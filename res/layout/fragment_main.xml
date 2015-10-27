@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#88ee00"
+    android:background="#ffffff"
     android:orientation="vertical" >
 
     <SeekBar
@@ -14,5 +14,11 @@
         android:id="@+id/ratingBar1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/testshape" />
 
 </LinearLayout>

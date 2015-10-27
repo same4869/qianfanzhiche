@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.app.ActionBar;
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -21,7 +22,10 @@ import android.widget.TextView;
 import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.adapter.HomePagerAdapter;
 import com.xun.qianfanzhiche.anim.ZoomOutPageTransformer;
+import com.xun.qianfanzhiche.fragment.CommunityFragment;
 import com.xun.qianfanzhiche.fragment.MainFragment;
+import com.xun.qianfanzhiche.view.ZhiCheActionBar;
+import com.xun.qianfanzhiche.view.ZhiCheActionBar.ActionBarListener;
 
 /**
  * 主Activity
@@ -30,11 +34,12 @@ import com.xun.qianfanzhiche.fragment.MainFragment;
  * 
  *         2015-10-22
  */
-public class ZhiCheMainActivity extends FragmentActivity {
+public class ZhiCheMainActivity extends FragmentActivity implements ActionBarListener {
 
 	private ViewPager viewPager;
 	public TabHost tabHost;
-	private MainFragment mainFragment, mainFragment1, mainFragment2, mainFragment3;
+	private MainFragment mainFragment, mainFragment2, mainFragment3;
+	private ZhiCheActionBar zhiCheActionBar;
 
 	private List<Map<String, View>> tabViews = new ArrayList<Map<String, View>>();
 	private List<Fragment> fragments = new ArrayList<Fragment>();
@@ -51,10 +56,10 @@ public class ZhiCheMainActivity extends FragmentActivity {
 	}
 
 	private void initView() {
-		ActionBar actionBar = getActionBar();
-		actionBar.setTitle("千帆知车");
 		viewPager = (ViewPager) findViewById(R.id.jazzyPager);
 		tabHost = (TabHost) findViewById(android.R.id.tabhost);
+		zhiCheActionBar = (ZhiCheActionBar) findViewById(R.id.actionbar);
+		zhiCheActionBar.setOnActionBarListener(this);
 	}
 
 	private void initTabHost() {
@@ -81,6 +86,7 @@ public class ZhiCheMainActivity extends FragmentActivity {
 	 * @param tabIndex
 	 * @return
 	 */
+	@SuppressLint("InflateParams")
 	private View createTab(String tabLabelText, int tabIndex) {
 		View tabIndicator = LayoutInflater.from(this).inflate(R.layout.main_tabwidget_layout, null);
 		TextView normalTV = (TextView) tabIndicator.findViewById(R.id.normalTV);
@@ -145,7 +151,7 @@ public class ZhiCheMainActivity extends FragmentActivity {
 	private void initFragment() {
 		mainFragment = new MainFragment();
 		fragments.add(mainFragment);
-		mainFragment1 = new MainFragment();
+		CommunityFragment mainFragment1 = new CommunityFragment();
 		fragments.add(mainFragment1);
 		mainFragment2 = new MainFragment();
 		fragments.add(mainFragment2);
@@ -171,6 +177,18 @@ public class ZhiCheMainActivity extends FragmentActivity {
 			}
 		});
 		viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+	}
+
+	@Override
+	public void onBackImgClick() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onAddImgClick() {
+		Intent intent = new Intent(this, CommunityNewPublishActivity.class);
+		startActivity(intent);
 	}
 
 }
