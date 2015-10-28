@@ -1,12 +1,14 @@
 package com.xun.qianfanzhiche.base;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +17,12 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobDate;
+import cn.bmob.v3.listener.FindListener;
 
 import com.xun.qianfanzhiche.R;
+import com.xun.qianfanzhiche.bean.CommunityItem;
 
 public class BaseCommunityFragment extends BaseFragmentActivity implements OnRefreshListener {
 	private ListView mListView;
@@ -50,17 +56,35 @@ public class BaseCommunityFragment extends BaseFragmentActivity implements OnRef
 				} else {
 					swipeView.setEnabled(false);
 				}
-
 			}
 		});
 		return rootView;
 	}
 
 	private void loadData() {
-		data.add("1");
-		data.add("2");
-		data.add("3");
-		data.add("4");
+		BmobQuery<CommunityItem> query = new BmobQuery<CommunityItem>();
+		// 查询playerName叫“比目”的数据
+		// query.addWhereEqualTo("CommunityItem", "");
+		BmobDate date = new BmobDate(new Date(System.currentTimeMillis()));
+		query.addWhereLessThan("createdAt", date);
+		// 返回50条数据，如果不加上这条语句，默认返回10条数据
+		query.setLimit(50);
+		// 执行查询方法
+		query.findObjects(getContext(), new FindListener<CommunityItem>() {
+			@Override
+			public void onSuccess(List<CommunityItem> object) {
+				Log.d("kkkkkkkk", "onSuccess");
+				for (CommunityItem communityItem : object) {
+					data.add(communityItem.getContent());
+				}
+				communityListAdapter.notifyDataSetChanged();
+			}
+
+			@Override
+			public void onError(int code, String msg) {
+				Log.d("kkkkkkkk", "onError --> msg -->" + msg);
+			}
+		});
 	}
 
 	public class CommunityListAdapter extends BaseAdapter {

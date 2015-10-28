@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.adapter.HomePagerAdapter;
 import com.xun.qianfanzhiche.anim.ZoomOutPageTransformer;
+import com.xun.qianfanzhiche.app.ZhiCheApp;
 import com.xun.qianfanzhiche.fragment.CommunityFragment;
 import com.xun.qianfanzhiche.fragment.MainFragment;
 import com.xun.qianfanzhiche.view.ZhiCheActionBar;
@@ -48,13 +49,14 @@ public class ZhiCheMainActivity extends FragmentActivity implements ActionBarLis
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		ZhiCheApp.getInstance().addActivity(this);
 
 		initView();
 		initTabHost();
 		initFragment();
 		initViewPager();
 	}
-
+	
 	private void initView() {
 		viewPager = (ViewPager) findViewById(R.id.jazzyPager);
 		tabHost = (TabHost) findViewById(android.R.id.tabhost);
