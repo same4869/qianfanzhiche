@@ -27,6 +27,14 @@
         <requestFocus />
     </EditText>
 
+    <ImageView
+        android:id="@+id/selectedImg"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/edit_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_launcher" />
+
     <RelativeLayout
         android:id="@+id/pic_content"
         android:layout_width="match_parent"

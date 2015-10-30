@@ -21,6 +21,14 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5632d26de0f55a37a1006780" >
+        </meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="common" />
+
         <activity
             android:name="com.xun.qianfanzhiche.ui.ZhiCheMainActivity"
             android:label="@string/app_name"

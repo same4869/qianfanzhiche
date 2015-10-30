@@ -9,7 +9,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
@@ -23,6 +22,7 @@ import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.adapter.HomePagerAdapter;
 import com.xun.qianfanzhiche.anim.ZoomOutPageTransformer;
 import com.xun.qianfanzhiche.app.ZhiCheApp;
+import com.xun.qianfanzhiche.base.BaseFragmentActivity;
 import com.xun.qianfanzhiche.fragment.CommunityFragment;
 import com.xun.qianfanzhiche.fragment.MainFragment;
 import com.xun.qianfanzhiche.view.ZhiCheActionBar;
@@ -35,7 +35,7 @@ import com.xun.qianfanzhiche.view.ZhiCheActionBar.ActionBarListener;
  * 
  *         2015-10-22
  */
-public class ZhiCheMainActivity extends FragmentActivity implements ActionBarListener {
+public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBarListener {
 
 	private ViewPager viewPager;
 	public TabHost tabHost;
