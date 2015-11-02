@@ -20,6 +20,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v4.util.LruCache;
@@ -35,8 +36,7 @@ public class ImageLoaderWithCaches {
 	private DiskLruCache mDiskCaches;
 	private List<String> imgUrls;
 
-	public ImageLoaderWithCaches(Context context, ListView listView,
-			List<String> imgUrls) {
+	public ImageLoaderWithCaches(Context context, ListView listView, List<String> imgUrls) {
 		this.listView = listView;
 		this.imgUrls = imgUrls;
 		mTask = new HashSet<ImageLoaderWithCaches.ASyncDownloadImage>();
@@ -72,6 +72,10 @@ public class ImageLoaderWithCaches {
 			mMemoryCaches.put(url, bitmap);
 		}
 	}
+	
+	public void setImgUrls(List<String> imgUrls){
+		this.imgUrls = imgUrls;
+	}
 
 	public void showImage(String url, ImageView imageView) {
 		Bitmap bitmap = getBitmapFromMemoryCaches(url);
@@ -85,9 +89,7 @@ public class ImageLoaderWithCaches {
 	@SuppressLint("NewApi")
 	private File getFileCache(Context context, String cacheFileName) {
 		String cachePath;
-		if (Environment.MEDIA_MOUNTED.equals(Environment
-				.getExternalStorageState())
-				|| !Environment.isExternalStorageRemovable()) {
+		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !Environment.isExternalStorageRemovable()) {
 			cachePath = context.getExternalCacheDir().getPath();
 		} else {
 			cachePath = context.getCacheDir().getPath();
@@ -117,16 +119,14 @@ public class ImageLoaderWithCaches {
 		return null;
 	}
 
-	private static boolean getBitmapUrlToStream(String urlString,
-			OutputStream outputStream) {
+	private static boolean getBitmapUrlToStream(String urlString, OutputStream outputStream) {
 		HttpURLConnection urlConnection = null;
 		BufferedOutputStream out = null;
 		BufferedInputStream in = null;
 		try {
 			final URL url = new URL(urlString);
 			urlConnection = (HttpURLConnection) url.openConnection();
-			in = new BufferedInputStream(urlConnection.getInputStream(),
-					8 * 1024);
+			in = new BufferedInputStream(urlConnection.getInputStream(), 8 * 1024);
 			out = new BufferedOutputStream(outputStream, 8 * 1024);
 			int b;
 			while ((b = in.read()) != -1) {
@@ -198,6 +198,9 @@ public class ImageLoaderWithCaches {
 	public void loadImages(int start, int end) {
 		for (int i = start; i < end; i++) {
 			String url = imgUrls.get(i);
+			if (url.equals("null")) {
+				continue;
+			}
 			Bitmap bitmap = getBitmapFromMemoryCaches(url);
 			if (bitmap == null) {
 				ASyncDownloadImage task = new ASyncDownloadImage(url);
@@ -240,13 +243,12 @@ public class ImageLoaderWithCaches {
 					snapShot = mDiskCaches.get(key);
 				}
 				if (snapShot != null) {
-					fileInputStream = (FileInputStream) snapShot
-							.getInputStream(0);
+					fileInputStream = (FileInputStream) snapShot.getInputStream(0);
 					fileDescriptor = fileInputStream.getFD();
 				}
 				Bitmap bitmap = null;
 				if (fileDescriptor != null) {
-					bitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+					bitmap = decodeSuitableBitmap(fileDescriptor, null, 250, 250);
 				}
 				if (bitmap != null) {
 					addBitmapToMemoryCaches(arg0[0], bitmap);
@@ -269,14 +271,39 @@ public class ImageLoaderWithCaches {
 		@Override
 		protected void onPostExecute(Bitmap result) {
 			super.onPostExecute(result);
-			ImageView imageView = (ImageView) listView
-					.findViewWithTag(urlString);
+			ImageView imageView = (ImageView) listView.findViewWithTag(urlString);
 			if (imageView != null && result != null) {
 				imageView.setImageBitmap(result);
 			}
 			mTask.remove(this);
 		}
 
+	}
+
+	public static int getInSampleSize(BitmapFactory.Options options, int targetWidth, int targetHeight) {
+		// 原始图片的高度和宽度
+		final int height = options.outHeight;
+		final int width = options.outWidth;
+		int inSampleSize = 1;
+		if (height > targetHeight || width > targetWidth) {
+			// 计算出实际宽高和目标宽高的比率
+			final int heightRate = Math.round((float) height / (float) targetHeight);
+			final int widthRate = Math.round((float) width / (float) targetWidth);
+			inSampleSize = heightRate < widthRate ? heightRate : widthRate;
+		}
+		return inSampleSize;
+	}
+
+	public static Bitmap decodeSuitableBitmap(FileDescriptor fd, Rect rect, int targetWidth, int targetHeight) {
+		// 空手套白狼
+		final BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeFileDescriptor(fd, rect, options);
+		// 计算合适的inSampleSize
+		options.inSampleSize = getInSampleSize(options, targetWidth, targetHeight);
+		// 加载到内存
+		options.inJustDecodeBounds = false;
+		return BitmapFactory.decodeFileDescriptor(fd, rect, options);
 	}
 
 }

@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
@@ -136,6 +137,7 @@ public class CommunityNewPublishActivity extends BaseActivity implements ActionB
 	public void onClick(View arg0) {
 		switch (arg0.getId()) {
 		case R.id.open_layout:
+			// 从相册选择
 			Date date1 = new Date(System.currentTimeMillis());
 			dateTime = date1.getTime() + "";
 			Intent intent = null;
@@ -148,7 +150,22 @@ public class CommunityNewPublishActivity extends BaseActivity implements ActionB
 			startActivityForResult(intent, REQUEST_CODE_ALBUM);
 			break;
 		case R.id.take_layout:
-
+			// 从相机拍摄
+			Date date = new Date(System.currentTimeMillis());
+			dateTime = date.getTime() + "";
+			File f = new File(CacheUtil.getCacheDirectory(getApplicationContext(), true, "pic") + dateTime);
+			if (f.exists()) {
+				f.delete();
+			}
+			try {
+				f.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			Uri uri = Uri.fromFile(f);
+			Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+			camera.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+			startActivityForResult(camera, REQUEST_CODE_CAMERA);
 			break;
 
 		default:
@@ -173,6 +190,36 @@ public class CommunityNewPublishActivity extends BaseActivity implements ActionB
 		return file.getAbsolutePath();
 	}
 
+	private Bitmap compressImageFromFile(String srcPath, float width, float height) {
+		BitmapFactory.Options newOpts = new BitmapFactory.Options();
+		newOpts.inJustDecodeBounds = true;// 只读边,不读内容
+		Bitmap bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
+
+		newOpts.inJustDecodeBounds = false;
+		int w = newOpts.outWidth;
+		int h = newOpts.outHeight;
+		float hh = height;//
+		float ww = width;//
+		int be = 1;
+		if (w > h && w > ww) {
+			be = (int) (newOpts.outWidth / ww);
+		} else if (w < h && h > hh) {
+			be = (int) (newOpts.outHeight / hh);
+		}
+		if (be <= 0)
+			be = 1;
+		newOpts.inSampleSize = be;// 设置采样率
+
+		newOpts.inPreferredConfig = Config.ARGB_8888;// 该模式是默认的,可不设
+		newOpts.inPurgeable = true;// 同时设置才会有效
+		newOpts.inInputShareable = true;// 。当系统内存不够时候图片自动被回收
+
+		bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
+		// return compressBmpFromBmp(bitmap);//原来的方法调用了这个方法企图进行二次压缩
+		// 其实是无效的,大家尽管尝试
+		return bitmap;
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -192,6 +239,17 @@ public class CommunityNewPublishActivity extends BaseActivity implements ActionB
 				targeturl = saveToSdCard(bmp);
 				selectedImg.setImageBitmap(bmp);
 
+				break;
+			case REQUEST_CODE_CAMERA:
+				String files = CacheUtil.getCacheDirectory(getApplicationContext(), true, "pic") + dateTime;
+				File file = new File(files);
+				if (file.exists()) {
+					Bitmap bitmap = compressImageFromFile(files, 480, 800);
+					targeturl = saveToSdCard(bitmap);
+					selectedImg.setImageBitmap(bitmap);
+				} else {
+
+				}
 				break;
 			}
 		}

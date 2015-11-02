@@ -21,4 +21,10 @@
         android:layout_marginLeft="20dp"
         android:background="@drawable/testshape" />
 
+    <Button
+        android:id="@+id/sign_up_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="注册" />
+
 </LinearLayout>

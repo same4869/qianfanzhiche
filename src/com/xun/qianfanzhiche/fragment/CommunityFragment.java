@@ -24,8 +24,7 @@ import com.xun.qianfanzhiche.bean.CommunityItem;
 import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
 import com.xun.qianfanzhiche.utils.LogUtil;
 
-public class CommunityFragment extends BaseFragment implements
-		OnRefreshListener {
+public class CommunityFragment extends BaseFragment implements OnRefreshListener {
 	private ListView mListView;
 	private SwipeRefreshLayout swipeView;
 	private CommunityListAdapter communityListAdapter;
@@ -34,28 +33,22 @@ public class CommunityFragment extends BaseFragment implements
 	private ImageLoaderWithCaches mImageLoader;
 	private int start, end;
 	private boolean mFirstFlag = true;
+	private boolean isSetScrollListener = false;
 	private List<String> imgUrls = new ArrayList<String>();
 
 	private List<CommunityItem> data = new ArrayList<CommunityItem>();
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		loadData();
-		View rootView = inflater.inflate(R.layout.fragment_community,
-				container, false);
-		swipeView = (SwipeRefreshLayout) rootView
-				.findViewById(R.id.community_swipe);
+		View rootView = inflater.inflate(R.layout.fragment_community, container, false);
+		swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.community_swipe);
 		swipeView.setOnRefreshListener(this);
-		swipeView.setColorSchemeResources(android.R.color.holo_blue_dark,
-				android.R.color.holo_blue_light,
-				android.R.color.holo_green_light,
+		swipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light,
 				android.R.color.holo_green_light);
 		mListView = (ListView) rootView.findViewById(R.id.community_list);
-		mImageLoader = new ImageLoaderWithCaches(getContext(), mListView,
-				imgUrls);
-		communityListAdapter = new CommunityListAdapter(getContext(), data,
-				mImageLoader);
+		mImageLoader = new ImageLoaderWithCaches(getContext(), mListView, imgUrls);
+		communityListAdapter = new CommunityListAdapter(getContext(), mImageLoader);
 		myScrollListener = new MyScrollListener();
 		mListView.setAdapter(communityListAdapter);
 		return rootView;
@@ -64,7 +57,7 @@ public class CommunityFragment extends BaseFragment implements
 	private class MyScrollListener implements OnScrollListener {
 		@Override
 		public void onScrollStateChanged(AbsListView arg0, int scrollState) {
-			LogUtil.d(LogUtil.TAG, "onScrollStateChanged");
+			// LogUtil.d(LogUtil.TAG, "onScrollStateChanged");
 			if (scrollState == SCROLL_STATE_IDLE) {
 				mImageLoader.loadImages(start, end);
 			} else {
@@ -73,9 +66,8 @@ public class CommunityFragment extends BaseFragment implements
 		}
 
 		@Override
-		public void onScroll(AbsListView arg0, int firstVisibleItem,
-				int visibleItemCount, int totalItemCount) {
-			LogUtil.d(LogUtil.TAG, "onScroll");
+		public void onScroll(AbsListView arg0, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+			// LogUtil.d(LogUtil.TAG, "onScroll");
 			if (firstVisibleItem == 0) {
 				swipeView.setEnabled(true);
 			} else {
@@ -92,7 +84,6 @@ public class CommunityFragment extends BaseFragment implements
 
 	private void loadData() {
 		data.clear();
-		imgUrls.clear();
 		BmobQuery<CommunityItem> query = new BmobQuery<CommunityItem>();
 		// query.addWhereEqualTo("CommunityItem", "");
 		BmobDate date = new BmobDate(new Date(System.currentTimeMillis()));
@@ -103,30 +94,31 @@ public class CommunityFragment extends BaseFragment implements
 		query.findObjects(getContext(), new FindListener<CommunityItem>() {
 			@Override
 			public void onSuccess(List<CommunityItem> object) {
+				LogUtil.d(LogUtil.TAG, "onSuccess object size--> " + object.size());
 				data = object;
 				putImgData(data);
+				mImageLoader.setImgUrls(imgUrls);
 				communityListAdapter.setData(data);
-				mListView.setOnScrollListener(myScrollListener);
+				if (!isSetScrollListener) {
+					mListView.setOnScrollListener(myScrollListener);
+					isSetScrollListener = true;
+				}
 			}
 
 			@Override
 			public void onError(int code, String msg) {
-				LogUtil.d(LogUtil.TAG, "onError --> msg -->" + msg
-						+ " code -->" + code);
+				LogUtil.d(LogUtil.TAG, "onError --> msg -->" + msg + " code -->" + code);
 			}
 		});
 	}
 
 	private void putImgData(List<CommunityItem> object) {
-		// LogUtil.d(LogUtil.TAG, "object.get(0).getImage().getUrl() --> "
-		// + object.get(0).getImage().getUrl()
-		// + " object.get(0).getImage().getFileUrl(getContext()) --> "
-		// + object.get(0).getImage().getFileUrl(getContext()));
+		imgUrls.clear();
 		for (int i = 0; i < object.size(); i++) {
 			if (object.get(i).getImage() == null) {
 				imgUrls.add("null");
 			} else {
-				imgUrls.add(object.get(i).getImage().getUrl());
+				imgUrls.add(object.get(i).getImage().getFileUrl(getContext()));
 			}
 		}
 	}

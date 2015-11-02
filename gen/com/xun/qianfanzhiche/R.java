@@ -93,37 +93,42 @@ containing a value of this type.
     }
     public static final class id {
         public static final int accordion=0x7f090000;
-        public static final int action_settings=0x7f090028;
+        public static final int action_settings=0x7f09002d;
         public static final int actionbar=0x7f09000c;
-        public static final int actionbar_add=0x7f090027;
-        public static final int actionbar_back=0x7f090025;
-        public static final int actionbar_title=0x7f090026;
-        public static final int community_list=0x7f09001c;
-        public static final int community_swipe=0x7f09001b;
-        public static final int container=0x7f09001a;
+        public static final int actionbar_add=0x7f09002c;
+        public static final int actionbar_back=0x7f09002a;
+        public static final int actionbar_title=0x7f09002b;
+        public static final int community_list=0x7f090020;
+        public static final int community_swipe=0x7f09001f;
+        public static final int container=0x7f09001e;
         public static final int cubein=0x7f090001;
         public static final int cubeout=0x7f090002;
         public static final int edit_content=0x7f09000d;
         public static final int fliphorizontal=0x7f090003;
         public static final int flipvertical=0x7f090004;
-        public static final int item_content=0x7f090018;
-        public static final int item_img=0x7f090019;
+        public static final int item_content=0x7f09001c;
+        public static final int item_img=0x7f09001d;
         public static final int jazzyPager=0x7f090017;
-        public static final int normalImg=0x7f090021;
-        public static final int normalLayout=0x7f09001f;
-        public static final int normalTV=0x7f090020;
+        public static final int normalImg=0x7f090026;
+        public static final int normalLayout=0x7f090024;
+        public static final int normalTV=0x7f090025;
         public static final int open_layout=0x7f090011;
         public static final int open_pic=0x7f090012;
         public static final int open_pic_tips=0x7f090013;
         public static final int pic_content=0x7f09000f;
-        public static final int ratingBar1=0x7f09001e;
+        public static final int ratingBar1=0x7f090022;
         public static final int rotatedown=0x7f090005;
         public static final int rotateup=0x7f090006;
-        public static final int seekBar1=0x7f09001d;
-        public static final int selectedImage=0x7f090024;
+        public static final int seekBar1=0x7f090021;
+        public static final int selectedImage=0x7f090029;
         public static final int selectedImg=0x7f09000e;
-        public static final int selectedLayout=0x7f090022;
-        public static final int selectedTV=0x7f090023;
+        public static final int selectedLayout=0x7f090027;
+        public static final int selectedTV=0x7f090028;
+        public static final int sign_up_button=0x7f090023;
+        public static final int sign_up_login=0x7f09001b;
+        public static final int sign_up_password=0x7f090019;
+        public static final int sign_up_submit=0x7f09001a;
+        public static final int sign_up_username=0x7f090018;
         public static final int stack=0x7f090007;
         public static final int standard=0x7f090008;
         public static final int tablet=0x7f090009;
@@ -137,11 +142,12 @@ containing a value of this type.
     public static final class layout {
         public static final int activity_community_publish=0x7f030000;
         public static final int activity_main=0x7f030001;
-        public static final int community_item=0x7f030002;
-        public static final int fragment_community=0x7f030003;
-        public static final int fragment_main=0x7f030004;
-        public static final int main_tabwidget_layout=0x7f030005;
-        public static final int view_actionbar=0x7f030006;
+        public static final int activity_signup=0x7f030002;
+        public static final int community_item=0x7f030003;
+        public static final int fragment_community=0x7f030004;
+        public static final int fragment_main=0x7f030005;
+        public static final int main_tabwidget_layout=0x7f030006;
+        public static final int view_actionbar=0x7f030007;
     }
     public static final class menu {
         public static final int main=0x7f080000;

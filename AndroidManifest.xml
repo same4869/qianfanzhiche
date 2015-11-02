@@ -43,6 +43,10 @@
             android:name=".ui.CommunityNewPublishActivity"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
         </activity>
+        <activity
+            android:name=".ui.SignUpActivity"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>
