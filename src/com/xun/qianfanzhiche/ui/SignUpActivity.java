@@ -12,8 +12,11 @@ import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.base.BaseActivity;
 import com.xun.qianfanzhiche.utils.StringUtil;
 import com.xun.qianfanzhiche.utils.ToastUtil;
+import com.xun.qianfanzhiche.view.ZhiCheActionBar;
+import com.xun.qianfanzhiche.view.ZhiCheActionBar.ActionBarListener;
 
-public class SignUpActivity extends BaseActivity implements OnClickListener {
+public class SignUpActivity extends BaseActivity implements OnClickListener, ActionBarListener {
+	private ZhiCheActionBar zhiCheActionBar;
 	private EditText username, password;
 	private Button submit, login;
 
@@ -31,6 +34,8 @@ public class SignUpActivity extends BaseActivity implements OnClickListener {
 		submit.setOnClickListener(this);
 		login = (Button) findViewById(R.id.sign_up_login);
 		login.setOnClickListener(this);
+		zhiCheActionBar = (ZhiCheActionBar) findViewById(R.id.actionbar);
+		zhiCheActionBar.setOnActionBarListener(this);
 	}
 
 	private void signUp(String username, String password) {
@@ -86,5 +91,22 @@ public class SignUpActivity extends BaseActivity implements OnClickListener {
 		default:
 			break;
 		}
+	}
+
+	@Override
+	public void onBackImgClick() {
+		finish();
+	}
+
+	@Override
+	public void onAddImgClick() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onTextTvClick() {
+		// TODO Auto-generated method stub
+		
 	}
 }

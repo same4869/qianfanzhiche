@@ -254,4 +254,10 @@ public class CommunityNewPublishActivity extends BaseActivity implements ActionB
 			}
 		}
 	}
+
+	@Override
+	public void onTextTvClick() {
+		// TODO Auto-generated method stub
+		
+	}
 }

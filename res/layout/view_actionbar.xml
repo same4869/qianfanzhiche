@@ -29,4 +29,15 @@
         android:layout_centerVertical="true"
         android:src="@drawable/skin_comp_detail_add_clip_default" />
 
+    <TextView
+        android:id="@+id/actionbar_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="测试测试"
+        android:textColor="#3399ee"
+        android:textSize="17sp"
+        android:visibility="gone" />
+
 </RelativeLayout>

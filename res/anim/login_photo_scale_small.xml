@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillAfter="true"
+    android:fillEnabled="true" >
+
+    <!--
+        android:pivotX 旋转中心的X坐标浮点数或是百分比。
+		android:pivotY 旋转中心的Y坐标浮点数或是百分比。浮点数表示相对于Object的上边缘，如5; 百分比表示相对于Object的上边缘，如5%; 另一种百分比表示相对于父容器的上边缘，如5%p; 一般设置为50%表示在Object中心
+		android:duration 表示从android:fromDegrees转动到android:toDegrees所花费的时间，单位为毫秒。可以用来计算速度。
+		fromXScale[float] fromYScale[float]	为动画起始时，X、Y坐标上的伸缩尺寸	0.0表示收缩到没有1.0表示正常无伸缩
+		toXScale [float] toYScale[float]	为动画结束时，X、Y坐标上的伸缩尺寸值小于1.0表示收缩 值大于1.0表示放大
+    -->
+    <scale
+        android:duration="500"
+        android:fromXScale="1.0"
+        android:fromYScale="1.0"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:toXScale="0.7"
+        android:toYScale="0.7" />
+
+</set>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context=".MainActivity" >
+
+    <com.xun.qianfanzhiche.view.ZhiCheActionBar
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" >
+    </com.xun.qianfanzhiche.view.ZhiCheActionBar>
+
+    <!-- LOGO -->
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:contentDescription="@string/app_name" />
+
+    <!-- 头像 -->
+
+    <ImageView
+        android:id="@+id/login_img_photo"
+        android:layout_width="77dp"
+        android:layout_height="77dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="135dp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_photo" />
+
+    <ImageView
+        android:id="@+id/login_img_progress"
+        android:layout_width="77dp"
+        android:layout_height="77dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="135dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/loading_1"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/login_layout_welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WELCOME"
+            android:textColor="#ffffff"
+            android:textSize="17sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="欢迎访问"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <!-- 中间的白线，滑动轨道 -->
+
+    <View
+        android:id="@+id/login_view_line"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:background="#ffffff" />
+
+    <!-- 滑动的图标 -->
+
+    <ImageView
+        android:id="@+id/login_img_slide"
+        android:layout_width="31dp"
+        android:layout_height="31dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_ask_circle" />
+
+    <!-- 用户名输入控件 -->
+
+    <EditText
+        android:id="@+id/login_edit_username"
+        android:layout_width="160dp"
+        android:layout_height="35dp"
+        android:layout_above="@id/login_view_line"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="4dp"
+        android:background="#00000000"
+        android:hint="手机号/昵称"
+        android:inputType="text"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:textSize="18sp" >
+
+        <requestFocus />
+    </EditText>
+
+    <!-- 用户名输入控件清空按钮 -->
+
+    <Button
+        android:id="@+id/login_btn_clear_username"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_above="@id/login_view_line"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="7dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/ic_x_circle_white"
+        android:contentDescription="@string/app_name"
+        android:visibility="gone" />
+
+    <!-- 密码输入控件 -->
+
+    <EditText
+        android:id="@+id/login_edit_password"
+        android:layout_width="160dp"
+        android:layout_height="35dp"
+        android:layout_below="@id/login_view_line"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp"
+        android:background="#00000000"
+        android:hint="密码"
+        android:inputType="textPassword"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:textSize="18sp" />
+
+    <!-- 密码输入控件清空按钮 -->
+
+    <Button
+        android:id="@+id/login_btn_clear_password"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/login_view_line"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/ic_x_circle_white"
+        android:contentDescription="@string/app_name"
+        android:visibility="gone" />
+
+    <!-- 左下角注册按钮 -->
+
+    <Button
+        android:id="@+id/login_btn_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="65dp"
+        android:layout_marginLeft="60dp"
+        android:background="#00000000"
+        android:text="注册"
+        android:textColor="#ffffff"
+        android:textSize="18sp" />
+
+    <!-- 右下角游客登录按钮 -->
+
+    <Button
+        android:id="@+id/login_btn_traveller"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="65dp"
+        android:layout_marginRight="60dp"
+        android:background="#00000000"
+        android:text="游客"
+        android:textColor="#ffffff"
+        android:textSize="18sp" />
+
+</RelativeLayout>

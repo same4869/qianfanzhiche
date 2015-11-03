@@ -103,11 +103,13 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 					mListView.setOnScrollListener(myScrollListener);
 					isSetScrollListener = true;
 				}
+				swipeView.setRefreshing(false);
 			}
 
 			@Override
 			public void onError(int code, String msg) {
 				LogUtil.d(LogUtil.TAG, "onError --> msg -->" + msg + " code -->" + code);
+				swipeView.setRefreshing(false);
 			}
 		});
 	}
@@ -127,7 +129,7 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 	public void onRefresh() {
 		swipeView.setRefreshing(true);
 		loadData();
-		swipeView.setRefreshing(false);
+
 	}
 
 }

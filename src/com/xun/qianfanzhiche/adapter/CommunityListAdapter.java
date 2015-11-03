@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.bean.CommunityItem;
 import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
-import com.xun.qianfanzhiche.utils.LogUtil;
 
 public class CommunityListAdapter extends BaseAdapter {
 	private Context mContext;
@@ -22,13 +21,13 @@ public class CommunityListAdapter extends BaseAdapter {
 	private ImageLoaderWithCaches mImageLoader;
 
 	public CommunityListAdapter(Context context, ImageLoaderWithCaches mImageLoader) {
-		LogUtil.d(LogUtil.TAG, "CommunityListAdapter");
+		// LogUtil.d(LogUtil.TAG, "CommunityListAdapter");
 		this.mImageLoader = mImageLoader;
 		this.mContext = context;
 	}
 
 	public void setData(List<CommunityItem> data) {
-		LogUtil.d(LogUtil.TAG, "setData");
+		// LogUtil.d(LogUtil.TAG, "setData");
 		this.data = data;
 		notifyDataSetChanged();
 	}
@@ -60,7 +59,7 @@ public class CommunityListAdapter extends BaseAdapter {
 		} else {
 			viewHolder = (ViewHolder) arg1.getTag();
 		}
-		LogUtil.d(LogUtil.TAG, "data.size() --> " + data.size());
+		// LogUtil.d(LogUtil.TAG, "data.size() --> " + data.size());
 		viewHolder.itemContent.setText(data.get(arg0).getContent());
 		if (data.get(arg0).getImage() != null) {
 			viewHolder.itemImg.setVisibility(View.VISIBLE);

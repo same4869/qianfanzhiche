@@ -10,7 +10,7 @@ import android.widget.Button;
 
 import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.base.BaseFragment;
-import com.xun.qianfanzhiche.ui.SignUpActivity;
+import com.xun.qianfanzhiche.ui.LoginActivity;
 
 public class MainFragment extends BaseFragment {
 	private Button sign_up_button;
@@ -23,7 +23,7 @@ public class MainFragment extends BaseFragment {
 
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(getContext(), SignUpActivity.class);
+				Intent intent = new Intent(getContext(), LoginActivity.class);
 				startActivity(intent);
 			}
 		});

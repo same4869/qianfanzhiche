@@ -12,7 +12,7 @@ import com.xun.qianfanzhiche.R;
 
 public class ZhiCheActionBar extends FrameLayout {
 	private ImageView backImg, addImg;
-	private TextView titleTv;
+	private TextView titleTv, textTv;
 
 	private ActionBarListener actionBarListener;
 
@@ -36,6 +36,7 @@ public class ZhiCheActionBar extends FrameLayout {
 		backImg = (ImageView) view.findViewById(R.id.actionbar_back);
 		addImg = (ImageView) view.findViewById(R.id.actionbar_add);
 		titleTv = (TextView) view.findViewById(R.id.actionbar_title);
+		textTv = (TextView) view.findViewById(R.id.actionbar_text);
 		backImg.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -54,6 +55,15 @@ public class ZhiCheActionBar extends FrameLayout {
 				}
 			}
 		});
+		textTv.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				if (actionBarListener != null) {
+					actionBarListener.onTextTvClick();
+				}
+			}
+		});
 	}
 
 	public void setOnActionBarListener(ActionBarListener actionBarListener) {
@@ -64,9 +74,17 @@ public class ZhiCheActionBar extends FrameLayout {
 		titleTv.setText(string);
 	}
 
+	public void setTextString(String string) {
+		addImg.setVisibility(View.GONE);
+		textTv.setVisibility(View.VISIBLE);
+		textTv.setText(string);
+	}
+
 	public interface ActionBarListener {
 		void onBackImgClick();
 
 		void onAddImgClick();
+
+		void onTextTvClick();
 	}
 }

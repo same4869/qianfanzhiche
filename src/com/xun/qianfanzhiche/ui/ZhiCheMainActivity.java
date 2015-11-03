@@ -193,4 +193,10 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 		startActivity(intent);
 	}
 
+	@Override
+	public void onTextTvClick() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
