@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.bean.CommunityItem;
 import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
+import com.xun.qianfanzhiche.utils.LogUtil;
 
 public class CommunityListAdapter extends BaseAdapter {
 	private Context mContext;
@@ -55,6 +56,8 @@ public class CommunityListAdapter extends BaseAdapter {
 			arg1 = LayoutInflater.from(mContext).inflate(R.layout.community_item, null);
 			viewHolder.itemContent = (TextView) arg1.findViewById(R.id.item_content);
 			viewHolder.itemImg = (ImageView) arg1.findViewById(R.id.item_img);
+			viewHolder.itemAvater = (ImageView) arg1.findViewById(R.id.item_avater);
+			viewHolder.itemName = (TextView) arg1.findViewById(R.id.item_name);
 			arg1.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) arg1.getTag();
@@ -63,6 +66,10 @@ public class CommunityListAdapter extends BaseAdapter {
 		viewHolder.itemContent.setText(data.get(arg0).getContent());
 		if (data.get(arg0).getImage() != null) {
 			viewHolder.itemImg.setVisibility(View.VISIBLE);
+			if (data.get(arg0).getAuthor() != null) {
+				// viewHolder.itemName.setText(data.get(arg0).getAuthor().getTableName());
+				LogUtil.d(LogUtil.TAG, "data.get(arg0).getAuthor().getUsername() --> " + data.get(arg0).getAuthor().getUsername());
+			}
 			viewHolder.itemImg.setTag(data.get(arg0).getImage().getFileUrl(mContext));
 			mImageLoader.showImage(data.get(arg0).getImage().getFileUrl(mContext), viewHolder.itemImg);
 			// LogUtil.d(LogUtil.TAG, "data.get(" + arg0 + ").getImage().getFileUrl(mContext) --> " + data.get(arg0).getImage().getFileUrl(mContext));
@@ -74,6 +81,8 @@ public class CommunityListAdapter extends BaseAdapter {
 	}
 
 	private class ViewHolder {
+		ImageView itemAvater;
+		TextView itemName;
 		TextView itemContent;
 		ImageView itemImg;
 	}

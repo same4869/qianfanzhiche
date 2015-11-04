@@ -1,6 +1,8 @@
 package com.xun.qianfanzhiche.ui;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,11 +19,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import cn.bmob.v3.listener.SaveListener;
 
 import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.base.BaseActivity;
 import com.xun.qianfanzhiche.bean.User;
+import com.xun.qianfanzhiche.utils.BitmapUtil;
 import com.xun.qianfanzhiche.utils.ScreenUtil;
 import com.xun.qianfanzhiche.utils.StringUtil;
 import com.xun.qianfanzhiche.utils.ToastUtil;
@@ -49,6 +53,7 @@ public class LoginActivity extends BaseActivity implements ActionBarListener {
 	private Button moBtnRegister;
 	private Button moBtnTraveller;
 	private ZhiCheActionBar zhiCheActionBar;
+	private RelativeLayout loginLayout;
 
 	// Members
 	private Handler moHandler;
@@ -103,6 +108,9 @@ public class LoginActivity extends BaseActivity implements ActionBarListener {
 		moBtnTraveller = (Button) findViewById(R.id.login_btn_traveller);
 		zhiCheActionBar = (ZhiCheActionBar) findViewById(R.id.actionbar);
 		zhiCheActionBar.setTextString("注册");
+		loginLayout = (RelativeLayout) findViewById(R.id.login_layout);
+		Bitmap bg = BitmapFactory.decodeResource(getResources(), R.drawable.bg);
+		loginLayout.setBackground(new BitmapDrawable(getResources(), BitmapUtil.fastblur(getApplicationContext(), bg, 25)));
 		mbIsSlidingBack = false;
 		miLastX = 0;
 		miSliderMinX = 0;
