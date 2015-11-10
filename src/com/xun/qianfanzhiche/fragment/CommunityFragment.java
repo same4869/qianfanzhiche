@@ -45,7 +45,6 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 	private float mFirstY, mCurrentY;
 	private int direction;
 	private boolean mShow;
-
 	// private boolean isSetScrollListener = false;
 	private List<String> imgUrls = new ArrayList<String>();
 	private List<CommunityItem> data = new ArrayList<CommunityItem>();
@@ -144,6 +143,7 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 		// query.addWhereEqualTo("CommunityItem", "");
 		BmobDate date = new BmobDate(new Date(System.currentTimeMillis()));
 		query.addWhereLessThan("createdAt", date);
+		query.include("author");
 		// 返回50条数据，如果不加上这条语句，默认返回10条数据
 		query.setLimit(50);
 		// 执行查询方法

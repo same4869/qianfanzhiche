@@ -25,6 +25,7 @@ import com.xun.qianfanzhiche.app.ZhiCheApp;
 import com.xun.qianfanzhiche.base.BaseFragmentActivity;
 import com.xun.qianfanzhiche.fragment.CommunityFragment;
 import com.xun.qianfanzhiche.fragment.MainFragment;
+import com.xun.qianfanzhiche.fragment.UserFragment;
 import com.xun.qianfanzhiche.view.ZhiCheActionBar;
 import com.xun.qianfanzhiche.view.ZhiCheActionBar.ActionBarListener;
 
@@ -56,7 +57,7 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 		initFragment();
 		initViewPager();
 	}
-	
+
 	private void initView() {
 		viewPager = (ViewPager) findViewById(R.id.jazzyPager);
 		tabHost = (TabHost) findViewById(android.R.id.tabhost);
@@ -157,7 +158,7 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 		fragments.add(mainFragment1);
 		mainFragment2 = new MainFragment();
 		fragments.add(mainFragment2);
-		mainFragment3 = new MainFragment();
+		UserFragment mainFragment3 = new UserFragment();
 		fragments.add(mainFragment3);
 	}
 
@@ -196,7 +197,7 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 	@Override
 	public void onTextTvClick() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

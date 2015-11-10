@@ -51,7 +51,6 @@ public class LoginActivity extends BaseActivity implements ActionBarListener {
 	private Button moBtnClearUsername;
 	private Button moBtnClearPassword;
 	private Button moBtnRegister;
-	private Button moBtnTraveller;
 	private ZhiCheActionBar zhiCheActionBar;
 	private RelativeLayout loginLayout;
 
@@ -59,6 +58,9 @@ public class LoginActivity extends BaseActivity implements ActionBarListener {
 	private Handler moHandler;
 	private boolean mbIsSlidingBack;
 	private int miSliderMinX, miSliderMaxX, miLastX;
+
+	public int status = 0;// 0为登录，1为注册
+	private Bitmap bg;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,11 +79,24 @@ public class LoginActivity extends BaseActivity implements ActionBarListener {
 				switch (poMsg.what) {
 				case LOGIN_SUCCESS:
 					// 登录成功
-					finish();
+					moHandler.postDelayed(new Runnable() {
+
+						@Override
+						public void run() {
+							finish();
+						}
+					}, 3000);
 					break;
 				case LOGIN_FAILED:
 					// 登录失败
-					stopLogin();
+					moHandler.postDelayed(new Runnable() {
+
+						@Override
+						public void run() {
+							stopLogin();
+							setStatus(0);
+						}
+					}, 3000);
 					break;
 				case LOGIN_SLIDER_TIP:
 					moImgSlider.layout(miLastX, moImgSlider.getTop(), miLastX + moImgSlider.getWidth(), moImgSlider.getTop() + moImgSlider.getHeight());
@@ -105,16 +120,14 @@ public class LoginActivity extends BaseActivity implements ActionBarListener {
 		moBtnClearUsername = (Button) findViewById(R.id.login_btn_clear_username);
 		moBtnClearPassword = (Button) findViewById(R.id.login_btn_clear_password);
 		moBtnRegister = (Button) findViewById(R.id.login_btn_register);
-		moBtnTraveller = (Button) findViewById(R.id.login_btn_traveller);
 		zhiCheActionBar = (ZhiCheActionBar) findViewById(R.id.actionbar);
-		zhiCheActionBar.setTextString("注册");
 		loginLayout = (RelativeLayout) findViewById(R.id.login_layout);
-		Bitmap bg = BitmapFactory.decodeResource(getResources(), R.drawable.bg);
-		loginLayout.setBackground(new BitmapDrawable(getResources(), BitmapUtil.fastblur(getApplicationContext(), bg, 25)));
+		bg = BitmapFactory.decodeResource(getResources(), R.drawable.bg);
 		mbIsSlidingBack = false;
 		miLastX = 0;
 		miSliderMinX = 0;
 		miSliderMaxX = 0;
+		setStatus(0);
 	}
 
 	private void initListener() {
@@ -125,7 +138,6 @@ public class LoginActivity extends BaseActivity implements ActionBarListener {
 		moImgSlider.setOnClickListener(new OnSliderClicked());
 		moImgSlider.setOnTouchListener(new OnSliderDragged());
 		moBtnRegister.setOnClickListener(new OnRegister());
-		moBtnTraveller.setOnClickListener(new OnTravell());
 		zhiCheActionBar.setOnActionBarListener(this);
 	}
 
@@ -211,7 +223,6 @@ public class LoginActivity extends BaseActivity implements ActionBarListener {
 
 	// 滑动图标滑动事件
 	private class OnSliderDragged implements OnTouchListener {
-		@SuppressWarnings("unused")
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 			ScreenUtil.closeKeybord(moEditPassword, LoginActivity.this);
@@ -235,10 +246,12 @@ public class LoginActivity extends BaseActivity implements ActionBarListener {
 						miLastX = liX;
 						if (miLastX == miSliderMaxX) {
 							// startRotateImg();
-							String lsUsername = moEditUsername.getText().toString();
-							String lsPassword = moEditPassword.getText().toString();
-							startLogin();
-							login(lsUsername, lsPassword);
+							if (status == 0) {
+								String lsUsername = moEditUsername.getText().toString();
+								String lsPassword = moEditPassword.getText().toString();
+								startLogin();
+								login(lsUsername, lsPassword);
+							}
 						}
 					}
 					break;
@@ -257,13 +270,10 @@ public class LoginActivity extends BaseActivity implements ActionBarListener {
 	private class OnRegister implements OnClickListener {
 		@Override
 		public void onClick(View v) {
-		}
-	}
-
-	// 游客事件
-	private class OnTravell implements OnClickListener {
-		@Override
-		public void onClick(View v) {
+			String lsUsername = moEditUsername.getText().toString();
+			String lsPassword = moEditPassword.getText().toString();
+			startLogin();
+			signUp(lsUsername, lsPassword);
 		}
 	}
 
@@ -331,7 +341,6 @@ public class LoginActivity extends BaseActivity implements ActionBarListener {
 		moBtnClearUsername.setVisibility(View.GONE);
 		moBtnClearPassword.setVisibility(View.GONE);
 		moBtnRegister.setVisibility(View.GONE);
-		moBtnTraveller.setVisibility(View.GONE);
 
 		moLayoutWelcome.setVisibility(View.VISIBLE);
 	}
@@ -353,10 +362,44 @@ public class LoginActivity extends BaseActivity implements ActionBarListener {
 		moBtnClearUsername.setVisibility(View.VISIBLE);
 		moBtnClearPassword.setVisibility(View.VISIBLE);
 		moBtnRegister.setVisibility(View.VISIBLE);
-		moBtnTraveller.setVisibility(View.VISIBLE);
 		moLayoutWelcome.setVisibility(View.GONE);
 	}
 
+	private void setStatus(int status) {
+		if (status == 0) {
+			moBtnRegister.setVisibility(View.GONE);
+			loginLayout.setBackground(new BitmapDrawable(getResources(), BitmapUtil.fastblur(getApplicationContext(), bg, 15)));
+			zhiCheActionBar.setTitle("登录");
+			zhiCheActionBar.setTextString("注册");
+		} else {
+			moBtnRegister.setVisibility(View.VISIBLE);
+			loginLayout.setBackground(new BitmapDrawable(getResources(), BitmapUtil.fastblur(getApplicationContext(), bg, 25)));
+			zhiCheActionBar.setTitle("注册");
+			zhiCheActionBar.setTextString("登录");
+		}
+	}
+
+	// 注册
+	private void signUp(String username, String password) {
+		User bu = new User();
+		bu.setUsername(username);
+		bu.setPassword(password);
+		// 注意：不能用save方法进行注册
+		bu.signUp(this, new SaveListener() {
+			@Override
+			public void onSuccess() {
+				ToastUtil.show(getApplicationContext(), "注册成功");
+				setStatus(0);
+			}
+
+			@Override
+			public void onFailure(int code, String msg) {
+				ToastUtil.show(getApplicationContext(), "注册失败 --> " + msg);
+			}
+		});
+	}
+
+	// 登录
 	private void login(String username, String password) {
 		User bu2 = new User();
 		bu2.setUsername(username);
@@ -370,10 +413,15 @@ public class LoginActivity extends BaseActivity implements ActionBarListener {
 
 			@Override
 			public void onFailure(int code, String msg) {
-				ToastUtil.show(getApplicationContext(), "登录失败");
+				ToastUtil.show(getApplicationContext(), "登录失败 --> " + msg);
 				moHandler.sendEmptyMessage(LOGIN_FAILED);
 			}
 		});
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
 	}
 
 	@Override
@@ -389,6 +437,14 @@ public class LoginActivity extends BaseActivity implements ActionBarListener {
 
 	@Override
 	public void onTextTvClick() {
-		ToastUtil.show(getApplicationContext(), "注册");
+		if (status == 0) {
+			ToastUtil.show(getApplicationContext(), "登录");
+			status = 1;
+			setStatus(status);
+		} else {
+			ToastUtil.show(getApplicationContext(), "注册");
+			status = 0;
+			setStatus(status);
+		}
 	}
 }

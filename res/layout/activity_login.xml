@@ -156,33 +156,16 @@
         android:contentDescription="@string/app_name"
         android:visibility="gone" />
 
-    <!-- 左下角注册按钮 -->
-
     <Button
         android:id="@+id/login_btn_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="65dp"
         android:layout_marginLeft="60dp"
         android:background="#00000000"
-        android:text="注册"
-        android:textColor="#ffffff"
-        android:textSize="18sp" />
-
-    <!-- 右下角游客登录按钮 -->
-
-    <Button
-        android:id="@+id/login_btn_traveller"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="65dp"
-        android:layout_marginRight="60dp"
-        android:background="#00000000"
-        android:text="游客"
+        android:text="确认注册"
         android:textColor="#ffffff"
         android:textSize="18sp" />
 

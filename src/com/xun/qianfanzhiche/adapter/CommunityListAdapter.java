@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.bean.CommunityItem;
 import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
-import com.xun.qianfanzhiche.utils.LogUtil;
 
 public class CommunityListAdapter extends BaseAdapter {
 	private Context mContext;
@@ -64,12 +63,14 @@ public class CommunityListAdapter extends BaseAdapter {
 		}
 		// LogUtil.d(LogUtil.TAG, "data.size() --> " + data.size());
 		viewHolder.itemContent.setText(data.get(arg0).getContent());
+		if (data.get(arg0).getAuthor() != null) {
+			viewHolder.itemName.setText(data.get(arg0).getAuthor().getUsername());
+			// LogUtil.d(LogUtil.TAG, "data.get(arg0).getAuthor().getUsername() --> " + data.get(arg0).getAuthor().getUsername());
+		} else {
+			viewHolder.itemName.setText("无用户名");
+		}
 		if (data.get(arg0).getImage() != null) {
 			viewHolder.itemImg.setVisibility(View.VISIBLE);
-			if (data.get(arg0).getAuthor() != null) {
-				// viewHolder.itemName.setText(data.get(arg0).getAuthor().getTableName());
-				LogUtil.d(LogUtil.TAG, "data.get(arg0).getAuthor().getUsername() --> " + data.get(arg0).getAuthor().getUsername());
-			}
 			viewHolder.itemImg.setTag(data.get(arg0).getImage().getFileUrl(mContext));
 			mImageLoader.showImage(data.get(arg0).getImage().getFileUrl(mContext), viewHolder.itemImg);
 			// LogUtil.d(LogUtil.TAG, "data.get(" + arg0 + ").getImage().getFileUrl(mContext) --> " + data.get(arg0).getImage().getFileUrl(mContext));

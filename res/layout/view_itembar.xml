@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="42dp" >
+
+    <TextView
+        android:id="@+id/item_bar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:text="标题"
+        android:textColor="#33bbff"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/item_bar_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="30dp"
+        android:text="内容"
+        android:textColor="#777777"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/item_bar_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:text=">"
+        android:textColor="#777777"
+        android:textSize="20sp" />
+
+    <View
+        android:id="@+id/item_bar_botom_line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:background="#B3B3B3" />
+
+</RelativeLayout>
