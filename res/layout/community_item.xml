@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ffffff"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:paddingBottom="5dp" >
 
         <ImageView
             android:id="@+id/item_avater"
@@ -30,32 +31,44 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_toRightOf="@+id/item_avater"
             android:text="名字"
             android:textColor="#995243"
             android:textSize="19sp" />
 
         <TextView
+            android:id="@+id/item_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_name"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_toRightOf="@+id/item_avater"
+            android:text="2015-5-3 18:18:18"
+            android:textColor="#995243"
+            android:textSize="19sp" />
+
+        <ImageView
+            android:id="@+id/item_img"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_below="@+id/item_avater"
+            android:layout_marginTop="5dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg" />
+
+        <TextView
             android:id="@+id/item_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/item_avater"
+            android:layout_below="@+id/item_img"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="5dp"
             android:text="内容内容内容内容内容内容"
             android:textColor="#999999"
             android:textSize="19sp" />
-
-        <ImageView
-            android:id="@+id/item_img"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_below="@+id/item_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="5dp"
-            android:src="@drawable/bg" />
     </RelativeLayout>
 
 </LinearLayout>

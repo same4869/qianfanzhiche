@@ -74,9 +74,10 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 		tabHost.setOnTabChangedListener(new OnTabChangeListener() {
 			@Override
 			public void onTabChanged(String tabId) {
+				tabHost.getTabContentView().setVisibility(View.GONE);// 隐藏content
 				int index = Integer.parseInt(tabId);
 				setTabSelectedState(index, 4);
-				tabHost.getTabContentView().setVisibility(View.GONE);// 隐藏content
+				tabHost.setCurrentTab(index);
 			}
 		});
 		tabHost.setCurrentTab(0);

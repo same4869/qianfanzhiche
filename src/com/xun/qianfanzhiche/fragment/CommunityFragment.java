@@ -118,7 +118,7 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 
 		@Override
 		public void onScroll(AbsListView arg0, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-			// LogUtil.d(LogUtil.TAG, "onScroll");
+			// LogUtil.d(LogUtil.TAG, "onScroll mFirstFlag --> " + mFirstFlag + " visibleItemCount --> " + visibleItemCount);
 			if (firstVisibleItem == 0) {
 				swipeView.setEnabled(true);
 				if (mShow) {
