@@ -17,6 +17,16 @@ public class CommunityItem extends BmobObject {
 
 	private BmobRelation likes;// 多对多关系：用于存储喜欢该帖子的所有用户
 
+	private BmobRelation relation;// 评论
+
+	public BmobRelation getRelation() {
+		return relation;
+	}
+
+	public void setRelation(BmobRelation relation) {
+		this.relation = relation;
+	}
+
 	public String getTitle() {
 		return title;
 	}

@@ -24,4 +24,5 @@ public class BaseActivity extends Activity {
 		super.onPause();
 		MobclickAgent.onPause(this);
 	}
+
 }

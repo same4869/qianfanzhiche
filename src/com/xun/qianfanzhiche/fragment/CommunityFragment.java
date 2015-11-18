@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
@@ -18,6 +19,8 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobDate;
@@ -28,8 +31,16 @@ import com.xun.qianfanzhiche.adapter.CommunityListAdapter;
 import com.xun.qianfanzhiche.base.BaseFragment;
 import com.xun.qianfanzhiche.bean.CommunityItem;
 import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
+import com.xun.qianfanzhiche.ui.CommunityDetailActivity;
 import com.xun.qianfanzhiche.utils.LogUtil;
 
+/**
+ * 社区页面
+ * 
+ * @author xunwang
+ * 
+ *         2015-11-18
+ */
 public class CommunityFragment extends BaseFragment implements OnRefreshListener, OnClickListener {
 	private ListView mListView;
 	private SwipeRefreshLayout swipeView;
@@ -64,7 +75,18 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 		mListView.setAdapter(communityListAdapter);
 		touchTopView = (View) rootView.findViewById(R.id.community_touch_top);
 		touchTopView.setOnClickListener(this);
+		toolBarAnim(1);
+		mShow = !mShow;
 		mListView.setOnTouchListener(new MyTouchListener());
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Intent intent = new Intent(getActivity(), CommunityDetailActivity.class);
+				intent.putExtra("data", data.get(position));
+				startActivity(intent);
+			}
+		});
 		return rootView;
 	}
 
@@ -135,6 +157,12 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 				mFirstFlag = false;
 			}
 		}
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		mFirstFlag = true;
 	}
 
 	private void loadData() {

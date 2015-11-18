@@ -16,4 +16,5 @@ public class BaseFragmentActivity extends FragmentActivity {
 		super.onPause();
 		MobclickAgent.onPause(this);
 	}
+
 }

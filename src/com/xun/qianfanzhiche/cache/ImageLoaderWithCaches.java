@@ -72,8 +72,8 @@ public class ImageLoaderWithCaches {
 			mMemoryCaches.put(url, bitmap);
 		}
 	}
-	
-	public void setImgUrls(List<String> imgUrls){
+
+	public void setImgUrls(List<String> imgUrls) {
 		this.imgUrls = imgUrls;
 	}
 
@@ -195,6 +195,17 @@ public class ImageLoaderWithCaches {
 		}
 	}
 
+	public void loadImagesWithUrl(ImageView imageView, String url) {
+		Bitmap bitmap = getBitmapFromMemoryCaches(url);
+		if (bitmap == null) {
+			ASyncDownloadImage task = new ASyncDownloadImage(url, imageView);
+			mTask.add(task);
+			task.execute(url);
+		} else {
+			imageView.setImageBitmap(bitmap);
+		}
+	}
+
 	public void loadImages(int start, int end) {
 		for (int i = start; i < end; i++) {
 			String url = imgUrls.get(i);
@@ -203,7 +214,7 @@ public class ImageLoaderWithCaches {
 			}
 			Bitmap bitmap = getBitmapFromMemoryCaches(url);
 			if (bitmap == null) {
-				ASyncDownloadImage task = new ASyncDownloadImage(url);
+				ASyncDownloadImage task = new ASyncDownloadImage(url, null);
 				mTask.add(task);
 				task.execute(url);
 			} else {
@@ -215,9 +226,11 @@ public class ImageLoaderWithCaches {
 
 	private class ASyncDownloadImage extends AsyncTask<String, Void, Bitmap> {
 		private String urlString;
+		private ImageView imageView;
 
-		public ASyncDownloadImage(String url) {
+		public ASyncDownloadImage(String url, ImageView imageView) {
 			this.urlString = url;
+			this.imageView = imageView;
 		}
 
 		@Override
@@ -271,7 +284,9 @@ public class ImageLoaderWithCaches {
 		@Override
 		protected void onPostExecute(Bitmap result) {
 			super.onPostExecute(result);
-			ImageView imageView = (ImageView) listView.findViewWithTag(urlString);
+			if (imageView == null) {
+				imageView = (ImageView) listView.findViewWithTag(urlString);
+			}
 			if (imageView != null && result != null) {
 				imageView.setImageBitmap(result);
 			}

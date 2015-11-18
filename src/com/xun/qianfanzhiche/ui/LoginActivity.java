@@ -32,6 +32,13 @@ import com.xun.qianfanzhiche.utils.ToastUtil;
 import com.xun.qianfanzhiche.view.ZhiCheActionBar;
 import com.xun.qianfanzhiche.view.ZhiCheActionBar.ActionBarListener;
 
+/**
+ * 注册登录页面
+ * 
+ * @author xunwang
+ * 
+ *         2015-11-18
+ */
 public class LoginActivity extends BaseActivity implements ActionBarListener {
 	// Constant
 	public static final int PASSWORD_MIN_LENGTH = 5;

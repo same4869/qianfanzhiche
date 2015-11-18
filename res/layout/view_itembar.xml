@@ -10,7 +10,6 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="16dp"
-        android:text="标题"
         android:textColor="#33bbff"
         android:textSize="20sp" />
 
@@ -21,7 +20,6 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="30dp"
-        android:text="内容"
         android:textColor="#777777"
         android:textSize="18sp" />
 

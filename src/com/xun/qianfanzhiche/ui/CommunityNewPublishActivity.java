@@ -33,10 +33,18 @@ import com.xun.qianfanzhiche.bean.CommunityItem;
 import com.xun.qianfanzhiche.bean.User;
 import com.xun.qianfanzhiche.utils.CacheUtil;
 import com.xun.qianfanzhiche.utils.LogUtil;
+import com.xun.qianfanzhiche.utils.ScreenUtil;
 import com.xun.qianfanzhiche.utils.ToastUtil;
 import com.xun.qianfanzhiche.view.ZhiCheActionBar;
 import com.xun.qianfanzhiche.view.ZhiCheActionBar.ActionBarListener;
 
+/**
+ * 发表新贴页面
+ * 
+ * @author xunwang
+ * 
+ *         2015-11-18
+ */
 public class CommunityNewPublishActivity extends BaseActivity implements ActionBarListener, OnClickListener {
 	private static final int REQUEST_CODE_ALBUM = 1;
 	private static final int REQUEST_CODE_CAMERA = 2;
@@ -49,6 +57,7 @@ public class CommunityNewPublishActivity extends BaseActivity implements ActionB
 	private String dateTime;
 	private Bitmap bmp = null;
 	private String targeturl = null;// 图片路径
+	private boolean isPublishing = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +79,7 @@ public class CommunityNewPublishActivity extends BaseActivity implements ActionB
 
 	// 发表纯文本内容,第一个参数为空，不然调下个函数
 	private void publish(String content, BmobFile figureFile) {
+		isPublishing = true;
 		User user = BmobUser.getCurrentUser(getApplicationContext(), User.class);
 
 		final CommunityItem communityItem = new CommunityItem();
@@ -85,18 +95,21 @@ public class CommunityNewPublishActivity extends BaseActivity implements ActionB
 			public void onSuccess() {
 				ToastUtil.show(CommunityNewPublishActivity.this, "发表成功！");
 				setResult(RESULT_OK);
+				isPublishing = false;
 				finish();
 			}
 
 			@Override
 			public void onFailure(int arg0, String arg1) {
-				ToastUtil.show(CommunityNewPublishActivity.this, "发表失败！yg" + arg1);
+				isPublishing = false;
+				ToastUtil.show(CommunityNewPublishActivity.this, "发表失败" + arg1);
 			}
 		});
 	}
 
 	// 发表图文内容
 	private void publishWithImg(final String content, String targeturl) {
+		isPublishing = true;
 		final BmobFile figureFile = new BmobFile(new File(targeturl));
 		figureFile.upload(getApplicationContext(), new UploadFileListener() {
 
@@ -109,6 +122,7 @@ public class CommunityNewPublishActivity extends BaseActivity implements ActionB
 			@Override
 			public void onFailure(int arg0, String arg1) {
 				LogUtil.d(LogUtil.TAG, "文件上传失败 --> " + arg1);
+				isPublishing = false;
 			}
 		});
 	}
@@ -120,6 +134,10 @@ public class CommunityNewPublishActivity extends BaseActivity implements ActionB
 
 	@Override
 	public void onAddImgClick() {
+		if (isPublishing) {
+			ToastUtil.show(getApplicationContext(), "正在发布中。。。");
+			return;
+		}
 		String commitContent = communityEt.getText().toString().trim();
 		if (TextUtils.isEmpty(commitContent)) {
 			ToastUtil.show(getApplicationContext(), "内容不能为空");
@@ -244,7 +262,8 @@ public class CommunityNewPublishActivity extends BaseActivity implements ActionB
 				String files = CacheUtil.getCacheDirectory(getApplicationContext(), true, "pic") + dateTime;
 				File file = new File(files);
 				if (file.exists()) {
-					Bitmap bitmap = compressImageFromFile(files, 480, 800);
+					LogUtil.d(LogUtil.TAG, "ScreenUtil.getDensity(this) --> " + ScreenUtil.getDensity(this));
+					Bitmap bitmap = compressImageFromFile(files, 720 * ScreenUtil.getDensity(this), 900 * ScreenUtil.getDensity(this));
 					targeturl = saveToSdCard(bitmap);
 					selectedImg.setImageBitmap(bitmap);
 				} else {
@@ -258,6 +277,6 @@ public class CommunityNewPublishActivity extends BaseActivity implements ActionB
 	@Override
 	public void onTextTvClick() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

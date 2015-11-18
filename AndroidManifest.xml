@@ -44,6 +44,8 @@
         </activity>
         <activity android:name=".ui.LoginActivity" >
         </activity>
+        <activity android:name=".ui.CommunityDetailActivity" >
+        </activity>
     </application>
 
 </manifest>

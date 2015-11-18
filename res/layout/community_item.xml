@@ -4,10 +4,10 @@
     android:layout_height="match_parent"
     android:background="#55777777"
     android:orientation="vertical"
-    android:paddingBottom="5dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="5dp" >
+    android:paddingBottom="3dp"
+    android:paddingLeft="6dp"
+    android:paddingRight="6dp"
+    android:paddingTop="3dp" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
             android:src="@drawable/ic_launcher" />
 
@@ -34,8 +34,8 @@
             android:layout_marginTop="8dp"
             android:layout_toRightOf="@+id/item_avater"
             android:text="名字"
-            android:textColor="#995243"
-            android:textSize="19sp" />
+            android:textColor="#111111"
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/item_time"
@@ -46,16 +46,18 @@
             android:layout_marginTop="3dp"
             android:layout_toRightOf="@+id/item_avater"
             android:text="2015-5-3 18:18:18"
-            android:textColor="#995243"
-            android:textSize="19sp" />
+            android:textColor="#777777"
+            android:textSize="15sp" />
 
         <ImageView
             android:id="@+id/item_img"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/item_avater"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
-            android:scaleType="centerCrop"
+            android:maxHeight="400dp"
+            android:scaleType="center"
             android:src="@drawable/bg" />
 
         <TextView
@@ -64,10 +66,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/item_img"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:text="内容内容内容内容内容内容"
-            android:textColor="#999999"
+            android:textColor="#111111"
             android:textSize="19sp" />
     </RelativeLayout>
 

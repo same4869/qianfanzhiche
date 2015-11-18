@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.adapter.HomePagerAdapter;
-import com.xun.qianfanzhiche.anim.ZoomOutPageTransformer;
+import com.xun.qianfanzhiche.anim.DepthPageTransformer;
 import com.xun.qianfanzhiche.app.ZhiCheApp;
 import com.xun.qianfanzhiche.base.BaseFragmentActivity;
 import com.xun.qianfanzhiche.fragment.CommunityFragment;
@@ -143,7 +143,7 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 				tabViews.get(i).get("selected").setAlpha(0f);
 			}
 		}
-		viewPager.setCurrentItem(index, false);// false表示 代码切换 pager 的时候不带scroll动画
+		viewPager.setCurrentItem(index, true);// false表示 代码切换 pager 的时候不带scroll动画
 	}
 
 	@Override
@@ -180,7 +180,7 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 			public void onPageScrollStateChanged(int paramInt) {
 			}
 		});
-		viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+		viewPager.setPageTransformer(true, new DepthPageTransformer());
 	}
 
 	@Override
