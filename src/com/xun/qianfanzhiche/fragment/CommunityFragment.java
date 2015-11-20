@@ -52,7 +52,7 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 	private ImageLoaderWithCaches mImageLoader;
 	private int start, end;
 	private boolean mFirstFlag = true;
-
+	
 	private float mFirstY, mCurrentY;
 	private int direction;
 	private boolean mShow;
@@ -64,13 +64,14 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_community, container, false);
 		loadData();
+		
 		swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.community_swipe);
 		swipeView.setOnRefreshListener(this);
 		swipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_red_light, android.R.color.holo_green_light,
 				android.R.color.holo_orange_light);
 		mListView = (ListView) rootView.findViewById(R.id.community_list);
 		mImageLoader = new ImageLoaderWithCaches(getContext(), mListView, imgUrls);
-		communityListAdapter = new CommunityListAdapter(getContext(), mImageLoader);
+		communityListAdapter = new CommunityListAdapter(getContext(), data, mImageLoader);
 		myScrollListener = new MyScrollListener();
 		mListView.setAdapter(communityListAdapter);
 		touchTopView = (View) rootView.findViewById(R.id.community_touch_top);
@@ -178,7 +179,7 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 		query.findObjects(getContext(), new FindListener<CommunityItem>() {
 			@Override
 			public void onSuccess(List<CommunityItem> object) {
-				// LogUtil.d(LogUtil.TAG, "onSuccess object size--> " + object.size());
+				LogUtil.d(LogUtil.TAG, "onSuccess object size--> " + object.size());
 				data = object;
 				Collections.reverse(data);
 				putImgData(data);

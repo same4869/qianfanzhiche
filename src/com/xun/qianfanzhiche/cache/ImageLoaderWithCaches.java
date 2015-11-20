@@ -80,7 +80,7 @@ public class ImageLoaderWithCaches {
 	public void showImage(String url, ImageView imageView) {
 		Bitmap bitmap = getBitmapFromMemoryCaches(url);
 		if (bitmap == null) {
-			imageView.setImageResource(R.drawable.ic_launcher);
+			imageView.setImageResource(R.drawable.bg_pic_loading);
 		} else {
 			imageView.setImageBitmap(bitmap);
 		}
@@ -261,7 +261,7 @@ public class ImageLoaderWithCaches {
 				}
 				Bitmap bitmap = null;
 				if (fileDescriptor != null) {
-					bitmap = decodeSuitableBitmap(fileDescriptor, null, 250, 250);
+					bitmap = decodeSuitableBitmap(fileDescriptor, null, 800, 800);
 				}
 				if (bitmap != null) {
 					addBitmapToMemoryCaches(arg0[0], bitmap);

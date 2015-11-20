@@ -36,7 +36,6 @@ import com.xun.qianfanzhiche.utils.LogUtil;
 import com.xun.qianfanzhiche.utils.ScreenUtil;
 import com.xun.qianfanzhiche.utils.ToastUtil;
 import com.xun.qianfanzhiche.view.ZhiCheActionBar;
-import com.xun.qianfanzhiche.view.ZhiCheActionBar.ActionBarListener;
 
 /**
  * 发表新贴页面
@@ -45,7 +44,7 @@ import com.xun.qianfanzhiche.view.ZhiCheActionBar.ActionBarListener;
  * 
  *         2015-11-18
  */
-public class CommunityNewPublishActivity extends BaseActivity implements ActionBarListener, OnClickListener {
+public class CommunityNewPublishActivity extends BaseActivity implements OnClickListener {
 	private static final int REQUEST_CODE_ALBUM = 1;
 	private static final int REQUEST_CODE_CAMERA = 2;
 
@@ -128,11 +127,6 @@ public class CommunityNewPublishActivity extends BaseActivity implements ActionB
 	}
 
 	@Override
-	public void onBackImgClick() {
-		finish();
-	}
-
-	@Override
 	public void onAddImgClick() {
 		if (isPublishing) {
 			ToastUtil.show(getApplicationContext(), "正在发布中。。。");
@@ -208,7 +202,7 @@ public class CommunityNewPublishActivity extends BaseActivity implements ActionB
 		return file.getAbsolutePath();
 	}
 
-	private Bitmap compressImageFromFile(String srcPath, float width, float height) {
+	private Bitmap compressImageFromFile(String srcPath) {
 		BitmapFactory.Options newOpts = new BitmapFactory.Options();
 		newOpts.inJustDecodeBounds = true;// 只读边,不读内容
 		Bitmap bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
@@ -216,8 +210,8 @@ public class CommunityNewPublishActivity extends BaseActivity implements ActionB
 		newOpts.inJustDecodeBounds = false;
 		int w = newOpts.outWidth;
 		int h = newOpts.outHeight;
-		float hh = height;//
-		float ww = width;//
+		float hh = 800;//
+		float ww = 800;//
 		int be = 1;
 		if (w > h && w > ww) {
 			be = (int) (newOpts.outWidth / ww);
@@ -263,7 +257,7 @@ public class CommunityNewPublishActivity extends BaseActivity implements ActionB
 				File file = new File(files);
 				if (file.exists()) {
 					LogUtil.d(LogUtil.TAG, "ScreenUtil.getDensity(this) --> " + ScreenUtil.getDensity(this));
-					Bitmap bitmap = compressImageFromFile(files, 720 * ScreenUtil.getDensity(this), 900 * ScreenUtil.getDensity(this));
+					Bitmap bitmap = compressImageFromFile(files);
 					targeturl = saveToSdCard(bitmap);
 					selectedImg.setImageBitmap(bitmap);
 				} else {
@@ -274,9 +268,4 @@ public class CommunityNewPublishActivity extends BaseActivity implements ActionB
 		}
 	}
 
-	@Override
-	public void onTextTvClick() {
-		// TODO Auto-generated method stub
-
-	}
 }

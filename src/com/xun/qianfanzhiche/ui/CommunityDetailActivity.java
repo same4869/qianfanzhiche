@@ -34,10 +34,9 @@ import com.xun.qianfanzhiche.bean.CommunityItem;
 import com.xun.qianfanzhiche.bean.User;
 import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
 import com.xun.qianfanzhiche.common.Constant;
+import com.xun.qianfanzhiche.utils.BmobUtil;
 import com.xun.qianfanzhiche.utils.LogUtil;
 import com.xun.qianfanzhiche.utils.ToastUtil;
-import com.xun.qianfanzhiche.view.ZhiCheActionBar;
-import com.xun.qianfanzhiche.view.ZhiCheActionBar.ActionBarListener;
 
 /**
  * 帖子详情评论页
@@ -46,8 +45,7 @@ import com.xun.qianfanzhiche.view.ZhiCheActionBar.ActionBarListener;
  * 
  *         2015-11-18
  */
-public class CommunityDetailActivity extends BaseActivity implements ActionBarListener, OnClickListener {
-	private ZhiCheActionBar zhiCheActionBar;
+public class CommunityDetailActivity extends BaseActivity implements OnClickListener {
 	private ListView commentList;
 	private TextView footer;
 	private EditText commentContent;
@@ -55,6 +53,8 @@ public class CommunityDetailActivity extends BaseActivity implements ActionBarLi
 	private TextView userName;
 	private TextView commentItemContent;
 	private ImageView commentItemImage;
+	private TextView timeTv;
+	private TextView userLevelTv;
 	private ImageView userLogo;
 
 	private CommunityItem communityItem;
@@ -78,10 +78,12 @@ public class CommunityDetailActivity extends BaseActivity implements ActionBarLi
 		Intent intent = getIntent();
 		communityItem = (CommunityItem) intent.getSerializableExtra("data");
 		userName.setText(communityItem.getAuthor().getUsername());
+		timeTv.setText(communityItem.getCreatedAt());
 		commentItemContent.setText(communityItem.getContent());
 		if (communityItem.getImage() != null) {
 			imageLoaderWithCaches.loadImagesWithUrl(commentItemImage, communityItem.getImage().getFileUrl(getApplicationContext()));
 		}
+		BmobUtil.queryCountForUserLevel(getApplicationContext(), userLevelTv, communityItem.getAuthor().getObjectId());
 		// data.getImage().loadImage(getApplicationContext(), commentItemImage);
 		commentAdapter = new CommentAdapter(getApplicationContext(), comments);
 		commentList.setAdapter(commentAdapter);
@@ -90,11 +92,11 @@ public class CommunityDetailActivity extends BaseActivity implements ActionBarLi
 	}
 
 	private void initView() {
-		zhiCheActionBar = (ZhiCheActionBar) findViewById(R.id.actionbar);
-		zhiCheActionBar.setTitle("帖子详情");
-		zhiCheActionBar.setOnActionBarListener(this);
+		setActionBarTitle("帖子详情");
 		commentList = (ListView) findViewById(R.id.comment_list);
 		footer = (TextView) findViewById(R.id.loadmore);
+		timeTv = (TextView) findViewById(R.id.item_time);
+		userLevelTv = (TextView) findViewById(R.id.item_user_level);
 
 		commentContent = (EditText) findViewById(R.id.comment_content);
 		commentCommit = (Button) findViewById(R.id.comment_commit);
@@ -103,26 +105,10 @@ public class CommunityDetailActivity extends BaseActivity implements ActionBarLi
 		userName = (TextView) findViewById(R.id.item_name);
 		commentItemContent = (TextView) findViewById(R.id.item_content);
 		commentItemImage = (ImageView) findViewById(R.id.item_img);
-		commentItemImage.setScaleType(ScaleType.FIT_CENTER);
+		commentItemImage.setScaleType(ScaleType.CENTER_INSIDE);
 
 		userLogo = (ImageView) findViewById(R.id.item_avater);
 		setListViewHeightBasedOnChildren(commentList);
-	}
-
-	@Override
-	public void onBackImgClick() {
-		finish();
-	}
-
-	@Override
-	public void onAddImgClick() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onTextTvClick() {
-		// TODO Auto-generated method stub
 
 	}
 

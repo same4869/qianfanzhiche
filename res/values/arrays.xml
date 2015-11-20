@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="user_level">
+        <item>人在旅途</item>
+        <item>白衣秀士</item>
+        <item>赏茶闲客</item>
+        <item>试剑江湖</item>
+        <item>人海孤鸿</item>
+        <item>草莽豪杰</item>
+        <item>武林新贵</item>
+        <item>逍遥游侠</item>
+        <item>风云使者</item>
+        <item>寂寞高手</item>
+        <item>惊鸿侠影</item>
+        <item>闻弦雅士</item>
+        <item>一代宗师</item>
+        <item>茶馆传奇</item>
+        <item>相忘江湖</item>
+    </string-array>
+
+</resources>

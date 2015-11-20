@@ -17,15 +17,18 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
+import cn.bmob.v3.BmobUser;
 
 import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.adapter.HomePagerAdapter;
 import com.xun.qianfanzhiche.anim.DepthPageTransformer;
 import com.xun.qianfanzhiche.app.ZhiCheApp;
 import com.xun.qianfanzhiche.base.BaseFragmentActivity;
+import com.xun.qianfanzhiche.bean.User;
 import com.xun.qianfanzhiche.fragment.CommunityFragment;
 import com.xun.qianfanzhiche.fragment.MainFragment;
 import com.xun.qianfanzhiche.fragment.UserFragment;
+import com.xun.qianfanzhiche.utils.ToastUtil;
 import com.xun.qianfanzhiche.view.ZhiCheActionBar;
 import com.xun.qianfanzhiche.view.ZhiCheActionBar.ActionBarListener;
 
@@ -191,8 +194,15 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 
 	@Override
 	public void onAddImgClick() {
-		Intent intent = new Intent(this, CommunityNewPublishActivity.class);
-		startActivity(intent);
+		User user = BmobUser.getCurrentUser(this, User.class);
+		if (user != null) {
+			Intent intent = new Intent(this, CommunityNewPublishActivity.class);
+			startActivity(intent);
+		} else {
+			Intent intent = new Intent(this, LoginActivity.class);
+			startActivity(intent);
+			ToastUtil.show(getApplicationContext(), "未登录");
+		}
 	}
 
 	@Override

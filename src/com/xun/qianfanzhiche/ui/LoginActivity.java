@@ -30,7 +30,6 @@ import com.xun.qianfanzhiche.utils.ScreenUtil;
 import com.xun.qianfanzhiche.utils.StringUtil;
 import com.xun.qianfanzhiche.utils.ToastUtil;
 import com.xun.qianfanzhiche.view.ZhiCheActionBar;
-import com.xun.qianfanzhiche.view.ZhiCheActionBar.ActionBarListener;
 
 /**
  * 注册登录页面
@@ -39,7 +38,7 @@ import com.xun.qianfanzhiche.view.ZhiCheActionBar.ActionBarListener;
  * 
  *         2015-11-18
  */
-public class LoginActivity extends BaseActivity implements ActionBarListener {
+public class LoginActivity extends BaseActivity {
 	// Constant
 	public static final int PASSWORD_MIN_LENGTH = 5;
 	public static final int LOGIN_SUCCESS = 0; // 登录成功
@@ -431,16 +430,6 @@ public class LoginActivity extends BaseActivity implements ActionBarListener {
 		super.onDestroy();
 	}
 
-	@Override
-	public void onBackImgClick() {
-		finish();
-	}
-
-	@Override
-	public void onAddImgClick() {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public void onTextTvClick() {

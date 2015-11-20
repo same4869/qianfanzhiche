@@ -4,17 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <com.xun.qianfanzhiche.view.ZhiCheActionBar
-        android:id="@+id/actionbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </com.xun.qianfanzhiche.view.ZhiCheActionBar>
-
     <EditText
         android:id="@+id/edit_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/actionbar"
         android:layout_margin="16dp"
         android:background="@drawable/selector_edittext"
         android:gravity="left|top"

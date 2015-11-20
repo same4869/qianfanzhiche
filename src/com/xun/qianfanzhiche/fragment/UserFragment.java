@@ -15,6 +15,7 @@ import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.base.BaseFragment;
 import com.xun.qianfanzhiche.bean.User;
 import com.xun.qianfanzhiche.ui.LoginActivity;
+import com.xun.qianfanzhiche.ui.UserHelperActivity;
 import com.xun.qianfanzhiche.utils.ToastUtil;
 import com.xun.qianfanzhiche.view.ItemBar;
 
@@ -28,7 +29,7 @@ import com.xun.qianfanzhiche.view.ItemBar;
 public class UserFragment extends BaseFragment implements OnClickListener {
 	private ImageView avaterImg;
 	private TextView avaterText;
-	private ItemBar sexItemBar, changePasswordItemBar, changeUserItemBar, logoutItemBar;
+	private ItemBar sexItemBar, changePasswordItemBar, changeUserItemBar, logoutItemBar, userHelperItemBar;
 
 	private boolean isLogin = false;
 
@@ -49,6 +50,9 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		logoutItemBar = (ItemBar) root.findViewById(R.id.logout);
 		logoutItemBar.setItemBarTitle("登出");
 		logoutItemBar.setOnClickListener(this);
+		userHelperItemBar = (ItemBar) root.findViewById(R.id.user_helper);
+		userHelperItemBar.setOnClickListener(this);
+		userHelperItemBar.setItemBarTitle("帮助中心");
 		loadData();
 		return root;
 	}
@@ -80,6 +84,10 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 			break;
 		case R.id.change_user:
 
+			break;
+		case R.id.user_helper:
+			Intent userHelperIntent = new Intent(getActivity(), UserHelperActivity.class);
+			startActivity(userHelperIntent);
 			break;
 		case R.id.logout:
 			if (isLogin) {
