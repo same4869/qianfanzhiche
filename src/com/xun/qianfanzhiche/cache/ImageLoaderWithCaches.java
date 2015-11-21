@@ -77,10 +77,14 @@ public class ImageLoaderWithCaches {
 		this.imgUrls = imgUrls;
 	}
 
-	public void showImage(String url, ImageView imageView) {
+	public void showImage(String url, ImageView imageView, int defaultImg) {
+		if (url == null) {
+			imageView.setImageResource(defaultImg);
+			return;
+		}
 		Bitmap bitmap = getBitmapFromMemoryCaches(url);
 		if (bitmap == null) {
-			imageView.setImageResource(R.drawable.bg_pic_loading);
+			imageView.setImageResource(defaultImg);
 		} else {
 			imageView.setImageBitmap(bitmap);
 		}

@@ -5,6 +5,7 @@ import java.util.List;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.bean.CommunityItem;
 import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
+import com.xun.qianfanzhiche.manager.ShareManger;
 import com.xun.qianfanzhiche.utils.BmobUtil;
 
 public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
@@ -35,7 +37,7 @@ public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
 	}
 
 	@Override
-	public View getConvertView(int position, View convertView, ViewGroup parent) {
+	public View getConvertView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder viewHolder = null;
 		if (convertView == null) {
 			viewHolder = new ViewHolder();
@@ -61,12 +63,27 @@ public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
 		if (data.get(position).getImage() != null) {
 			viewHolder.itemImg.setVisibility(View.VISIBLE);
 			viewHolder.itemImg.setTag(data.get(position).getImage().getFileUrl(mContext));
-			mImageLoader.showImage(data.get(position).getImage().getFileUrl(mContext), viewHolder.itemImg);
+			mImageLoader.showImage(data.get(position).getImage().getFileUrl(mContext), viewHolder.itemImg,
+					R.drawable.bg_pic_loading);
 		} else {
 			viewHolder.itemImg.setVisibility(View.GONE);
 		}
+		String avatarUrl = null;
+		if (data.get(position).getAuthor() != null && data.get(position).getAuthor().getAvatar() != null) {
+			avatarUrl = data.get(position).getAuthor().getAvatar().getFileUrl(mContext);
+		}
+		mImageLoader.showImage(avatarUrl, viewHolder.itemAvater, R.drawable.defalut_avater);
 		viewHolder.itemTime.setText(data.get(position).getCreatedAt());
-		BmobUtil.queryCountForUserLevel(mContext, viewHolder.itemUserLeavel, data.get(position).getAuthor().getObjectId());
+		BmobUtil.queryCountForUserLevel(mContext, viewHolder.itemUserLeavel, data.get(position).getAuthor()
+				.getObjectId());
+
+		viewHolder.itemShare.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				ShareManger.getInstance().showShare(mContext, data.get(position).getImage().getFileUrl(mContext));
+			}
+		});
 
 		return convertView;
 	}
