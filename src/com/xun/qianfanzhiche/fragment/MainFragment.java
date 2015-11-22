@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.base.BaseFragment;
+import com.xun.qianfanzhiche.ui.CommonWebActivity;
 import com.xun.qianfanzhiche.ui.LoginActivity;
 
 public class MainFragment extends BaseFragment {
@@ -23,7 +24,7 @@ public class MainFragment extends BaseFragment {
 
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(getContext(), LoginActivity.class);
+				Intent intent = new Intent(getContext(), CommonWebActivity.class);
 				startActivity(intent);
 			}
 		});

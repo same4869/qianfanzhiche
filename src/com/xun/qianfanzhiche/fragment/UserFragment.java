@@ -14,6 +14,7 @@ import cn.bmob.v3.BmobUser;
 import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.base.BaseFragment;
 import com.xun.qianfanzhiche.bean.User;
+import com.xun.qianfanzhiche.ui.CarShowGirlActivity;
 import com.xun.qianfanzhiche.ui.LoginActivity;
 import com.xun.qianfanzhiche.ui.UserHelperActivity;
 import com.xun.qianfanzhiche.utils.ToastUtil;
@@ -29,7 +30,8 @@ import com.xun.qianfanzhiche.view.ItemBar;
 public class UserFragment extends BaseFragment implements OnClickListener {
 	private ImageView avaterImg;
 	private TextView avaterText;
-	private ItemBar sexItemBar, changePasswordItemBar, changeUserItemBar, logoutItemBar, userHelperItemBar;
+	private ItemBar sexItemBar, changePasswordItemBar, changeUserItemBar, logoutItemBar, userHelperItemBar,
+			carShowGirlItemBar;
 
 	private boolean isLogin = false;
 
@@ -53,6 +55,9 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		userHelperItemBar = (ItemBar) root.findViewById(R.id.user_helper);
 		userHelperItemBar.setOnClickListener(this);
 		userHelperItemBar.setItemBarTitle("帮助中心");
+		carShowGirlItemBar = (ItemBar) root.findViewById(R.id.car_show_girl);
+		carShowGirlItemBar.setOnClickListener(this);
+		carShowGirlItemBar.setItemBarTitle("汽车车模");
 		loadData();
 		return root;
 	}
@@ -88,6 +93,10 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		case R.id.user_helper:
 			Intent userHelperIntent = new Intent(getActivity(), UserHelperActivity.class);
 			startActivity(userHelperIntent);
+			break;
+		case R.id.car_show_girl:
+			Intent showGirlIntent = new Intent(getActivity(), CarShowGirlActivity.class);
+			startActivity(showGirlIntent);
 			break;
 		case R.id.logout:
 			if (isLogin) {

@@ -53,6 +53,12 @@
     </com.xun.qianfanzhiche.view.ItemBar>
 
     <com.xun.qianfanzhiche.view.ItemBar
+        android:id="@+id/car_show_girl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </com.xun.qianfanzhiche.view.ItemBar>
+
+    <com.xun.qianfanzhiche.view.ItemBar
         android:id="@+id/user_helper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
