@@ -63,8 +63,7 @@ public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
 		if (data.get(position).getImage() != null) {
 			viewHolder.itemImg.setVisibility(View.VISIBLE);
 			viewHolder.itemImg.setTag(data.get(position).getImage().getFileUrl(mContext));
-			mImageLoader.showImage(data.get(position).getImage().getFileUrl(mContext), viewHolder.itemImg,
-					R.drawable.bg_pic_loading);
+			mImageLoader.showImage(data.get(position).getImage().getFileUrl(mContext), viewHolder.itemImg, R.drawable.bg_pic_loading);
 		} else {
 			viewHolder.itemImg.setVisibility(View.GONE);
 		}
@@ -74,8 +73,7 @@ public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
 		}
 		mImageLoader.showImage(avatarUrl, viewHolder.itemAvater, R.drawable.defalut_avater);
 		viewHolder.itemTime.setText(data.get(position).getCreatedAt());
-		BmobUtil.queryCountForUserLevel(mContext, viewHolder.itemUserLeavel, data.get(position).getAuthor()
-				.getObjectId());
+		BmobUtil.queryCountForUserLevel(mContext, viewHolder.itemUserLeavel, data.get(position).getAuthor().getObjectId());
 
 		viewHolder.itemShare.setOnClickListener(new OnClickListener() {
 
