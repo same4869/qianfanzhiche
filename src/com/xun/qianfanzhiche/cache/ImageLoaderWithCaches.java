@@ -24,19 +24,17 @@ import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v4.util.LruCache;
+import android.widget.AbsListView;
 import android.widget.ImageView;
-import android.widget.ListView;
-
-import com.xun.qianfanzhiche.R;
 
 public class ImageLoaderWithCaches {
-	private ListView listView;
+	private AbsListView listView;
 	private LruCache<String, Bitmap> mMemoryCaches;
 	private Set<ASyncDownloadImage> mTask;
 	private DiskLruCache mDiskCaches;
 	private List<String> imgUrls;
 
-	public ImageLoaderWithCaches(Context context, ListView listView, List<String> imgUrls) {
+	public ImageLoaderWithCaches(Context context, AbsListView listView, List<String> imgUrls) {
 		this.listView = listView;
 		this.imgUrls = imgUrls;
 		mTask = new HashSet<ImageLoaderWithCaches.ASyncDownloadImage>();

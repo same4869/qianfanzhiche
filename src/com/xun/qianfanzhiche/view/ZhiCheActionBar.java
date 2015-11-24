@@ -56,7 +56,7 @@ public class ZhiCheActionBar extends FrameLayout {
 			}
 		});
 		textTv.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				if (actionBarListener != null) {
@@ -64,6 +64,10 @@ public class ZhiCheActionBar extends FrameLayout {
 				}
 			}
 		});
+	}
+
+	public ImageView getBackImg() {
+		return backImg;
 	}
 
 	public void setOnActionBarListener(ActionBarListener actionBarListener) {

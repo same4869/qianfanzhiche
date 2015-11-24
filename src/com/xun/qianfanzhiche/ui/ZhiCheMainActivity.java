@@ -8,15 +8,18 @@ import java.util.Map;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 import cn.bmob.v3.BmobUser;
 
 import com.xun.qianfanzhiche.R;
@@ -43,11 +46,12 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 
 	private ViewPager viewPager;
 	public TabHost tabHost;
-	private MainFragment mainFragment, mainFragment2, mainFragment3;
+	private MainFragment mainFragment, mainFragment2;
 	private ZhiCheActionBar zhiCheActionBar;
 
 	private List<Map<String, View>> tabViews = new ArrayList<Map<String, View>>();
 	private List<Fragment> fragments = new ArrayList<Fragment>();
+	private Boolean is2CallBack = false;// 是否双击退出
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,14 +70,16 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 		tabHost = (TabHost) findViewById(android.R.id.tabhost);
 		zhiCheActionBar = (ZhiCheActionBar) findViewById(R.id.actionbar);
 		zhiCheActionBar.setOnActionBarListener(this);
+		zhiCheActionBar.getBackImg().setVisibility(View.GONE);
+		zhiCheActionBar.setTitle("汽车品牌");
 	}
 
 	private void initTabHost() {
 		tabHost.setup();
-		tabHost.addTab(tabHost.newTabSpec("0").setIndicator(createTab("主页", 0)).setContent(android.R.id.tabcontent));
-		tabHost.addTab(tabHost.newTabSpec("1").setIndicator(createTab("统计", 1)).setContent(android.R.id.tabcontent));
-		tabHost.addTab(tabHost.newTabSpec("2").setIndicator(createTab("消息", 2)).setContent(android.R.id.tabcontent));
-		tabHost.addTab(tabHost.newTabSpec("3").setIndicator(createTab("设置", 3)).setContent(android.R.id.tabcontent));
+		tabHost.addTab(tabHost.newTabSpec("0").setIndicator(createTab("品牌", 0)).setContent(android.R.id.tabcontent));
+		tabHost.addTab(tabHost.newTabSpec("1").setIndicator(createTab("社区", 1)).setContent(android.R.id.tabcontent));
+		tabHost.addTab(tabHost.newTabSpec("2").setIndicator(createTab("待定", 2)).setContent(android.R.id.tabcontent));
+		tabHost.addTab(tabHost.newTabSpec("3").setIndicator(createTab("个人", 3)).setContent(android.R.id.tabcontent));
 		tabHost.setOnTabChangedListener(new OnTabChangeListener() {
 			@Override
 			public void onTabChanged(String tabId) {
@@ -173,6 +179,22 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 			@Override
 			public void onPageSelected(int position) {
 				tabHost.setCurrentTab(position);
+				switch (position) {
+				case 0:
+					zhiCheActionBar.setTitle("汽车品牌");
+					break;
+				case 1:
+					zhiCheActionBar.setTitle("知车社区");
+					break;
+				case 2:
+					zhiCheActionBar.setTitle("待定");
+					break;
+				case 3:
+					zhiCheActionBar.setTitle("个人中心");
+					break;
+				default:
+					break;
+				}
 			}
 
 			@Override
@@ -209,6 +231,27 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 	public void onTextTvClick() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (!is2CallBack) {
+				is2CallBack = true;
+				Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+				new Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						is2CallBack = false;
+					}
+				}, 2500);
+
+			} else {
+				android.os.Process.killProcess(android.os.Process.myPid());
+			}
+		}
+		return true;
 	}
 
 }

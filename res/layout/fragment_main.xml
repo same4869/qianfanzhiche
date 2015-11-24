@@ -2,29 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:orientation="vertical" >
+    android:background="#eeeeee"
+    android:orientation="vertical"
+    android:padding="3dp" >
 
-    <SeekBar
-        android:id="@+id/seekBar1"
+    <GridView
+        android:id="@+id/car_gridview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <RatingBar
-        android:id="@+id/ratingBar1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <ImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginLeft="20dp"
-        android:background="@drawable/testshape" />
-
-    <Button
-        android:id="@+id/sign_up_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="注册" />
+        android:layout_height="match_parent"
+        android:numColumns="2" >
+    </GridView>
 
 </LinearLayout>

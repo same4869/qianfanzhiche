@@ -18,5 +18,73 @@
         <item>茶馆传奇</item>
         <item>相忘江湖</item>
     </string-array>
+    <!-- 这个key是在汽车之家的index，也是七牛的命名后缀，下面相关的顺序都不能随意改 -->
+    <string-array name="car_grid_key">
+        <item>1</item>
+        <item>3</item>
+        <item>8</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>25</item>
+        <item>33</item>
+        <item>36</item>
+        <item>38</item>
+        <item>58</item>
+        <item>62</item>
+        <item>63</item>
+        <item>71</item>
+        <item>75</item>
+        <item>76</item>
+        <item>77</item>
+        <item>84</item>
+        <item>40</item>
+    </string-array>
+    <string-array name="car_grid_name">
+        <item>大众</item>
+        <item>丰田</item>
+        <item>福特</item>
+        <item>现代</item>
+        <item>标致</item>
+        <item>本田</item>
+        <item>宝马</item>
+        <item>吉利</item>
+        <item>奥迪</item>
+        <item>奔驰</item>
+        <item>别克</item>
+        <item>马自达</item>
+        <item>起亚</item>
+        <item>日产</item>
+        <item>雪佛兰</item>
+        <item>比亚迪</item>
+        <item>长安</item>
+        <item>长城</item>
+        <item>江淮</item>
+        <item>保时捷</item>
+    </string-array>
+    <!-- 这个key是在百度百科的index -->
+    <string-array name="car_grid_baike_key">
+        <item>63293</item>
+        <item>19530</item>
+        <item>26979</item>
+        <item>83827</item>
+        <item>29751</item>
+        <item>23292</item>
+        <item>2450</item>
+        <item>726716</item>
+        <item>13873</item>
+        <item>5345033</item>
+        <item>29774</item>
+        <item>19411</item>
+        <item>94157</item>
+        <item>29841</item>
+        <item>79198</item>
+        <item>897170</item>
+        <item>2480529</item>
+        <item>4396</item>
+        <item>672538</item>
+        <item>5523</item>
+    </string-array>
 
 </resources>
