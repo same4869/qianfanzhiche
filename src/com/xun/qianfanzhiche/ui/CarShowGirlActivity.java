@@ -30,7 +30,7 @@ public class CarShowGirlActivity extends BaseActivity {
 		setContentView(R.layout.activity_car_show_girl);
 
 		mImg = (ImageView) findViewById(R.id.id_content);
-		mDatas = getQiNiuImgData(15);
+		mDatas = getQiNiuImgData(36);
 
 		mRecyclerView = (MyRecyclerView) findViewById(R.id.id_recyclerview_horizontal);
 		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);

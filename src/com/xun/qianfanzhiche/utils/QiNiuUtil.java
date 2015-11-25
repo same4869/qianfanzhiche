@@ -20,7 +20,11 @@ public class QiNiuUtil {
 		for (int i = 0; i < carGridKeyList.length; i++) {
 			CarGridBean carGridBean = new CarGridBean();
 			carGridBean.setCarName(carGridNameList[i]);
-			carGridBean.setCarUrl(Constant.QINIU_IMG_BASE_URL + "chebiao-" + carGridKeyList[i] + ".jpg");
+			String[] strings = carGridKeyList[i].split("-");
+			carGridBean.setCarUrl(Constant.QINIU_IMG_BASE_URL + "chebiao-" + strings[0] + ".jpg");
+			if (strings.length >= 2) {
+				carGridBean.setCarCategory(strings[1]);
+			}
 			carGridBean.setCarDetailUrl(Constant.BAIDU_BAIKE_BASE_URL + carGridBaikeKeyList[i] + ".html");
 			carGridList.add(carGridBean);
 		}

@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#eeeeee"
-    android:orientation="vertical"
-    android:padding="3dp" >
+    android:background="#eeeeee" >
 
     <GridView
         android:id="@+id/car_gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="2" >
+        android:numColumns="2"
+        android:padding="3dp" >
     </GridView>
 
-</LinearLayout>
+    <View
+        android:id="@+id/car_gridview_cover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#55000000"
+        android:visibility="gone" />
+
+    <com.xun.qianfanzhiche.view.PathComposerLayout
+        android:id="@+id/car_gridview_path"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp" >
+    </com.xun.qianfanzhiche.view.PathComposerLayout>
+
+</RelativeLayout>

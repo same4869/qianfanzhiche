@@ -1,5 +1,6 @@
 package com.xun.qianfanzhiche.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -21,6 +22,7 @@ import com.xun.qianfanzhiche.ui.CommonWebActivity;
 public class CarGridAdapter extends BaseContentAdapter<CarGridBean> {
 	private Context context;
 	private ImageLoaderWithCaches mImageLoader;
+	private List<String> carKey = new ArrayList<String>();
 
 	private String[] carGridKeyList;
 
@@ -30,6 +32,16 @@ public class CarGridAdapter extends BaseContentAdapter<CarGridBean> {
 		this.context = context;
 		Resources res = context.getResources();
 		carGridKeyList = res.getStringArray(R.array.car_grid_key);
+		for (int i = 0; i < carGridKeyList.length; i++) {
+			carKey.add(carGridKeyList[i]);
+		}
+	}
+
+	public void setDataChange(List<CarGridBean> list, ImageLoaderWithCaches mImageLoader, List<String> carKey) {
+		setDataList(list);
+		this.mImageLoader = mImageLoader;
+		this.carKey = carKey;
+		notifyDataSetChanged();
 	}
 
 	@Override
@@ -54,7 +66,7 @@ public class CarGridAdapter extends BaseContentAdapter<CarGridBean> {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(context, CommonWebActivity.class);
-				String url = Constant.AUTO_HOME_BASE_URL + carGridKeyList[position] + Constant.AUTO_HOME_BASE_URL_SUFFIX;
+				String url = Constant.AUTO_HOME_BASE_URL + carKey.get(position) + Constant.AUTO_HOME_BASE_URL_SUFFIX;
 				intent.putExtra(MainFragment.CAR_GRID_URL_KEY, url);
 				context.startActivity(intent);
 			}

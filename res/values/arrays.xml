@@ -42,26 +42,26 @@
         <item>40</item>
     </string-array>
     <string-array name="car_grid_name">
-        <item>大众</item>
-        <item>丰田</item>
-        <item>福特</item>
-        <item>现代</item>
-        <item>标致</item>
-        <item>本田</item>
-        <item>宝马</item>
-        <item>吉利</item>
-        <item>奥迪</item>
-        <item>奔驰</item>
-        <item>别克</item>
-        <item>马自达</item>
-        <item>起亚</item>
-        <item>日产</item>
-        <item>雪佛兰</item>
-        <item>比亚迪</item>
-        <item>长安</item>
-        <item>长城</item>
-        <item>江淮</item>
-        <item>保时捷</item>
+        <item>大众-2</item>
+        <item>丰田-1</item>
+        <item>福特-6</item>
+        <item>现代-7</item>
+        <item>标致-3</item>
+        <item>本田-1</item>
+        <item>宝马-2</item>
+        <item>吉利-0</item>
+        <item>奥迪-2</item>
+        <item>奔驰-2</item>
+        <item>别克-6</item>
+        <item>马自达-1</item>
+        <item>起亚-7</item>
+        <item>日产-1</item>
+        <item>雪佛兰-6</item>
+        <item>比亚迪-0</item>
+        <item>长安-0</item>
+        <item>长城-0</item>
+        <item>江淮-0</item>
+        <item>保时捷-2</item>
     </string-array>
     <!-- 这个key是在百度百科的index -->
     <string-array name="car_grid_baike_key">
@@ -85,6 +85,17 @@
         <item>4396</item>
         <item>672538</item>
         <item>5523</item>
+    </string-array>
+    <string-array name="car_grid_category">
+        <item>国产</item>
+        <item>日本</item>
+        <item>德国</item>
+        <item>法国</item>
+        <item>英国</item>
+        <item>美国</item>
+        <item>韩国</item>
+        <item>其他</item>
+        <item>全部</item>
     </string-array>
 
 </resources>

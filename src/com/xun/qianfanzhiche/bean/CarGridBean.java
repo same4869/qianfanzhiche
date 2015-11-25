@@ -9,6 +9,7 @@ public class CarGridBean implements Serializable {
 	private String carName;
 	private String carUrl;
 	private String carDetailUrl;
+	private String carCategory;
 
 	public String getCarName() {
 		return carName;
@@ -32,6 +33,14 @@ public class CarGridBean implements Serializable {
 
 	public void setCarDetailUrl(String carDetailUrl) {
 		this.carDetailUrl = carDetailUrl;
+	}
+
+	public String getCarCategory() {
+		return carCategory;
+	}
+
+	public void setCarCategory(String carCategory) {
+		this.carCategory = carCategory;
 	}
 
 }
