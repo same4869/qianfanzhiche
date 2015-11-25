@@ -43,6 +43,7 @@ public class MainFragment extends BaseFragment implements PathStatusInterface, O
 
 	private List<CarGridBean> list;
 	private List<String> imgsUrlList = new ArrayList<String>();
+	
 	private List<CarGridBean> newList = new ArrayList<CarGridBean>();
 	private List<String> newImgsUrlList = new ArrayList<String>();
 	private List<String> newCarKey = new ArrayList<String>();
@@ -66,16 +67,17 @@ public class MainFragment extends BaseFragment implements PathStatusInterface, O
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Intent intent = new Intent(getActivity(), CommonWebActivity.class);
-				intent.putExtra(CAR_GRID_URL_KEY, list.get(position).getCarDetailUrl());
+				intent.putExtra(CAR_GRID_URL_KEY, newList.get(position).getCarDetailUrl());
 				startActivity(intent);
 			}
 		});
 		PathComposerLayout clayout = (PathComposerLayout) rootView.findViewById(R.id.car_gridview_path);
 		clayout.setOnPathStatusListener(this);
-		clayout.init(new int[] { R.drawable.composer_camera, R.drawable.composer_camera, R.drawable.composer_camera, R.drawable.composer_camera,
-				R.drawable.composer_music, R.drawable.composer_place, R.drawable.composer_sleep, R.drawable.composer_thought, R.drawable.composer_with },
-				R.drawable.composer_button, R.drawable.composer_icn_plus, PathComposerLayout.RIGHTBOTTOM, (int) (ScreenUtil.getDensity(getActivity()) * 200),
-				300);
+		clayout.init(new int[] { R.drawable.composer_camera, R.drawable.composer_camera, R.drawable.composer_camera,
+				R.drawable.composer_camera, R.drawable.composer_music, R.drawable.composer_place,
+				R.drawable.composer_sleep, R.drawable.composer_thought, R.drawable.composer_with },
+				R.drawable.composer_button, R.drawable.composer_icn_plus, PathComposerLayout.RIGHTBOTTOM,
+				(int) (ScreenUtil.getDensity(getActivity()) * 200), 300);
 		clayout.setButtonsOnClickListener(clickit);
 		return rootView;
 	}
@@ -85,6 +87,7 @@ public class MainFragment extends BaseFragment implements PathStatusInterface, O
 		for (int i = 0; i < list.size(); i++) {
 			imgsUrlList.add(list.get(i).getCarUrl());
 		}
+		newList = list;
 	}
 
 	@Override
@@ -117,27 +120,6 @@ public class MainFragment extends BaseFragment implements PathStatusInterface, O
 	OnClickListener clickit = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			// if (v.getId() == 100 + 0) {
-			// Log.d("kkkkkkkk", "1");
-			// } else if (v.getId() == 100 + 1) {
-			// Log.d("kkkkkkkk", "2");
-			// } else if (v.getId() == 100 + 2) {
-			// Log.d("kkkkkkkk", "3");
-			// } else if (v.getId() == 100 + 3) {
-			// Log.d("kkkkkkkk", "4");
-			// } else if (v.getId() == 100 + 4) {
-			// Log.d("kkkkkkkk", "5");
-			// } else if (v.getId() == 100 + 5) {
-			// Log.d("kkkkkkkk", "6");
-			// } else if (v.getId() == 100 + 6) {
-			// Log.d("kkkkkkkk", "7");
-			// } else if (v.getId() == 100 + 7) {
-			// Log.d("kkkkkkkk", "8");
-			// } else if (v.getId() == 100 + 8) {
-			// Log.d("kkkkkkkk", "9");
-			// } else if (v.getId() == 100 + 9) {
-			// Log.d("kkkkkkkk", "10");
-			// }
 			changeCarCategory(String.valueOf(v.getId() - 100));
 		}
 	};
@@ -145,6 +127,8 @@ public class MainFragment extends BaseFragment implements PathStatusInterface, O
 	private void changeCarCategory(String carCategory) {
 		String[] carGridKeyList = getResources().getStringArray(R.array.car_grid_key);
 		newList.clear();
+		newImgsUrlList.clear();
+		newCarKey.clear();
 		list = QiNiuUtil.getCardGridInfo(getContext());
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getCarCategory().equals(carCategory)) {

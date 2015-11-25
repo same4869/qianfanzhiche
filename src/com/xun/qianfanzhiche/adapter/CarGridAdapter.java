@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mob.tools.network.StringPart;
 import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.bean.CarGridBean;
 import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
@@ -41,7 +42,7 @@ public class CarGridAdapter extends BaseContentAdapter<CarGridBean> {
 		setDataList(list);
 		this.mImageLoader = mImageLoader;
 		this.carKey = carKey;
-		notifyDataSetChanged();
+		super.notifyDataSetChanged();
 	}
 
 	@Override
@@ -57,7 +58,8 @@ public class CarGridAdapter extends BaseContentAdapter<CarGridBean> {
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
-		viewHolder.carName.setText(dataList.get(position).getCarName());
+		String[] names = dataList.get(position).getCarName().split("-");
+		viewHolder.carName.setText(names[0]);
 		viewHolder.carImg.setTag(dataList.get(position).getCarUrl());
 		mImageLoader.showImage(dataList.get(position).getCarUrl(), viewHolder.carImg, R.drawable.bg_pic_loading);
 
