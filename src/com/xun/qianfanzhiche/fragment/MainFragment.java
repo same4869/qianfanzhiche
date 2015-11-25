@@ -155,6 +155,7 @@ public class MainFragment extends BaseFragment implements PathStatusInterface, O
 		}
 		mImageLoader = new ImageLoaderWithCaches(getContext(), carGridView, newImgsUrlList);
 		carGridAdapter.setDataChange(newList, mImageLoader, newCarKey);
+		mFirstFlag = true;
 	}
 
 	@Override

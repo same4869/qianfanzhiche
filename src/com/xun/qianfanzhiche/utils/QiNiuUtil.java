@@ -20,7 +20,7 @@ public class QiNiuUtil {
 		for (int i = 0; i < carGridKeyList.length; i++) {
 			CarGridBean carGridBean = new CarGridBean();
 			carGridBean.setCarName(carGridNameList[i]);
-			String[] strings = carGridKeyList[i].split("-");
+			String[] strings = carGridNameList[i].split("-");
 			carGridBean.setCarUrl(Constant.QINIU_IMG_BASE_URL + "chebiao-" + strings[0] + ".jpg");
 			if (strings.length >= 2) {
 				carGridBean.setCarCategory(strings[1]);
