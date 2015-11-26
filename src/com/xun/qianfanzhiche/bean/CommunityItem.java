@@ -19,6 +19,28 @@ public class CommunityItem extends BmobObject {
 
 	private BmobRelation relation;// 评论
 
+	private boolean myFav;// 收藏
+
+	private boolean myLove;// 赞
+	
+	private int love;
+
+	public boolean isMyFav() {
+		return myFav;
+	}
+
+	public void setMyFav(boolean myFav) {
+		this.myFav = myFav;
+	}
+
+	public boolean isMyLove() {
+		return myLove;
+	}
+
+	public void setMyLove(boolean myLove) {
+		this.myLove = myLove;
+	}
+
 	public BmobRelation getRelation() {
 		return relation;
 	}
@@ -65,6 +87,14 @@ public class CommunityItem extends BmobObject {
 
 	public void setLikes(BmobRelation likes) {
 		this.likes = likes;
+	}
+
+	public int getLove() {
+		return love;
+	}
+
+	public void setLove(int love) {
+		this.love = love;
 	}
 
 }

@@ -5,9 +5,11 @@ import java.util.List;
 import android.content.Context;
 import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.FindListener;
 
 import com.xun.qianfanzhiche.bean.CommunityItem;
+import com.xun.qianfanzhiche.bean.User;
 import com.xun.qianfanzhiche.manager.UserLevelManager;
 
 public class BmobUtil {
@@ -30,5 +32,13 @@ public class BmobUtil {
 			public void onError(int code, String msg) {
 			}
 		});
+	}
+
+	public static User getCurrentUser(Context context) {
+		User user = BmobUser.getCurrentUser(context, User.class);
+		if (user != null) {
+			return user;
+		}
+		return null;
 	}
 }

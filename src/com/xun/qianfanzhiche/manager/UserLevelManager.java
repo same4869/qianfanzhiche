@@ -91,13 +91,13 @@ public class UserLevelManager {
 		int i = level % 3;
 		switch (i) {
 		case 1:
-			textView.setTextColor(Color.BLUE);
+			textView.setTextColor(Color.parseColor("#D2E9FF"));
 			break;
 		case 2:
-			textView.setTextColor(Color.GREEN);
+			textView.setTextColor(Color.parseColor("#97CBFF"));
 			break;
 		case 0:
-			textView.setTextColor(Color.RED);
+			textView.setTextColor(Color.parseColor("#2894FF"));
 			break;
 
 		default:

@@ -31,7 +31,9 @@ import com.xun.qianfanzhiche.adapter.CommunityListAdapter;
 import com.xun.qianfanzhiche.base.BaseFragment;
 import com.xun.qianfanzhiche.bean.CommunityItem;
 import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
+import com.xun.qianfanzhiche.db.DatabaseManager;
 import com.xun.qianfanzhiche.ui.CommunityDetailActivity;
+import com.xun.qianfanzhiche.utils.BmobUtil;
 import com.xun.qianfanzhiche.utils.LogUtil;
 
 /**
@@ -184,6 +186,9 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 				Collections.reverse(data);
 				putImgData(data);
 				mImageLoader.setImgUrls(imgUrls);
+				if(BmobUtil.getCurrentUser(getContext())!=null){
+					data = DatabaseManager.getInstance(getContext()).setFav(data);
+				}
 				communityListAdapter.setData(data);
 				// if (!isSetScrollListener) {
 				mListView.setOnScrollListener(myScrollListener);

@@ -43,7 +43,7 @@ public class MainFragment extends BaseFragment implements PathStatusInterface, O
 
 	private List<CarGridBean> list;
 	private List<String> imgsUrlList = new ArrayList<String>();
-	
+
 	private List<CarGridBean> newList = new ArrayList<CarGridBean>();
 	private List<String> newImgsUrlList = new ArrayList<String>();
 	private List<String> newCarKey = new ArrayList<String>();
@@ -73,11 +73,10 @@ public class MainFragment extends BaseFragment implements PathStatusInterface, O
 		});
 		PathComposerLayout clayout = (PathComposerLayout) rootView.findViewById(R.id.car_gridview_path);
 		clayout.setOnPathStatusListener(this);
-		clayout.init(new int[] { R.drawable.composer_camera, R.drawable.composer_camera, R.drawable.composer_camera,
-				R.drawable.composer_camera, R.drawable.composer_music, R.drawable.composer_place,
-				R.drawable.composer_sleep, R.drawable.composer_thought, R.drawable.composer_with },
-				R.drawable.composer_button, R.drawable.composer_icn_plus, PathComposerLayout.RIGHTBOTTOM,
-				(int) (ScreenUtil.getDensity(getActivity()) * 200), 300);
+		clayout.init(new int[] { R.drawable.zhong, R.drawable.ri, R.drawable.de, R.drawable.fa,
+				R.drawable.ying, R.drawable.mei, R.drawable.han, R.drawable.ta, R.drawable.quan },
+				R.drawable.composer_button, R.drawable.composer_icn_plus, PathComposerLayout.RIGHTBOTTOM, (int) (ScreenUtil.getDensity(getActivity()) * 200),
+				300);
 		clayout.setButtonsOnClickListener(clickit);
 		return rootView;
 	}
@@ -131,6 +130,11 @@ public class MainFragment extends BaseFragment implements PathStatusInterface, O
 		newCarKey.clear();
 		list = QiNiuUtil.getCardGridInfo(getContext());
 		for (int i = 0; i < list.size(); i++) {
+			if (carCategory.equals("8")) { // 8是全部
+				newList.add(list.get(i));
+				newImgsUrlList.add(list.get(i).getCarUrl());
+				newCarKey.add(carGridKeyList[i]);
+			}
 			if (list.get(i).getCarCategory().equals(carCategory)) {
 				newList.add(list.get(i));
 				newImgsUrlList.add(list.get(i).getCarUrl());
