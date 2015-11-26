@@ -72,7 +72,8 @@ public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
 		if (data.get(position).getImage() != null) {
 			viewHolder.itemImg.setVisibility(View.VISIBLE);
 			viewHolder.itemImg.setTag(data.get(position).getImage().getFileUrl(mContext));
-			mImageLoader.showImage(data.get(position).getImage().getFileUrl(mContext), viewHolder.itemImg, R.drawable.bg_pic_loading);
+			mImageLoader.showImage(data.get(position).getImage().getFileUrl(mContext), viewHolder.itemImg,
+					R.drawable.bg_pic_loading);
 		} else {
 			viewHolder.itemImg.setVisibility(View.GONE);
 		}
@@ -82,7 +83,8 @@ public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
 		}
 		mImageLoader.showImage(avatarUrl, viewHolder.itemAvater, R.drawable.defalut_avater);
 		viewHolder.itemTime.setText(data.get(position).getCreatedAt());
-		BmobUtil.queryCountForUserLevel(mContext, viewHolder.itemUserLeavel, data.get(position).getAuthor().getObjectId());
+		BmobUtil.queryCountForUserLevel(mContext, viewHolder.itemUserLeavel, data.get(position).getAuthor()
+				.getObjectId());
 
 		viewHolder.itemShare.setOnClickListener(new OnClickListener() {
 
@@ -107,7 +109,8 @@ public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
 		});
 
 		viewHolder.itemLove.setText(data.get(position).getLove() + "");
-		if (data.get(position).isMyLove() || DatabaseManager.getInstance(mContext).isLoved(data.get(position))) {
+		if (BmobUtil.getCurrentUser(mContext) != null
+				&& (data.get(position).isMyLove() || DatabaseManager.getInstance(mContext).isLoved(data.get(position)))) {
 			viewHolder.itemLove.setTextColor(Color.parseColor("#D95555"));
 		} else {
 			viewHolder.itemLove.setTextColor(Color.parseColor("#000000"));
@@ -132,9 +135,11 @@ public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
 				if (DatabaseManager.getInstance(mContext).isLoved(data.get(position))) {
 					ToastUtil.show(mContext, "您已赞过啦");
 					data.get(position).setMyLove(true);
-					// data.get(position).setLove(data.get(position).getLove() + 1);
+					// data.get(position).setLove(data.get(position).getLove() +
+					// 1);
 					// viewHolder.itemLove.setTextColor(Color.parseColor("#D95555"));
-					// viewHolder.itemLove.setText(data.get(position).getLove() + "");
+					// viewHolder.itemLove.setText(data.get(position).getLove()
+					// + "");
 					return;
 				}
 				data.get(position).setLove(data.get(position).getLove() + 1);
