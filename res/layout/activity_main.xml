@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="match_parent" >
 
     <com.xun.qianfanzhiche.view.ZhiCheActionBar
         android:id="@+id/actionbar"
@@ -10,39 +9,19 @@
         android:layout_height="48dp" >
     </com.xun.qianfanzhiche.view.ZhiCheActionBar>
 
-    <TabHost
-        android:id="@android:id/tabhost"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/main_body_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#eeeeee" >
+        android:layout_above="@+id/main_footer"
+        android:layout_below="@id/actionbar" >
+    </android.support.v4.view.ViewPager>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
+    <com.xun.qianfanzhiche.view.CustomRadioGroup
+        android:id="@+id/main_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+    </com.xun.qianfanzhiche.view.CustomRadioGroup>
 
-            <FrameLayout
-                android:id="@android:id/tabcontent"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="#FFFFFF"
-                android:visibility="gone" >
-            </FrameLayout>
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/jazzyPager"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <TabWidget
-                android:id="@android:id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/main_tabwidget_background"
-                android:visibility="visible" />
-        </LinearLayout>
-    </TabHost>
-
-</LinearLayout>
+</RelativeLayout>

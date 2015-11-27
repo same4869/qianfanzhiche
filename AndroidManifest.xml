@@ -58,6 +58,8 @@
         </activity>
         <activity android:name=".ui.CarShowGirlActivity" >
         </activity>
+        <activity android:name=".ui.FavActivity" >
+        </activity>
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"

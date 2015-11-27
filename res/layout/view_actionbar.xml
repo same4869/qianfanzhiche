@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/actionbar_layout"
     android:layout_width="match_parent"
     android:layout_height="48dp"
     android:orientation="vertical"
@@ -10,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:padding="5dp"
         android:src="@drawable/skin_comm_back" />
 
     <TextView
@@ -17,6 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:padding="5dp"
         android:text="我是标题"
         android:textColor="#3399ee"
         android:textSize="19sp" />
@@ -27,6 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:padding="5dp"
         android:src="@drawable/skin_comp_detail_add_clip_default" />
 
     <TextView
@@ -35,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:padding="5dp"
         android:text="测试测试"
         android:textColor="#3399ee"
         android:textSize="17sp"

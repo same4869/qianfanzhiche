@@ -75,4 +75,10 @@ public class BaseActivity extends Activity implements ActionBarListener {
 
 	}
 
+	@Override
+	public void onActionBarTopClick() {
+		// TODO Auto-generated method stub
+
+	}
+
 }

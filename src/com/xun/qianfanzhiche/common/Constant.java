@@ -11,5 +11,5 @@ public class Constant {
 
 	public static final String BAIDU_BAIKE_BASE_URL = "http://wapbaike.baidu.com/view/";
 
-	public static final int NUMBERS_PER_PAGE = 15;// 每次请求返回评论条数
+	public static final int NUMBERS_PER_PAGE = 10;// 每次请求返回评论条数
 }

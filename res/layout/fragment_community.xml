@@ -20,11 +20,10 @@
         </ListView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <View
-        android:id="@+id/community_touch_top"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_alignParentTop="true"
-        android:background="#ffff00" />
+    <ProgressBar
+        android:id="@+id/community_progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>
