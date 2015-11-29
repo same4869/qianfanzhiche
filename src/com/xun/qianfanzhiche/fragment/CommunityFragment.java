@@ -44,7 +44,8 @@ import com.xun.qianfanzhiche.utils.ToastUtil;
  * 
  *         2015-11-18
  */
-public class CommunityFragment extends BaseFragment implements OnRefreshListener, OnClickListener, ActionBarTopInterface {
+public class CommunityFragment extends BaseFragment implements OnRefreshListener, OnClickListener,
+		ActionBarTopInterface {
 	private ListView mListView;
 	private SwipeRefreshLayout swipeView;
 	private CommunityListAdapter communityListAdapter;
@@ -68,8 +69,8 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 
 		swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.community_swipe);
 		swipeView.setOnRefreshListener(this);
-		swipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_red_light, android.R.color.holo_green_light,
-				android.R.color.holo_orange_light);
+		swipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_red_light,
+				android.R.color.holo_green_light, android.R.color.holo_orange_light);
 		mListView = (ListView) rootView.findViewById(R.id.community_list);
 		progressBar = (ProgressBar) rootView.findViewById(R.id.community_progressbar);
 		mImageLoader = new ImageLoaderWithCaches(getContext(), mListView, imgUrls);
@@ -103,7 +104,8 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 
 		@Override
 		public void onScroll(AbsListView arg0, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-			// LogUtil.d(LogUtil.TAG, "onScroll mFirstFlag --> " + mFirstFlag + " visibleItemCount --> " + visibleItemCount);
+			// LogUtil.d(LogUtil.TAG, "onScroll mFirstFlag --> " + mFirstFlag +
+			// " visibleItemCount --> " + visibleItemCount);
 			if (firstVisibleItem == 0) {
 				swipeView.setEnabled(true);
 			} else {
@@ -115,7 +117,8 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 				mImageLoader.loadImages(start, end);
 				mFirstFlag = false;
 			}
-			if (end > totalItemCount - Constant.NUMBERS_PER_PAGE && !isAllLoaded && mCurrentScrollState != SCROLL_STATE_IDLE) {
+			if (end > totalItemCount - Constant.NUMBERS_PER_PAGE && !isAllLoaded
+					&& mCurrentScrollState != SCROLL_STATE_IDLE) {
 				loadData();
 			}
 		}
@@ -125,6 +128,9 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 	public void onStop() {
 		super.onStop();
 		mFirstFlag = true;
+		pageNum = 0;
+		isAllLoaded = false;
+		data.clear();
 	}
 
 	private void loadData() {
@@ -143,24 +149,8 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 			@Override
 			public void onSuccess(List<CommunityItem> list) {
 				LogUtil.d(LogUtil.TAG, "onSuccess list size--> " + list.size());
-				// data = list;
-				// //Collections.reverse(data);
-				// putImgData(data);
-				// mImageLoader.setImgUrls(imgUrls);
-				// if (BmobUtil.getCurrentUser(getContext()) != null) {
-				// data = DatabaseManager.getInstance(getContext()).setFav(data);
-				// }
-				// communityListAdapter.setData(data);
-				// // if (!isSetScrollListener) {
-				// mListView.setOnScrollListener(myScrollListener);
-				// // isSetScrollListener = true;
-				// // }
-				// swipeView.setRefreshing(false);
-				// progressBar.setVisibility(View.GONE);
-
 				if (list.size() != 0 && list.get(list.size() - 1) != null) {
 					if (isCleared == false) {
-						Log.d("kkkkkkkk", "data.clear() ");
 						data.clear();
 						isCleared = true;
 					}
@@ -169,7 +159,6 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 						ToastUtil.show(getContext(), "已加载完所有数据~");
 					}
 					data.addAll(list);
-					Log.d("kkkkkkkk", "data.size() --> " + data.size());
 					putImgData(data);
 					mImageLoader.setImgUrls(imgUrls);
 					if (BmobUtil.getCurrentUser(getContext()) != null) {

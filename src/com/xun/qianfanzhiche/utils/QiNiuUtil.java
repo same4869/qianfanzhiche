@@ -8,7 +8,6 @@ import android.content.res.Resources;
 
 import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.bean.CarGridBean;
-import com.xun.qianfanzhiche.common.Constant;
 
 public class QiNiuUtil {
 	public static List<CarGridBean> getCardGridInfo(Context context) {
@@ -21,11 +20,11 @@ public class QiNiuUtil {
 			CarGridBean carGridBean = new CarGridBean();
 			carGridBean.setCarName(carGridNameList[i]);
 			String[] strings = carGridNameList[i].split("-");
-			carGridBean.setCarUrl(Constant.QINIU_IMG_BASE_URL + "chebiao-" + carGridKeyList[i] + ".jpg");
+			carGridBean.setCarUrl(ConstantsUtil.getConstantFromLocalOrRemote("QINIU_IMG_BASE_URL") + "chebiao-" + carGridKeyList[i] + ".jpg");
 			if (strings.length >= 2) {
 				carGridBean.setCarCategory(strings[1]);
 			}
-			carGridBean.setCarDetailUrl(Constant.BAIDU_BAIKE_BASE_URL + carGridBaikeKeyList[i] + ".html");
+			carGridBean.setCarDetailUrl(ConstantsUtil.getConstantFromLocalOrRemote("BAIDU_BAIKE_BASE_URL") + carGridBaikeKeyList[i] + ".html");
 			carGridList.add(carGridBean);
 		}
 		return carGridList;

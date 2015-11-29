@@ -34,7 +34,7 @@ import com.xun.qianfanzhiche.view.PathComposerLayout.PathStatusInterface;
  *         2015-11-24
  */
 public class MainFragment extends BaseFragment implements PathStatusInterface, OnClickListener {
-	public static final String CAR_GRID_URL_KEY = "car_grid_url_key";
+	// public static final String CAR_GRID_URL_KEY = "car_grid_url_key";
 	private GridView carGridView;
 	private CarGridAdapter carGridAdapter;
 	private View carGridCover;
@@ -67,16 +67,16 @@ public class MainFragment extends BaseFragment implements PathStatusInterface, O
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Intent intent = new Intent(getActivity(), CommonWebActivity.class);
-				intent.putExtra(CAR_GRID_URL_KEY, newList.get(position).getCarDetailUrl());
+				intent.putExtra(CommonWebActivity.COMMON_WEB_URL, newList.get(position).getCarDetailUrl());
 				startActivity(intent);
 			}
 		});
 		PathComposerLayout clayout = (PathComposerLayout) rootView.findViewById(R.id.car_gridview_path);
 		clayout.setOnPathStatusListener(this);
-		clayout.init(new int[] { R.drawable.zhong, R.drawable.ri, R.drawable.de, R.drawable.fa,
-				R.drawable.ying, R.drawable.mei, R.drawable.han, R.drawable.ta, R.drawable.quan },
-				R.drawable.composer_button, R.drawable.composer_icn_plus, PathComposerLayout.RIGHTBOTTOM, (int) (ScreenUtil.getDensity(getActivity()) * 200),
-				300);
+		clayout.init(new int[] { R.drawable.zhong, R.drawable.ri, R.drawable.de, R.drawable.fa, R.drawable.ying,
+				R.drawable.mei, R.drawable.han, R.drawable.ta, R.drawable.quan }, R.drawable.composer_button,
+				R.drawable.composer_icn_plus, PathComposerLayout.RIGHTBOTTOM,
+				(int) (ScreenUtil.getDensity(getActivity()) * 200), 300);
 		clayout.setButtonsOnClickListener(clickit);
 		return rootView;
 	}

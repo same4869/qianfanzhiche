@@ -46,10 +46,12 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 
 	private List<Fragment> fragments = new ArrayList<Fragment>();
 	private Boolean is2CallBack = false;// 是否双击退出
-	private int[] itemImage = { R.drawable.main_footer_message, R.drawable.main_footer_contanct, R.drawable.main_footer_discovery, R.drawable.main_footer_me };
-	private int[] itemCheckedImage = { R.drawable.main_footer_message_selected, R.drawable.main_footer_contanct_selected,
-			R.drawable.main_footer_discovery_selected, R.drawable.main_footer_me_selected };
-	private String[] itemText = { "微信", "通讯录", "发现", "我" };
+	private int[] itemImage = { R.drawable.main_footer_message, R.drawable.main_footer_contanct,
+			R.drawable.main_footer_discovery, R.drawable.main_footer_me };
+	private int[] itemCheckedImage = { R.drawable.main_footer_message_selected,
+			R.drawable.main_footer_contanct_selected, R.drawable.main_footer_discovery_selected,
+			R.drawable.main_footer_me_selected };
+	private String[] itemText = { "品牌", "社区", "扩展", "个人" };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +91,7 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 		viewPager.setAdapter(new HomePagerAdapter(getSupportFragmentManager(), fragments));
 		viewPager.setPageMargin(30);
 		viewPager.addOnPageChangeListener(new MyOnPageChangeListener(footer));
-		//viewPager.setPageTransformer(true, new DepthPageTransformer());
+		// viewPager.setPageTransformer(true, new DepthPageTransformer());
 
 		footer.setCheckedIndex(viewPager.getCurrentItem());
 		footer.setOnItemChangedListener(new OnItemChangedListener() {
@@ -100,7 +102,10 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 		/**
 		 * BUG :显示不出数字。数字尺寸太大
 		 */
-		footer.setItemNewsCount(1, 10);// 设置消息数量
+		footer.setItemNewsCount(0, 10);// 设置消息数量
+		footer.setItemNewsCount(1, 99);// 设置消息数量
+		footer.setItemNewsCount(2, 10);// 设置消息数量
+		footer.setItemNewsCount(3, 1);// 设置消息数量
 	}
 
 	public class MyOnPageChangeListener implements OnPageChangeListener {
@@ -133,7 +138,6 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 
 		@Override
 		public void onPageScrolled(int paramInt1, float paramFloat, int paramInt2) {
-			Log.d("kkkkkkkk", "paramInt1 --> " + paramInt1);
 			if (paramFloat != 0.0f) {
 				int right, left;
 				if (paramInt1 == customRadioGroup.getCheckedIndex()) {
@@ -146,7 +150,6 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 					right = customRadioGroup.getCheckedIndex();
 
 				}
-				Log.d("kkkkkkkk", "left --> " + left + " right -->" + right);
 				customRadioGroup.itemChangeChecked(left, right, paramFloat);
 			}
 		}

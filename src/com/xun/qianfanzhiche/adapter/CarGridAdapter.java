@@ -12,13 +12,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mob.tools.network.StringPart;
 import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.bean.CarGridBean;
 import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
-import com.xun.qianfanzhiche.common.Constant;
 import com.xun.qianfanzhiche.fragment.MainFragment;
 import com.xun.qianfanzhiche.ui.CommonWebActivity;
+import com.xun.qianfanzhiche.utils.ConstantsUtil;
 
 public class CarGridAdapter extends BaseContentAdapter<CarGridBean> {
 	private Context context;
@@ -68,8 +67,9 @@ public class CarGridAdapter extends BaseContentAdapter<CarGridBean> {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(context, CommonWebActivity.class);
-				String url = Constant.AUTO_HOME_BASE_URL + carKey.get(position) + Constant.AUTO_HOME_BASE_URL_SUFFIX;
-				intent.putExtra(MainFragment.CAR_GRID_URL_KEY, url);
+				String url = ConstantsUtil.getConstantFromLocalOrRemote("AUTO_HOME_BASE_URL") + carKey.get(position)
+						+ ConstantsUtil.getConstantFromLocalOrRemote("AUTO_HOME_BASE_URL_SUFFIX");
+				intent.putExtra(CommonWebActivity.COMMON_WEB_URL, url);
 				context.startActivity(intent);
 			}
 		});

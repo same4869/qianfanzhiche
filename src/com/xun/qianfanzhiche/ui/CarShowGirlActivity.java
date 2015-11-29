@@ -13,7 +13,7 @@ import com.xun.qianfanzhiche.adapter.GalleryAdapter;
 import com.xun.qianfanzhiche.adapter.GalleryAdapter.OnItemClickLitener;
 import com.xun.qianfanzhiche.base.BaseActivity;
 import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
-import com.xun.qianfanzhiche.common.Constant;
+import com.xun.qianfanzhiche.utils.ConstantsUtil;
 import com.xun.qianfanzhiche.view.MyRecyclerView;
 import com.xun.qianfanzhiche.view.MyRecyclerView.OnItemScrollChangeListener;
 
@@ -61,11 +61,11 @@ public class CarShowGirlActivity extends BaseActivity {
 		List<String> mData = new ArrayList<String>();
 		for (int i = 1; i <= count; i++) {
 			if (i < 10) {
-				mData.add(Constant.QINIU_IMG_BASE_URL + "qfzc000" + i + ".jpg");
+				mData.add(ConstantsUtil.getConstantFromLocalOrRemote("QINIU_IMG_BASE_URL") + "qfzc000" + i + ".jpg");
 			} else if (i >= 10 && i <= 99) {
-				mData.add(Constant.QINIU_IMG_BASE_URL + "qfzc00" + i + ".jpg");
+				mData.add(ConstantsUtil.getConstantFromLocalOrRemote("QINIU_IMG_BASE_URL") + "qfzc00" + i + ".jpg");
 			} else if (i >= 100 && i <= 999) {
-				mData.add(Constant.QINIU_IMG_BASE_URL + "qfzc0" + i + ".jpg");
+				mData.add(ConstantsUtil.getConstantFromLocalOrRemote("QINIU_IMG_BASE_URL") + "qfzc0" + i + ".jpg");
 			}
 		}
 		return mData;

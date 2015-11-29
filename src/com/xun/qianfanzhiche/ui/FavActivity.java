@@ -24,6 +24,8 @@ import com.xun.qianfanzhiche.bean.CommunityItem;
 import com.xun.qianfanzhiche.bean.User;
 import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
 import com.xun.qianfanzhiche.common.Constant;
+import com.xun.qianfanzhiche.db.DatabaseManager;
+import com.xun.qianfanzhiche.utils.BmobUtil;
 import com.xun.qianfanzhiche.utils.ToastUtil;
 
 /**
@@ -104,6 +106,9 @@ public class FavActivity extends BaseActivity {
 					if (list.size() < Constant.NUMBERS_PER_PAGE) {
 						isAllLoaded = true;
 						ToastUtil.show(getApplicationContext(), "已加载完所有数据~");
+					}
+					for (int i = 0; i < list.size(); i++) {
+						list.get(i).setMyFav(true);
 					}
 					data.addAll(list);
 					putImgData(data);

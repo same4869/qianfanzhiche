@@ -67,6 +67,9 @@ public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
 		}
 
 		// LogUtil.d(LogUtil.TAG, "data.size() --> " + data.size());
+		if (data.size() <= 0) {
+			return convertView;
+		}
 		viewHolder.itemContent.setText(data.get(position).getContent());
 		viewHolder.itemName.setText(data.get(position).getAuthor().getUsername());
 		if (data.get(position).getImage() != null) {
