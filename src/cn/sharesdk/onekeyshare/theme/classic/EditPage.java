@@ -8,12 +8,12 @@
 
 package cn.sharesdk.onekeyshare.theme.classic;
 
+import static cn.sharesdk.framework.utils.ShareSDKR.getBitmapRes;
+import static cn.sharesdk.framework.utils.ShareSDKR.getStringRes;
 import static com.mob.tools.utils.BitmapHelper.blur;
 import static com.mob.tools.utils.BitmapHelper.captureView;
 import static com.mob.tools.utils.R.dipToPx;
 import static com.mob.tools.utils.R.getScreenWidth;
-import static cn.sharesdk.framework.utils.ShareSDKR.getStringRes;
-import static cn.sharesdk.framework.utils.ShareSDKR.getBitmapRes;
 
 import java.util.ArrayList;
 import java.util.HashMap;

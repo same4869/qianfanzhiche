@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.bean.CarGridBean;
 import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
-import com.xun.qianfanzhiche.fragment.MainFragment;
 import com.xun.qianfanzhiche.ui.CommonWebActivity;
 import com.xun.qianfanzhiche.utils.ConstantsUtil;
 

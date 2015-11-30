@@ -5,6 +5,10 @@ public class Constant {
 
 	public static final int NUMBERS_PER_PAGE = 10;// 每次请求返回评论条数
 
+	public static final String QQ_APP_ID = "222222";
+
+	public static final String WEIXIN_APP_ID = "wxf373d09a6458127c";
+
 	// 下面的地址分为取本地与使用服务器两种方式
 	public static final String QINIU_IMG_BASE_URL = "http://7xnmgu.com1.z0.glb.clouddn.com/";// 七牛存储，首页车标图片，车模图片
 

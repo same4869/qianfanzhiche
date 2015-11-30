@@ -7,13 +7,6 @@
     android:background="#000000"
     tools:context=".MainActivity" >
 
-    <com.xun.qianfanzhiche.view.ZhiCheActionBar
-        android:id="@+id/actionbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true" >
-    </com.xun.qianfanzhiche.view.ZhiCheActionBar>
-
     <!-- LOGO -->
 
     <ImageView
@@ -168,5 +161,27 @@
         android:text="确认注册"
         android:textColor="#ffffff"
         android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/login_auth_qq_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ssdk_oks_skyblue_logo_qq_checked" />
+
+        <ImageView
+            android:id="@+id/login_auth_weixin_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ssdk_oks_skyblue_logo_wechat_checked" />
+    </LinearLayout>
 
 </RelativeLayout>

@@ -11,6 +11,8 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.xun.qianfanzhiche.bean.ConstantsBean;
 import com.xun.qianfanzhiche.common.Constant;
 import com.xun.qianfanzhiche.utils.ActivityManagerUtils;
@@ -20,6 +22,7 @@ import com.xun.qianfanzhiche.utils.ZhiCheSPUtil;
 
 public class ZhiCheApp extends Application {
 	private static ZhiCheApp mApplication = null;
+	public static IWXAPI api;
 
 	public static ZhiCheApp getInstance() {
 		return mApplication;
@@ -34,8 +37,14 @@ public class ZhiCheApp extends Application {
 		super.onCreate();
 		mApplication = this;
 		Bmob.initialize(getApplicationContext(), Constant.BMOB_APP_ID);
+		register2WX();
 		// setConstants();
 		getConstants();
+	}
+	
+	private void register2WX() {
+		api = WXAPIFactory.createWXAPI(this, Constant.WEIXIN_APP_ID, true);
+		api.registerApp(Constant.WEIXIN_APP_ID);
 	}
 
 	private void getConstants() {

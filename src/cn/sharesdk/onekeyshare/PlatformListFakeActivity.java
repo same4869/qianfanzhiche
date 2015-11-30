@@ -1,17 +1,17 @@
 package cn.sharesdk.onekeyshare;
 
-import android.content.Context;
-import android.content.Intent;
-import android.view.KeyEvent;
-import android.view.View;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.mob.tools.FakeActivity;
+import android.content.Context;
+import android.content.Intent;
+import android.view.KeyEvent;
+import android.view.View;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
+
+import com.mob.tools.FakeActivity;
 
 public class PlatformListFakeActivity extends FakeActivity {
 	protected HashMap<String, Object> shareParamsMap;

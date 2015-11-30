@@ -4,22 +4,20 @@ import android.content.Context;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 
-import com.xun.qianfanzhiche.R;
-
 /**
  * 分享管理
  * 
  * @author wangxun
  * 
  */
-public class ShareManger {
-	private static ShareManger instance = null;
+public class ShareManager {
+	private static ShareManager instance = null;
 
-	private ShareManger() {
+	private ShareManager() {
 
 	}
 
-	public static ShareManger getInstance() {
+	public static ShareManager getInstance() {
 		if (instance == null) {
 			syncInit();
 		}
@@ -28,7 +26,7 @@ public class ShareManger {
 
 	private static synchronized void syncInit() {
 		if (instance == null) {
-			instance = new ShareManger();
+			instance = new ShareManager();
 		}
 	}
 

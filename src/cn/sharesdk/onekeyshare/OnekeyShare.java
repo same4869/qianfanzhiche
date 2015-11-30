@@ -8,8 +8,8 @@
 
 package cn.sharesdk.onekeyshare;
 
-import static com.mob.tools.utils.BitmapHelper.captureView;
 import static cn.sharesdk.framework.utils.ShareSDKR.getStringRes;
+import static com.mob.tools.utils.BitmapHelper.captureView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -29,6 +29,7 @@ import cn.sharesdk.framework.CustomPlatform;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
+
 import com.mob.tools.utils.UIHandler;
 
 /**

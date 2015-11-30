@@ -12,7 +12,6 @@ import android.widget.ProgressBar;
 
 import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.base.BaseActivity;
-import com.xun.qianfanzhiche.fragment.MainFragment;
 
 /**
  * 

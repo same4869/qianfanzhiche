@@ -20,7 +20,7 @@ import com.xun.qianfanzhiche.bean.CommunityItem;
 import com.xun.qianfanzhiche.bean.User;
 import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
 import com.xun.qianfanzhiche.db.DatabaseManager;
-import com.xun.qianfanzhiche.manager.ShareManger;
+import com.xun.qianfanzhiche.manager.ShareManager;
 import com.xun.qianfanzhiche.ui.LoginActivity;
 import com.xun.qianfanzhiche.utils.BmobUtil;
 import com.xun.qianfanzhiche.utils.ToastUtil;
@@ -93,7 +93,7 @@ public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
 
 			@Override
 			public void onClick(View arg0) {
-				ShareManger.getInstance().showShare(mContext, data.get(position).getImage().getFileUrl(mContext));
+				ShareManager.getInstance().showShare(mContext, data.get(position).getImage().getFileUrl(mContext));
 			}
 		});
 

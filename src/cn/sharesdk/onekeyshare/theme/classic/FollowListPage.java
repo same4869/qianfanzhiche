@@ -8,6 +8,13 @@
 
 package cn.sharesdk.onekeyshare.theme.classic;
 
+import static cn.sharesdk.framework.utils.ShareSDKR.getBitmapRes;
+import static cn.sharesdk.framework.utils.ShareSDKR.getStringRes;
+import static com.mob.tools.utils.R.dipToPx;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -28,23 +35,16 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.TitleLayout;
+import cn.sharesdk.onekeyshare.FollowerListFakeActivity;
+
 import com.mob.tools.gui.AsyncImageView;
 import com.mob.tools.gui.BitmapProcessor;
 import com.mob.tools.gui.PullToRefreshListAdapter;
 import com.mob.tools.gui.PullToRefreshView;
 import com.mob.tools.utils.UIHandler;
-import cn.sharesdk.onekeyshare.FollowerListFakeActivity;
-
-import static com.mob.tools.utils.R.dipToPx;
-import static cn.sharesdk.framework.utils.ShareSDKR.getBitmapRes;
-import static cn.sharesdk.framework.utils.ShareSDKR.getStringRes;
 
 /** 获取好友或关注列表 */
 public class FollowListPage extends FollowerListFakeActivity implements OnClickListener, OnItemClickListener {

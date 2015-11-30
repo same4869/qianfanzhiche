@@ -1,5 +1,9 @@
 package com.xun.qianfanzhiche.ui;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -20,16 +24,25 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.BmobUser.BmobThirdUserAuth;
+import cn.bmob.v3.listener.OtherLoginListener;
 import cn.bmob.v3.listener.SaveListener;
 
+import com.tencent.mm.sdk.modelmsg.SendAuth;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 import com.xun.qianfanzhiche.R;
+import com.xun.qianfanzhiche.app.ZhiCheApp;
 import com.xun.qianfanzhiche.base.BaseActivity;
 import com.xun.qianfanzhiche.bean.User;
+import com.xun.qianfanzhiche.common.Constant;
 import com.xun.qianfanzhiche.utils.BitmapUtil;
+import com.xun.qianfanzhiche.utils.LogUtil;
 import com.xun.qianfanzhiche.utils.ScreenUtil;
 import com.xun.qianfanzhiche.utils.StringUtil;
 import com.xun.qianfanzhiche.utils.ToastUtil;
-import com.xun.qianfanzhiche.view.ZhiCheActionBar;
 
 /**
  * 注册登录页面
@@ -38,7 +51,7 @@ import com.xun.qianfanzhiche.view.ZhiCheActionBar;
  * 
  *         2015-11-18
  */
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements OnClickListener {
 	// Constant
 	public static final int PASSWORD_MIN_LENGTH = 5;
 	public static final int LOGIN_SUCCESS = 0; // 登录成功
@@ -57,8 +70,9 @@ public class LoginActivity extends BaseActivity {
 	private Button moBtnClearUsername;
 	private Button moBtnClearPassword;
 	private Button moBtnRegister;
-	private ZhiCheActionBar zhiCheActionBar;
 	private RelativeLayout loginLayout;
+	private ImageView loginAuthQQBtn;
+	private ImageView loginAuthWeixinBtn;
 
 	// Members
 	private Handler moHandler;
@@ -67,6 +81,8 @@ public class LoginActivity extends BaseActivity {
 
 	public int status = 0;// 0为登录，1为注册
 	private Bitmap bg;
+
+	public static Tencent mTencent;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -126,8 +142,10 @@ public class LoginActivity extends BaseActivity {
 		moBtnClearUsername = (Button) findViewById(R.id.login_btn_clear_username);
 		moBtnClearPassword = (Button) findViewById(R.id.login_btn_clear_password);
 		moBtnRegister = (Button) findViewById(R.id.login_btn_register);
-		zhiCheActionBar = (ZhiCheActionBar) findViewById(R.id.actionbar);
 		loginLayout = (RelativeLayout) findViewById(R.id.login_layout);
+		loginAuthQQBtn = (ImageView) findViewById(R.id.login_auth_qq_button);
+		loginAuthWeixinBtn = (ImageView) findViewById(R.id.login_auth_weixin_button);
+
 		bg = BitmapFactory.decodeResource(getResources(), R.drawable.bg);
 		mbIsSlidingBack = false;
 		miLastX = 0;
@@ -144,7 +162,7 @@ public class LoginActivity extends BaseActivity {
 		moImgSlider.setOnClickListener(new OnSliderClicked());
 		moImgSlider.setOnTouchListener(new OnSliderDragged());
 		moBtnRegister.setOnClickListener(new OnRegister());
-		zhiCheActionBar.setOnActionBarListener(this);
+		loginAuthQQBtn.setOnClickListener(this);
 	}
 
 	// 处理用户名编辑事件
@@ -375,13 +393,11 @@ public class LoginActivity extends BaseActivity {
 		if (status == 0) {
 			moBtnRegister.setVisibility(View.GONE);
 			loginLayout.setBackground(new BitmapDrawable(getResources(), BitmapUtil.fastblur(getApplicationContext(), bg, 15)));
-			zhiCheActionBar.setTitle("登录");
-			zhiCheActionBar.setTextString("注册");
+			setActionBarTitle("登录");
 		} else {
 			moBtnRegister.setVisibility(View.VISIBLE);
 			loginLayout.setBackground(new BitmapDrawable(getResources(), BitmapUtil.fastblur(getApplicationContext(), bg, 25)));
-			zhiCheActionBar.setTitle("注册");
-			zhiCheActionBar.setTextString("登录");
+			setActionBarTitle("注册");
 		}
 	}
 
@@ -426,12 +442,6 @@ public class LoginActivity extends BaseActivity {
 	}
 
 	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-	}
-
-
-	@Override
 	public void onTextTvClick() {
 		if (status == 0) {
 			ToastUtil.show(getApplicationContext(), "登录");
@@ -441,6 +451,85 @@ public class LoginActivity extends BaseActivity {
 			ToastUtil.show(getApplicationContext(), "注册");
 			status = 0;
 			setStatus(status);
+		}
+	}
+
+	private void qqAuthorize() {
+		if (mTencent == null) {
+			mTencent = Tencent.createInstance(Constant.QQ_APP_ID, getApplicationContext());
+		}
+		mTencent.logout(this);
+		mTencent.login(this, "all", new IUiListener() {
+
+			@Override
+			public void onComplete(Object arg0) {
+				if (arg0 != null) {
+					JSONObject jsonObject = (JSONObject) arg0;
+					try {
+						String token = jsonObject.getString(com.tencent.connect.common.Constants.PARAM_ACCESS_TOKEN);
+						String expires = jsonObject.getString(com.tencent.connect.common.Constants.PARAM_EXPIRES_IN);
+						String openId = jsonObject.getString(com.tencent.connect.common.Constants.PARAM_OPEN_ID);
+						BmobThirdUserAuth authInfo = new BmobThirdUserAuth(BmobThirdUserAuth.SNS_TYPE_QQ, token, expires, openId);
+						loginWithAuth(authInfo);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+			@Override
+			public void onError(UiError arg0) {
+				ToastUtil.show(getApplicationContext(), "QQ授权出错：" + arg0.errorCode + "--" + arg0.errorDetail);
+			}
+
+			@Override
+			public void onCancel() {
+				ToastUtil.show(getApplicationContext(), "取消qq授权");
+			}
+		});
+	}
+
+	public void loginWithAuth(final BmobThirdUserAuth authInfo) {
+		BmobUser.loginWithAuthData(LoginActivity.this, authInfo, new OtherLoginListener() {
+
+			@Override
+			public void onSuccess(JSONObject userAuth) {
+				LogUtil.d(LogUtil.TAG, authInfo.getSnsType() + "登陆成功返回:" + userAuth);
+				Intent intent = new Intent(LoginActivity.this, ZhiCheMainActivity.class);
+				intent.putExtra("json", userAuth.toString());
+				intent.putExtra("from", authInfo.getSnsType());
+				startActivity(intent);
+			}
+
+			@Override
+			public void onFailure(int code, String msg) {
+				ToastUtil.show(getApplicationContext(), "第三方登陆失败：" + msg);
+			}
+
+		});
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		mTencent.onActivityResult(requestCode, resultCode, data);
+		LogUtil.d(LogUtil.TAG, "data --> " + data);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.login_auth_qq_button:
+			qqAuthorize();
+			break;
+		case R.id.login_auth_weixin_button:
+			 // send oauth request 
+		    final SendAuth.Req req = new SendAuth.Req();
+		    req.scope = "snsapi_userinfo";
+		    req.state = "wechat_sdk_qianfanzhiche";
+		    ZhiCheApp.api.sendReq(req);
+			break;
+		default:
+			break;
 		}
 	}
 }

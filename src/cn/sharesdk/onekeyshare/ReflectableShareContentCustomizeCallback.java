@@ -4,6 +4,7 @@ import android.os.Handler.Callback;
 import android.os.Message;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.Platform.ShareParams;
+
 import com.mob.tools.utils.UIHandler;
 
 /**
