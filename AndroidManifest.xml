@@ -65,6 +65,8 @@
         </activity>
         <activity android:name=".ui.FavActivity" >
         </activity>
+        <activity android:name=".ui.PayMeActivity" >
+        </activity>
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"

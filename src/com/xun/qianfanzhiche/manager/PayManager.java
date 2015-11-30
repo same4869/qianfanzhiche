@@ -41,7 +41,7 @@ public class PayManager {
 		new BmobPay(context).payByWX(price, name, listener);
 	}
 
-	public void orderQuery(Activity context, String name, OrderQueryListener orderQueryListener) {
-		new BmobPay(context).query(name, orderQueryListener);
+	public void orderQuery(Activity context, String orderId, OrderQueryListener orderQueryListener) {
+		new BmobPay(context).query(orderId, orderQueryListener);
 	}
 }
