@@ -43,8 +43,9 @@ import com.xun.qianfanzhiche.utils.ToastUtil;
  * 
  *         2015-11-18
  */
-public class CommunityFragment extends BaseFragment implements OnRefreshListener, OnClickListener,
-		ActionBarTopInterface {
+public class CommunityFragment extends BaseFragment implements OnRefreshListener, OnClickListener, ActionBarTopInterface {
+	private static final int PRE_LOAD_OFFSET = 2;// 拉到距离底部多少条的时候加载下一页
+
 	private ListView mListView;
 	private SwipeRefreshLayout swipeView;
 	private CommunityListAdapter communityListAdapter;
@@ -60,16 +61,17 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 	private boolean isCleared, isAllLoaded;
 	private int pageNum = 0;
 	private int mCurrentScrollState;
+	private boolean isLoading;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_community, container, false);
-		loadData();
+		// loadData();
 
 		swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.community_swipe);
 		swipeView.setOnRefreshListener(this);
-		swipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_red_light,
-				android.R.color.holo_green_light, android.R.color.holo_orange_light);
+		swipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_red_light, android.R.color.holo_green_light,
+				android.R.color.holo_orange_light);
 		mListView = (ListView) rootView.findViewById(R.id.community_list);
 		progressBar = (ProgressBar) rootView.findViewById(R.id.community_progressbar);
 		mImageLoader = new ImageLoaderWithCaches(getContext(), mListView, imgUrls);
@@ -116,8 +118,7 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 				mImageLoader.loadImages(start, end);
 				mFirstFlag = false;
 			}
-			if (end > totalItemCount - Constant.NUMBERS_PER_PAGE && !isAllLoaded
-					&& mCurrentScrollState != SCROLL_STATE_IDLE) {
+			if (end > totalItemCount - PRE_LOAD_OFFSET && !isAllLoaded && mCurrentScrollState != SCROLL_STATE_IDLE && isLoading == false) {
 				loadData();
 			}
 		}
@@ -132,8 +133,15 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 		data.clear();
 	}
 
+	@Override
+	public void onResume() {
+		super.onResume();
+		loadData();
+	}
+
 	private void loadData() {
 		// data.clear();
+		isLoading = true;
 		BmobQuery<CommunityItem> query = new BmobQuery<CommunityItem>();
 		// query.addWhereEqualTo("CommunityItem", "");
 		BmobDate date = new BmobDate(new Date(System.currentTimeMillis()));
@@ -176,6 +184,7 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 				}
 				swipeView.setRefreshing(false);
 				progressBar.setVisibility(View.GONE);
+				isLoading = false;
 			}
 
 			@Override
@@ -183,6 +192,7 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 				LogUtil.d(LogUtil.TAG, "onError --> msg -->" + msg + " code -->" + code);
 				pageNum--;
 				swipeView.setRefreshing(false);
+				isLoading = false;
 			}
 		});
 	}

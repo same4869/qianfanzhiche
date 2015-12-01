@@ -83,8 +83,7 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 				// 当code为-2,意味着用户中断了操作
 				// code为-3意味着没有安装BmobPlugin插件
 				if (arg0 == -3) {
-					new AlertDialog.Builder(getApplicationContext())
-							.setMessage("监测到你尚未安装支付插件,无法进行微信支付,请选择安装插件(已打包在本地,无流量消耗)还是用支付宝支付")
+					new AlertDialog.Builder(getApplicationContext()).setMessage("监测到你尚未安装支付插件,无法进行微信支付,请选择安装插件(已打包在本地,无流量消耗)还是用支付宝支付")
 							.setPositiveButton("安装", new DialogInterface.OnClickListener() {
 
 								@Override

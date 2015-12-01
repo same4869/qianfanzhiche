@@ -3,7 +3,6 @@ package com.xun.qianfanzhiche.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +10,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
 import com.xun.qianfanzhiche.R;
@@ -20,7 +17,6 @@ import com.xun.qianfanzhiche.adapter.CarGridAdapter;
 import com.xun.qianfanzhiche.base.BaseFragment;
 import com.xun.qianfanzhiche.bean.CarGridBean;
 import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
-import com.xun.qianfanzhiche.ui.CommonWebActivity;
 import com.xun.qianfanzhiche.utils.QiNiuUtil;
 import com.xun.qianfanzhiche.utils.ScreenUtil;
 import com.xun.qianfanzhiche.view.PathComposerLayout;
@@ -62,15 +58,15 @@ public class MainFragment extends BaseFragment implements PathStatusInterface, O
 		carGridAdapter = new CarGridAdapter(getContext(), list, mImageLoader);
 		carGridView.setAdapter(carGridAdapter);
 		carGridView.setOnScrollListener(new MyScrollListener());
-		carGridView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Intent intent = new Intent(getActivity(), CommonWebActivity.class);
-				intent.putExtra(CommonWebActivity.COMMON_WEB_URL, newList.get(position).getCarDetailUrl());
-				startActivity(intent);
-			}
-		});
+		// carGridView.setOnItemClickListener(new OnItemClickListener() {
+		//
+		// @Override
+		// public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		// Intent intent = new Intent(getActivity(), CommonWebActivity.class);
+		// intent.putExtra(CommonWebActivity.COMMON_WEB_URL, newList.get(position).getCarDetailUrl());
+		// startActivity(intent);
+		// }
+		// });
 		PathComposerLayout clayout = (PathComposerLayout) rootView.findViewById(R.id.car_gridview_path);
 		clayout.setOnPathStatusListener(this);
 		clayout.init(new int[] { R.drawable.zhong, R.drawable.ri, R.drawable.de, R.drawable.fa, R.drawable.ying,

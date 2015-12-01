@@ -22,4 +22,6 @@ public class Constant {
 
 	public static final String CAR_ACTIVITY = "http://auto.sina.cn/guangzhouchezhan/"; // 汽车活动
 
+	public static final String CAR_VIDEO = "http://auto.sina.cn/video/";// 汽车视频
+
 }

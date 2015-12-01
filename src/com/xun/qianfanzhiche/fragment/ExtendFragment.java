@@ -27,7 +27,7 @@ import com.xun.qianfanzhiche.view.ItemBar;
  *         2015-11-27
  */
 public class ExtendFragment extends BaseFragment implements OnClickListener {
-	private ItemBar carShowGirlItemBar, userFavItemBar, carMaintenance, carActivity, payMeItemBar;
+	private ItemBar carShowGirlItemBar, userFavItemBar, carMaintenance, carActivity, payMeItemBar, carVideoItemBar;
 
 	@Override
 	@Nullable
@@ -48,6 +48,9 @@ public class ExtendFragment extends BaseFragment implements OnClickListener {
 		payMeItemBar = (ItemBar) root.findViewById(R.id.pay_me);
 		payMeItemBar.setItemBarTitle("给我钱");
 		payMeItemBar.setOnClickListener(this);
+		carVideoItemBar = (ItemBar) root.findViewById(R.id.car_video);
+		carVideoItemBar.setItemBarTitle("汽车视频");
+		carVideoItemBar.setOnClickListener(this);
 		return root;
 	}
 
@@ -69,19 +72,22 @@ public class ExtendFragment extends BaseFragment implements OnClickListener {
 			break;
 		case R.id.car_maintenance:
 			Intent carMaintenanceIntent = new Intent(getActivity(), CommonWebActivity.class);
-			carMaintenanceIntent.putExtra(CommonWebActivity.COMMON_WEB_URL,
-					ConstantsUtil.getConstantFromLocalOrRemote("SINA_CAR_MAINTENANCE"));
+			carMaintenanceIntent.putExtra(CommonWebActivity.COMMON_WEB_URL, ConstantsUtil.getConstantFromLocalOrRemote("SINA_CAR_MAINTENANCE"));
 			startActivity(carMaintenanceIntent);
 			break;
 		case R.id.car_activity:
 			Intent carActivityIntent = new Intent(getActivity(), CommonWebActivity.class);
-			carActivityIntent.putExtra(CommonWebActivity.COMMON_WEB_URL,
-					ConstantsUtil.getConstantFromLocalOrRemote("CAR_ACTIVITY"));
+			carActivityIntent.putExtra(CommonWebActivity.COMMON_WEB_URL, ConstantsUtil.getConstantFromLocalOrRemote("CAR_ACTIVITY"));
 			startActivity(carActivityIntent);
 			break;
 		case R.id.pay_me:
 			Intent payIntent = new Intent(getActivity(), PayMeActivity.class);
 			startActivity(payIntent);
+			break;
+		case R.id.car_video:
+			Intent carVideoIntent = new Intent(getActivity(), CommonWebActivity.class);
+			carVideoIntent.putExtra(CommonWebActivity.COMMON_WEB_URL, ConstantsUtil.getConstantFromLocalOrRemote("CAR_VIDEO"));
+			startActivity(carVideoIntent);
 			break;
 		default:
 			break;

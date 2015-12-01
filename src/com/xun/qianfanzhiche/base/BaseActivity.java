@@ -48,14 +48,18 @@ public class BaseActivity extends Activity implements ActionBarListener {
 	public void setContentView(View view) {
 		contentView.addView(view);
 	}
-	
+
 	@Override
 	public void setContentView(View view, LayoutParams params) {
 		contentView.addView(view, params);
 	}
-	
-	public void setActionBarGone(){
+
+	public void setActionBarGone() {
 		zhiCheActionBar.setVisibility(View.GONE);
+	}
+
+	public void setActionBarVisible() {
+		zhiCheActionBar.setVisibility(View.VISIBLE);
 	}
 
 	public void setActionBarTitle(String string) {

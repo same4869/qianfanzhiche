@@ -61,6 +61,16 @@ public class CarGridAdapter extends BaseContentAdapter<CarGridBean> {
 		viewHolder.carImg.setTag(dataList.get(position).getCarUrl());
 		mImageLoader.showImage(dataList.get(position).getCarUrl(), viewHolder.carImg, R.drawable.bg_pic_loading);
 
+		viewHolder.carImg.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(context, CommonWebActivity.class);
+				intent.putExtra(CommonWebActivity.COMMON_WEB_URL, dataList.get(position).getCarDetailUrl());
+				context.startActivity(intent);
+			}
+		});
+
 		viewHolder.carPrice.setOnClickListener(new OnClickListener() {
 
 			@Override

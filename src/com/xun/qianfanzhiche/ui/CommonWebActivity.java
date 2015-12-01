@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.xun.qianfanzhiche.R;
@@ -21,9 +23,13 @@ import com.xun.qianfanzhiche.base.BaseActivity;
  */
 public class CommonWebActivity extends BaseActivity {
 	public static final String COMMON_WEB_URL = "common_web_url";
-	
+
 	private WebView commonWebView;
 	private ProgressBar progressBar;
+
+	private MyWebChromeClient myWebChromeClient;
+	private FrameLayout videoFullLayout;
+	private View myView = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +44,15 @@ public class CommonWebActivity extends BaseActivity {
 		String url = intent.getStringExtra(COMMON_WEB_URL);
 
 		progressBar = (ProgressBar) findViewById(R.id.progressBar);
+		videoFullLayout = (FrameLayout) findViewById(R.id.video_fullView);
 
 		commonWebView = (WebView) findViewById(R.id.common_webview);
 		initSetting();
+		myWebChromeClient = new MyWebChromeClient();
+		commonWebView.setWebChromeClient(myWebChromeClient);
 		commonWebView.setWebViewClient(new MyWebViewClient());
 		commonWebView.loadUrl(url);
-		//"http://auto.sina.cn/guangzhouchezhan/?vt=4&pos=25"
+		// "http://auto.sina.cn/guangzhouchezhan/?vt=4&pos=25"
 
 	}
 
@@ -91,5 +100,49 @@ public class CommonWebActivity extends BaseActivity {
 			return;
 		}
 		super.onBackPressed();
+	}
+
+	class MyWebChromeClient extends WebChromeClient {
+		private CustomViewCallback myCallback = null;
+
+		@Override
+		public void onShowCustomView(View view, CustomViewCallback callback) {
+			super.onShowCustomView(view, callback);
+			setActionBarGone();
+			commonWebView.setVisibility(View.INVISIBLE);
+			// 如果一个视图已经存在，那么立刻终止并新建一个
+			if (myView != null) {
+				callback.onCustomViewHidden();
+				myView = null;
+				return;
+			}
+			videoFullLayout.addView(view);
+			myView = view;
+			myCallback = callback;
+			videoFullLayout.setVisibility(View.VISIBLE);
+		}
+
+		@Override
+		public void onHideCustomView() {
+			super.onHideCustomView();
+			if (myView == null)// 不是全屏播放状态
+				return;
+
+			myView.setVisibility(View.GONE);
+			videoFullLayout.removeView(myView);
+			myView = null;
+			videoFullLayout.setVisibility(View.GONE);
+			myCallback.onCustomViewHidden();
+			commonWebView.setVisibility(View.VISIBLE);
+			setActionBarVisible();
+		}
+	}
+
+	public boolean inCustomView() {
+		return (myView != null);
+	}
+
+	public void hideCustomView() {
+		myWebChromeClient.onHideCustomView();
 	}
 }

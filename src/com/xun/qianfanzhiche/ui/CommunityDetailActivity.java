@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -34,6 +35,8 @@ import com.xun.qianfanzhiche.bean.CommunityItem;
 import com.xun.qianfanzhiche.bean.User;
 import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
 import com.xun.qianfanzhiche.common.Constant;
+import com.xun.qianfanzhiche.db.DatabaseManager;
+import com.xun.qianfanzhiche.manager.ShareManager;
 import com.xun.qianfanzhiche.utils.BmobUtil;
 import com.xun.qianfanzhiche.utils.LogUtil;
 import com.xun.qianfanzhiche.utils.ToastUtil;
@@ -56,6 +59,9 @@ public class CommunityDetailActivity extends BaseActivity implements OnClickList
 	private TextView timeTv;
 	private TextView userLevelTv;
 	private ImageView userLogo;
+	private TextView loveTv;
+	private TextView shareTv;
+	private ImageView favImg;
 
 	private CommunityItem communityItem;
 	private ImageLoaderWithCaches imageLoaderWithCaches;
@@ -85,6 +91,24 @@ public class CommunityDetailActivity extends BaseActivity implements OnClickList
 		}
 		BmobUtil.queryCountForUserLevel(getApplicationContext(), userLevelTv, communityItem.getAuthor().getObjectId());
 		// data.getImage().loadImage(getApplicationContext(), commentItemImage);
+		String avatarUrl = null;
+		if (communityItem.getAuthor() != null && communityItem.getAuthor().getAvatar() != null) {
+			avatarUrl = communityItem.getAuthor().getAvatar().getFileUrl(getApplicationContext());
+		}
+		imageLoaderWithCaches.showImage(avatarUrl, userLogo, R.drawable.defalut_avater);
+		if (communityItem.isMyFav()) {
+			favImg.setImageResource(R.drawable.ic_action_fav_choose);
+		} else {
+			favImg.setImageResource(R.drawable.ic_action_fav_normal);
+		}
+		loveTv.setText(communityItem.getLove() + "");
+		if (BmobUtil.getCurrentUser(getApplicationContext()) != null
+				&& (communityItem.isMyLove() || DatabaseManager.getInstance(getApplicationContext()).isLoved(communityItem))) {
+			loveTv.setTextColor(Color.parseColor("#D95555"));
+		} else {
+			loveTv.setTextColor(Color.parseColor("#000000"));
+		}
+
 		commentAdapter = new CommentAdapter(getApplicationContext(), comments);
 		commentList.setAdapter(commentAdapter);
 		fetchComment();
@@ -97,6 +121,12 @@ public class CommunityDetailActivity extends BaseActivity implements OnClickList
 		footer = (TextView) findViewById(R.id.loadmore);
 		timeTv = (TextView) findViewById(R.id.item_time);
 		userLevelTv = (TextView) findViewById(R.id.item_user_level);
+		loveTv = (TextView) findViewById(R.id.item_action_love);
+		shareTv = (TextView) findViewById(R.id.item_action_share);
+		favImg = (ImageView) findViewById(R.id.item_action_fav);
+		loveTv.setOnClickListener(this);
+		shareTv.setOnClickListener(this);
+		favImg.setOnClickListener(this);
 
 		commentContent = (EditText) findViewById(R.id.comment_content);
 		commentCommit = (Button) findViewById(R.id.comment_commit);
@@ -231,11 +261,111 @@ public class CommunityDetailActivity extends BaseActivity implements OnClickList
 				ToastUtil.show(getApplicationContext(), "发表评论前请先登录。");
 			}
 			break;
+		case R.id.item_action_share:
+			ShareManager.getInstance().showShare(getApplicationContext(), communityItem.getImage().getFileUrl(getApplicationContext()));
+			break;
+		case R.id.item_action_love:
+			final boolean oldFav = communityItem.isMyFav();
+			ToastUtil.show(getApplicationContext(), "点赞");
+			if (BmobUtil.getCurrentUser(getApplicationContext()) == null) {
+				ToastUtil.show(getApplicationContext(), "请先登录。");
+				Intent intent = new Intent();
+				intent.setClass(getApplicationContext(), LoginActivity.class);
+				startActivity(intent);
+				return;
+			}
+			if (communityItem.isMyLove()) {
+				ToastUtil.show(getApplicationContext(), "您已赞过啦");
+				return;
+			}
+			if (DatabaseManager.getInstance(getApplicationContext()).isLoved(communityItem)) {
+				ToastUtil.show(getApplicationContext(), "您已赞过啦");
+				communityItem.setMyLove(true);
+				return;
+			}
+			communityItem.setLove(communityItem.getLove() + 1);
+			loveTv.setTextColor(Color.parseColor("#D95555"));
+			loveTv.setText(communityItem.getLove() + "");
 
+			communityItem.increment("love", 1);
+			if (communityItem.isMyFav()) {
+				communityItem.setMyFav(false);
+			}
+			communityItem.update(getApplicationContext(), new UpdateListener() {
+
+				@Override
+				public void onSuccess() {
+					communityItem.setMyLove(true);
+					communityItem.setMyFav(oldFav);
+					DatabaseManager.getInstance(getApplicationContext()).insertFav(communityItem);
+				}
+
+				@Override
+				public void onFailure(int arg0, String arg1) {
+					communityItem.setMyLove(true);
+					communityItem.setMyFav(oldFav);
+				}
+			});
+			break;
+		case R.id.item_action_fav:
+			onClickFav(v, communityItem);
+			break;
 		default:
 			break;
 		}
 
+	}
+
+	private void onClickFav(View v, final CommunityItem communityItem) {
+		User user = BmobUser.getCurrentUser(getApplicationContext(), User.class);
+		if (user != null && user.getSessionToken() != null) {
+			BmobRelation favRelaton = new BmobRelation();
+
+			communityItem.setMyFav(!communityItem.isMyFav());
+			if (communityItem.isMyFav()) {
+				((ImageView) v).setImageResource(R.drawable.ic_action_fav_choose);
+				favRelaton.add(communityItem);
+				user.setFavorite(favRelaton);
+				user.update(getApplicationContext(), new UpdateListener() {
+
+					@Override
+					public void onSuccess() {
+						ToastUtil.show(getApplicationContext(), "收藏成功。");
+						DatabaseManager.getInstance(getApplicationContext()).insertFav(communityItem);
+					}
+
+					@Override
+					public void onFailure(int arg0, String arg1) {
+						ToastUtil.show(getApplicationContext(), "收藏失败。请检查网络~" + arg0);
+					}
+				});
+
+			} else {
+				((ImageView) v).setImageResource(R.drawable.ic_action_fav_normal);
+				favRelaton.remove(communityItem);
+				user.setFavorite(favRelaton);
+				ToastUtil.show(getApplicationContext(), "取消收藏。");
+				user.update(getApplicationContext(), new UpdateListener() {
+
+					@Override
+					public void onSuccess() {
+						DatabaseManager.getInstance(getApplicationContext()).deleteFav(communityItem);
+					}
+
+					@Override
+					public void onFailure(int arg0, String arg1) {
+						ToastUtil.show(getApplicationContext(), "取消收藏失败。请检查网络~" + arg0);
+					}
+				});
+			}
+
+		} else {
+			// 前往登录注册界面
+			ToastUtil.show(getApplicationContext(), "收藏前请先登录。");
+			Intent intent = new Intent();
+			intent.setClass(getApplicationContext(), LoginActivity.class);
+			startActivity(intent);
+		}
 	}
 
 }
