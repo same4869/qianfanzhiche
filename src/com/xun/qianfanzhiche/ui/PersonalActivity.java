@@ -24,6 +24,8 @@ import com.xun.qianfanzhiche.bean.CommunityItem;
 import com.xun.qianfanzhiche.bean.User;
 import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
 import com.xun.qianfanzhiche.common.Constant;
+import com.xun.qianfanzhiche.db.DatabaseManager;
+import com.xun.qianfanzhiche.utils.BmobUtil;
 import com.xun.qianfanzhiche.utils.ToastUtil;
 
 /**
@@ -148,6 +150,9 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 					}
 
 					data.addAll(list);
+					if (BmobUtil.getCurrentUser(getApplicationContext()) != null) {
+						data = DatabaseManager.getInstance(getApplicationContext()).setFav(data);
+					}
 					putImgData(data);
 					mImageLoader.setImgUrls(imgUrls);
 					favListAdapter.notifyDataSetChanged();

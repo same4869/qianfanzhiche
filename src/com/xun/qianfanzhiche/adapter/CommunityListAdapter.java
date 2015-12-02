@@ -100,6 +100,7 @@ public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
 				} else {
 					ZhiCheApp.getInstance().setCurrentCommunityItem(data.get(position));
 					Intent intent = new Intent(mContext, PersonalActivity.class);
+					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					mContext.startActivity(intent);
 				}
 			}

@@ -24,7 +24,7 @@ public class CustomRadioGroup extends LinearLayout {
 	/**
 	 * IMAGE/TEXT : 条目的图片/文字 START/DIF : 初始值/和目标的差值 R/G/B ： 目标颜色RGB格式下的R/G/B
 	 */
-	private static final int TEXT_START_COLOR = Color.GRAY, END_COLOR = Color.parseColor("#45c01a"), TEXT_START_R = Color.red(TEXT_START_COLOR),
+	private static final int TEXT_START_COLOR = Color.GRAY, END_COLOR = Color.parseColor("#33bbff"), TEXT_START_R = Color.red(TEXT_START_COLOR),
 			TEXT_START_G = Color.green(TEXT_START_COLOR), TEXT_START_B = Color.blue(TEXT_START_COLOR), TEXT_DIF_R = Color.red(END_COLOR) - TEXT_START_R,
 			TEXT_DIF_G = Color.green(END_COLOR) - TEXT_START_G, TEXT_DIF_B = Color.blue(END_COLOR) - TEXT_START_B;;
 	// 相关的资源ID：

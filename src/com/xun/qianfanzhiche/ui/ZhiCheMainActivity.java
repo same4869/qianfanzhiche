@@ -45,9 +45,10 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 
 	private List<Fragment> fragments = new ArrayList<Fragment>();
 	private Boolean is2CallBack = false;// 是否双击退出
-	private int[] itemImage = { R.drawable.basic_spades_d, R.drawable.main_footer_contanct, R.drawable.main_footer_discovery, R.drawable.main_footer_me };
-	private int[] itemCheckedImage = { R.drawable.basic_spades_h, R.drawable.main_footer_contanct_selected, R.drawable.main_footer_discovery_selected,
-			R.drawable.main_footer_me_selected };
+	private int[] itemImage = { R.drawable.basic_spades_d, R.drawable.basic_heart_d, R.drawable.basic_clubs_d,
+			R.drawable.basic_diamonds_d };
+	private int[] itemCheckedImage = { R.drawable.basic_spades_h, R.drawable.basic_heart_h, R.drawable.basic_clubs_h,
+			R.drawable.basic_diamonds_h };
 	private String[] itemText = { "品牌", "社区", "扩展", "个人" };
 
 	@Override

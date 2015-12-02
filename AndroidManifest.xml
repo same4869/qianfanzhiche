@@ -64,7 +64,9 @@
         </activity>
         <activity android:name=".ui.LoginActivity" >
         </activity>
-        <activity android:name=".ui.CommunityDetailActivity" >
+        <activity
+            android:name=".ui.CommunityDetailActivity"
+            android:launchMode="singleTop" >
         </activity>
         <activity android:name=".ui.UserHelperActivity" >
         </activity>
@@ -78,7 +80,9 @@
         </activity>
         <activity android:name=".ui.PayMeActivity" >
         </activity>
-        <activity android:name=".ui.PersonalActivity" >
+        <activity
+            android:name=".ui.PersonalActivity"
+            android:launchMode="singleTop" >
         </activity>
         <activity
             android:name="com.mob.tools.MobUIShell"
