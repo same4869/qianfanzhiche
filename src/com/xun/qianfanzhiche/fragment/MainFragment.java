@@ -58,20 +58,11 @@ public class MainFragment extends BaseFragment implements PathStatusInterface, O
 		carGridAdapter = new CarGridAdapter(getContext(), list, mImageLoader);
 		carGridView.setAdapter(carGridAdapter);
 		carGridView.setOnScrollListener(new MyScrollListener());
-		// carGridView.setOnItemClickListener(new OnItemClickListener() {
-		//
-		// @Override
-		// public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		// Intent intent = new Intent(getActivity(), CommonWebActivity.class);
-		// intent.putExtra(CommonWebActivity.COMMON_WEB_URL, newList.get(position).getCarDetailUrl());
-		// startActivity(intent);
-		// }
-		// });
+
 		PathComposerLayout clayout = (PathComposerLayout) rootView.findViewById(R.id.car_gridview_path);
 		clayout.setOnPathStatusListener(this);
-		clayout.init(new int[] { R.drawable.zhong, R.drawable.ri, R.drawable.de, R.drawable.fa, R.drawable.ying,
-				R.drawable.mei, R.drawable.han, R.drawable.ta, R.drawable.quan }, R.drawable.composer_button,
-				R.drawable.composer_icn_plus, PathComposerLayout.RIGHTBOTTOM,
+		clayout.init(new int[] { R.drawable.zhong, R.drawable.ri, R.drawable.de, R.drawable.fa, R.drawable.ying, R.drawable.mei, R.drawable.han, R.drawable.ta,
+				R.drawable.quan }, R.drawable.composer_button, R.drawable.composer_icn_plus, PathComposerLayout.RIGHTBOTTOM,
 				(int) (ScreenUtil.getDensity(getActivity()) * 200), 300);
 		clayout.setButtonsOnClickListener(clickit);
 		return rootView;

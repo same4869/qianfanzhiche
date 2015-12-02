@@ -16,12 +16,15 @@ import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.listener.UpdateListener;
 
 import com.xun.qianfanzhiche.R;
+import com.xun.qianfanzhiche.app.ZhiCheApp;
 import com.xun.qianfanzhiche.bean.CommunityItem;
 import com.xun.qianfanzhiche.bean.User;
 import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
 import com.xun.qianfanzhiche.db.DatabaseManager;
 import com.xun.qianfanzhiche.manager.ShareManager;
+import com.xun.qianfanzhiche.ui.CommunityDetailActivity;
 import com.xun.qianfanzhiche.ui.LoginActivity;
+import com.xun.qianfanzhiche.ui.PersonalActivity;
 import com.xun.qianfanzhiche.utils.BmobUtil;
 import com.xun.qianfanzhiche.utils.ToastUtil;
 
@@ -75,8 +78,7 @@ public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
 		if (data.get(position).getImage() != null) {
 			viewHolder.itemImg.setVisibility(View.VISIBLE);
 			viewHolder.itemImg.setTag(data.get(position).getImage().getFileUrl(mContext));
-			mImageLoader.showImage(data.get(position).getImage().getFileUrl(mContext), viewHolder.itemImg,
-					R.drawable.bg_pic_loading);
+			mImageLoader.showImage(data.get(position).getImage().getFileUrl(mContext), viewHolder.itemImg, R.drawable.bg_pic_loading);
 		} else {
 			viewHolder.itemImg.setVisibility(View.GONE);
 		}
@@ -84,10 +86,26 @@ public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
 		if (data.get(position).getAuthor() != null && data.get(position).getAuthor().getAvatar() != null) {
 			avatarUrl = data.get(position).getAuthor().getAvatar().getFileUrl(mContext);
 		}
-		mImageLoader.showImage(avatarUrl, viewHolder.itemAvater, R.drawable.defalut_avater);
+		mImageLoader.showImage(avatarUrl, viewHolder.itemAvater, R.drawable.user_icon_default);
+		viewHolder.itemAvater.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (BmobUtil.getCurrentUser(mContext) == null) {
+					ToastUtil.show(mContext, "请先登录。");
+					Intent intent = new Intent();
+					intent.setClass(mContext, LoginActivity.class);
+					mContext.startActivity(intent);
+					return;
+				} else {
+					ZhiCheApp.getInstance().setCurrentCommunityItem(data.get(position));
+					Intent intent = new Intent(mContext, PersonalActivity.class);
+					mContext.startActivity(intent);
+				}
+			}
+		});
 		viewHolder.itemTime.setText(data.get(position).getCreatedAt());
-		BmobUtil.queryCountForUserLevel(mContext, viewHolder.itemUserLeavel, data.get(position).getAuthor()
-				.getObjectId());
+		BmobUtil.queryCountForUserLevel(mContext, viewHolder.itemUserLeavel, data.get(position).getAuthor().getObjectId());
 
 		viewHolder.itemShare.setOnClickListener(new OnClickListener() {
 
@@ -112,8 +130,7 @@ public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
 		});
 
 		viewHolder.itemLove.setText(data.get(position).getLove() + "");
-		if (BmobUtil.getCurrentUser(mContext) != null
-				&& (data.get(position).isMyLove() || DatabaseManager.getInstance(mContext).isLoved(data.get(position)))) {
+		if (BmobUtil.getCurrentUser(mContext) != null && (data.get(position).isMyLove() || DatabaseManager.getInstance(mContext).isLoved(data.get(position)))) {
 			viewHolder.itemLove.setTextColor(Color.parseColor("#D95555"));
 		} else {
 			viewHolder.itemLove.setTextColor(Color.parseColor("#000000"));
@@ -138,11 +155,6 @@ public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
 				if (DatabaseManager.getInstance(mContext).isLoved(data.get(position))) {
 					ToastUtil.show(mContext, "您已赞过啦");
 					data.get(position).setMyLove(true);
-					// data.get(position).setLove(data.get(position).getLove() +
-					// 1);
-					// viewHolder.itemLove.setTextColor(Color.parseColor("#D95555"));
-					// viewHolder.itemLove.setText(data.get(position).getLove()
-					// + "");
 					return;
 				}
 				data.get(position).setLove(data.get(position).getLove() + 1);
@@ -168,6 +180,16 @@ public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
 						data.get(position).setMyFav(oldFav);
 					}
 				});
+			}
+		});
+		viewHolder.itemComment.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(mContext, CommunityDetailActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				intent.putExtra("data", data.get(position));
+				mContext.startActivity(intent);
 			}
 		});
 

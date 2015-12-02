@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
@@ -14,8 +13,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import cn.bmob.v3.BmobQuery;
@@ -29,7 +26,6 @@ import com.xun.qianfanzhiche.bean.CommunityItem;
 import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
 import com.xun.qianfanzhiche.common.Constant;
 import com.xun.qianfanzhiche.db.DatabaseManager;
-import com.xun.qianfanzhiche.ui.CommunityDetailActivity;
 import com.xun.qianfanzhiche.ui.ZhiCheMainActivity;
 import com.xun.qianfanzhiche.ui.ZhiCheMainActivity.ActionBarTopInterface;
 import com.xun.qianfanzhiche.utils.BmobUtil;
@@ -79,15 +75,6 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 		myScrollListener = new MyScrollListener();
 		mListView.setAdapter(communityListAdapter);
 		((ZhiCheMainActivity) getActivity()).setActionBarTopInterface(this);
-		mListView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Intent intent = new Intent(getActivity(), CommunityDetailActivity.class);
-				intent.putExtra("data", data.get(position));
-				startActivity(intent);
-			}
-		});
 		return rootView;
 	}
 

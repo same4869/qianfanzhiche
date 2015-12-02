@@ -23,6 +23,7 @@ import com.xun.qianfanzhiche.base.BaseActivity;
  */
 public class CommonWebActivity extends BaseActivity {
 	public static final String COMMON_WEB_URL = "common_web_url";
+	public static final String COMMON_WEB_TITLE = "common_web_title";
 
 	private WebView commonWebView;
 	private ProgressBar progressBar;
@@ -43,6 +44,8 @@ public class CommonWebActivity extends BaseActivity {
 		Intent intent = getIntent();
 		String url = intent.getStringExtra(COMMON_WEB_URL);
 
+		setActionBarTitle(intent.getStringExtra(COMMON_WEB_TITLE));
+
 		progressBar = (ProgressBar) findViewById(R.id.progressBar);
 		videoFullLayout = (FrameLayout) findViewById(R.id.video_fullView);
 
@@ -52,7 +55,6 @@ public class CommonWebActivity extends BaseActivity {
 		commonWebView.setWebChromeClient(myWebChromeClient);
 		commonWebView.setWebViewClient(new MyWebViewClient());
 		commonWebView.loadUrl(url);
-		// "http://auto.sina.cn/guangzhouchezhan/?vt=4&pos=25"
 
 	}
 

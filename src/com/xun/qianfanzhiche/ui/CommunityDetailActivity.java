@@ -95,7 +95,7 @@ public class CommunityDetailActivity extends BaseActivity implements OnClickList
 		if (communityItem.getAuthor() != null && communityItem.getAuthor().getAvatar() != null) {
 			avatarUrl = communityItem.getAuthor().getAvatar().getFileUrl(getApplicationContext());
 		}
-		imageLoaderWithCaches.showImage(avatarUrl, userLogo, R.drawable.defalut_avater);
+		imageLoaderWithCaches.showImage(avatarUrl, userLogo, R.drawable.user_icon_default);
 		if (communityItem.isMyFav()) {
 			favImg.setImageResource(R.drawable.ic_action_fav_choose);
 		} else {

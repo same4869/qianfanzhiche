@@ -11,6 +11,7 @@ import com.xun.qianfanzhiche.R;
 
 public class ItemBar extends FrameLayout {
 	private TextView itemBarTitle, itemBarContent, itemBarArrow;
+	private View topLine;
 
 	public ItemBar(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -32,6 +33,11 @@ public class ItemBar extends FrameLayout {
 		itemBarTitle = (TextView) view.findViewById(R.id.item_bar_title);
 		itemBarContent = (TextView) view.findViewById(R.id.item_bar_content);
 		itemBarArrow = (TextView) view.findViewById(R.id.item_bar_arrow);
+		topLine = (View) view.findViewById(R.id.item_bar_top_line);
+	}
+
+	public void setTopLineVisible() {
+		topLine.setVisibility(View.VISIBLE);
 	}
 
 	public void setItemBarTitle(String string) {

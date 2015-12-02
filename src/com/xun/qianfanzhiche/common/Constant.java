@@ -9,6 +9,10 @@ public class Constant {
 
 	public static final String WEIXIN_APP_ID = "wxf373d09a6458127c";
 
+	public static final String YOU_MI_APP_ID = "d846455406a2ac6f";
+
+	public static final String YOU_MI_APP_SECRET = "2b7a62635620d835";
+
 	// 下面的地址分为取本地与使用服务器两种方式
 	public static final String QINIU_IMG_BASE_URL = "http://7xnmgu.com1.z0.glb.clouddn.com/";// 七牛存储，首页车标图片，车模图片
 
@@ -23,5 +27,7 @@ public class Constant {
 	public static final String CAR_ACTIVITY = "http://auto.sina.cn/guangzhouchezhan/"; // 汽车活动
 
 	public static final String CAR_VIDEO = "http://auto.sina.cn/video/";// 汽车视频
+
+	public static final String CAR_NEWS = "http://info.3g.qq.com/g/s?aid=template&tid=auto_h&icfa=home_navi&iarea=220"; // 汽车新闻
 
 }

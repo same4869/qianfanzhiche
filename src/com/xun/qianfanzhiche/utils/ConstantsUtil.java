@@ -52,6 +52,12 @@ public class ConstantsUtil {
 			} else {
 				return ZhiCheSPUtil.getBaiduBaiKeBaseUrl();
 			}
+		} else if (constantKey.equals("CAR_NEWS")) {
+			if (isUseLocalConstants) {
+				return Constant.CAR_NEWS;
+			} else {
+				return ZhiCheSPUtil.getBaiduBaiKeBaseUrl();
+			}
 		}
 		return constantKey;
 	}

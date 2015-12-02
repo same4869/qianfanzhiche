@@ -38,6 +38,7 @@ public class FavActivity extends BaseActivity {
 	private static final int LOADING_COMPLETED = 2;
 	private static final int LOADING_FAILED = 3;
 	private static final int NORMAL = 4;
+	private static final int PRE_LOAD_OFFSET = 2;// 拉到距离底部多少条的时候加载下一页
 
 	private ListView favListView;
 	private CommunityListAdapter favListAdapter;
@@ -163,7 +164,7 @@ public class FavActivity extends BaseActivity {
 				mImageLoader.loadImages(start, end);
 				mFirstFlag = false;
 			}
-			if (end > totalItemCount - Constant.NUMBERS_PER_PAGE && !isAllLoaded) {
+			if (end > totalItemCount - PRE_LOAD_OFFSET && !isAllLoaded) {
 				loadData();
 			}
 		}

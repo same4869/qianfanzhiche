@@ -28,6 +28,7 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void initView() {
+		setActionBarTitle("千帆基金");
 		payAliBtn = (Button) findViewById(R.id.pay_ali_btn);
 		payWxBtn = (Button) findViewById(R.id.pay_wx_btn);
 		payAliBtn.setOnClickListener(this);

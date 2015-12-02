@@ -13,6 +13,7 @@ import cn.bmob.v3.listener.SaveListener;
 
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.xun.qianfanzhiche.bean.CommunityItem;
 import com.xun.qianfanzhiche.bean.ConstantsBean;
 import com.xun.qianfanzhiche.common.Constant;
 import com.xun.qianfanzhiche.utils.ActivityManagerUtils;
@@ -23,6 +24,7 @@ import com.xun.qianfanzhiche.utils.ZhiCheSPUtil;
 public class ZhiCheApp extends Application {
 	private static ZhiCheApp mApplication = null;
 	public static IWXAPI api;
+	private CommunityItem currentCommunityItem = null;
 
 	public static ZhiCheApp getInstance() {
 		return mApplication;
@@ -41,7 +43,7 @@ public class ZhiCheApp extends Application {
 		// setConstants();
 		getConstants();
 	}
-	
+
 	private void register2WX() {
 		api = WXAPIFactory.createWXAPI(this, Constant.WEIXIN_APP_ID, true);
 		api.registerApp(Constant.WEIXIN_APP_ID);
@@ -57,8 +59,8 @@ public class ZhiCheApp extends Application {
 			public void onSuccess(List<ConstantsBean> object) {
 				for (ConstantsBean constantsBean : object) {
 					LogUtil.d(LogUtil.TAG, "constantsBean.getQiniuBaseUrl() --> " + constantsBean.getQiniuBaseUrl()
-							+ " constantsBean.getAutoHomeBaseUrl() --> " + constantsBean.getAutoHomeBaseUrl()
-							+ " constantsBean.getBaiduBaiKeBaseUrl() --> " + constantsBean.getBaiduBaiKeBaseUrl());
+							+ " constantsBean.getAutoHomeBaseUrl() --> " + constantsBean.getAutoHomeBaseUrl() + " constantsBean.getBaiduBaiKeBaseUrl() --> "
+							+ constantsBean.getBaiduBaiKeBaseUrl());
 					ZhiCheSPUtil.setQiniuBaseUrl(constantsBean.getQiniuBaseUrl());
 					ZhiCheSPUtil.setAutoHomeBaseUrl(constantsBean.getAutoHomeBaseUrl());
 					ZhiCheSPUtil.setAutoHomeBaseUrlSuffix(constantsBean.getAutoHomeBaseUrlSuffix());
@@ -99,6 +101,14 @@ public class ZhiCheApp extends Application {
 				ToastUtil.show(getApplicationContext(), "初始化常量失败");
 			}
 		});
+	}
+
+	public CommunityItem getCurrentCommunityItem() {
+		return currentCommunityItem;
+	}
+
+	public void setCurrentCommunityItem(CommunityItem currentCommunityItem) {
+		this.currentCommunityItem = currentCommunityItem;
 	}
 
 	public void addActivity(Activity ac) {

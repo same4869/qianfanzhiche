@@ -29,6 +29,8 @@ public class CarShowGirlActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_car_show_girl);
 
+		setActionBarTitle("汽车车模");
+
 		mImg = (ImageView) findViewById(R.id.id_content);
 		mDatas = getQiNiuImgData(50);
 

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/personal_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/theme_color"
+        android:padding="16dp" >
+
+        <ImageView
+            android:id="@+id/personal_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="4dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/user_icon_default" />
+
+        <TextView
+            android:id="@+id/personl_name"
+            style="@android:style/TextAppearance.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/personal_icon"
+            android:layout_margin="4dip"
+            android:layout_toRightOf="@id/personal_icon"
+            android:text="清风拭泪"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/personl_signature"
+            style="@android:style/TextAppearance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/personl_name"
+            android:layout_margin="4dip"
+            android:layout_toRightOf="@id/personal_icon"
+            android:text="面朝大海，春暖花开"
+            android:textColor="#FFFFFF" />
+
+        <ImageView
+            android:id="@+id/go_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/personl_name"
+            android:scaleType="centerInside"
+            android:src="@drawable/bg_go_settings" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/personl_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/personal_info"
+        android:gravity="center"
+        android:padding="8dip"
+        android:text="发表过的"
+        android:textColor="#888888"
+        android:textSize="16sp"
+        android:textStyle="normal" />
+
+    <ListView
+        android:id="@+id/personal_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/personl_title"
+        android:divider="@null" >
+    </ListView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+</RelativeLayout>
