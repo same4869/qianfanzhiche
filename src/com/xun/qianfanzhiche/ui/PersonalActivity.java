@@ -3,6 +3,7 @@ package com.xun.qianfanzhiche.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -55,6 +56,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 	private int pageNum;
 	private int start, end;
 	private boolean mFirstFlag = true;
+	private boolean isFromUserCenter;
 	private List<String> imgUrls = new ArrayList<String>();
 	private List<CommunityItem> data = new ArrayList<CommunityItem>();
 
@@ -87,6 +89,8 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 		mImageLoader = new ImageLoaderWithCaches(getApplicationContext(), mListView, imgUrls);
 		favListAdapter = new CommunityListAdapter(getApplicationContext(), data, mImageLoader);
 		mListView.setAdapter(favListAdapter);
+
+		updatePersonalInfo(mUser);
 	}
 
 	private void initView() {
@@ -98,8 +102,18 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 		mListView = (ListView) findViewById(R.id.personal_list);
 		progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-		mUser = ZhiCheApp.getInstance().getCurrentCommunityItem().getAuthor();
-		updatePersonalInfo(mUser);
+		setActionBarTitle("个人中心");
+
+		Intent intent = getIntent();
+		if (intent.getBooleanExtra("isFromUserCenter", false)) {
+			isFromUserCenter = true;
+		}
+
+		if (!isFromUserCenter) {
+			mUser = ZhiCheApp.getInstance().getCurrentCommunityItem().getAuthor();
+		} else {
+			mUser = BmobUtil.getCurrentUser(getApplicationContext());
+		}
 	}
 
 	private void updatePersonalInfo(User user) {
@@ -109,6 +123,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 			mImageLoader.loadImagesWithUrl(personalIcon, user.getAvatar().getFileUrl(getApplicationContext()));
 		}
 	}
+
 
 	/**
 	 * 判断点击条目的用户是否是当前登录用户

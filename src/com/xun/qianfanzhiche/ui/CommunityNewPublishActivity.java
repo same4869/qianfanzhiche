@@ -74,6 +74,8 @@ public class CommunityNewPublishActivity extends BaseActivity implements OnClick
 		takeLayout = (LinearLayout) findViewById(R.id.take_layout);
 		takeLayout.setOnClickListener(this);
 		selectedImg = (ImageView) findViewById(R.id.selectedImg);
+		setActionBarTitle("发布新帖");
+		getZhiCheActionBar().setAddImgResource(R.drawable.basic_elaboration_todolist_check);
 	}
 
 	// 发表纯文本内容,第一个参数为空，不然调下个函数

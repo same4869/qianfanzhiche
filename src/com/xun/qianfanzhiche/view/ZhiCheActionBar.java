@@ -64,6 +64,10 @@ public class ZhiCheActionBar extends FrameLayout implements OnClickListener {
 		textTv.setVisibility(View.VISIBLE);
 		textTv.setText(string);
 	}
+	
+	public void setAddImgResource(int resourceId){
+		addImg.setImageResource(resourceId);
+	}
 
 	public interface ActionBarListener {
 		void onBackImgClick();

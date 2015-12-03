@@ -24,7 +24,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/user_icon_default" />
 
         <TextView
             android:id="@+id/item_name"
@@ -75,9 +75,8 @@
             android:id="@+id/item_action_fav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/item_avater"
+            android:layout_alignBottom="@id/item_time"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@id/item_avater"
             android:layout_marginRight="10dp"
             android:scaleType="centerInside"
             android:src="@drawable/ic_action_fav_normal" />

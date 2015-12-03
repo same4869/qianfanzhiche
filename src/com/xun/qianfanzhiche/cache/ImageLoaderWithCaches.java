@@ -15,6 +15,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -23,6 +25,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.util.LruCache;
 import android.widget.AbsListView;
 import android.widget.ImageView;
@@ -33,6 +37,8 @@ public class ImageLoaderWithCaches {
 	private Set<ASyncDownloadImage> mTask;
 	private DiskLruCache mDiskCaches;
 	private List<String> imgUrls;
+
+	private ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
 
 	public ImageLoaderWithCaches(Context context, AbsListView listView, List<String> imgUrls) {
 		this.listView = listView;
@@ -99,26 +105,61 @@ public class ImageLoaderWithCaches {
 		return new File(cachePath + File.separator + cacheFileName);
 	}
 
-	private static Bitmap getBitmapFromUrl(String urlString) {
-		Bitmap bitmap;
-		InputStream is = null;
-		try {
-			URL url = new URL(urlString);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			is = new BufferedInputStream(conn.getInputStream());
-			bitmap = BitmapFactory.decodeStream(is);
-			conn.disconnect();
-			return bitmap;
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (is != null)
-					is.close();
-			} catch (IOException e) {
+	ImageView imageView;
+	int defaultImg;
+
+	public void setImageFromUrl(String urlString, ImageView imageView, int defaultImg) {
+		getBitmapFromUrl(urlString);
+		this.imageView = imageView;
+		this.defaultImg = defaultImg;
+	}
+
+	Handler mHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			Bitmap bitmap = (Bitmap) msg.obj;
+			if (bitmap != null) {
+				imageView.setImageBitmap(bitmap);
+			} else {
+				imageView.setImageResource(defaultImg);
 			}
 		}
-		return null;
+
+	};
+
+	private void getBitmapFromUrl(final String urlString) {
+
+		cachedThreadPool.execute(new Runnable() {
+
+			@Override
+			public void run() {
+				Bitmap bitmap;
+				InputStream is = null;
+				try {
+					URL url = new URL(urlString);
+					HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+					conn.setConnectTimeout(6000);
+					conn.setDoInput(true);
+					conn.setUseCaches(false);
+					is = new BufferedInputStream(conn.getInputStream());
+					bitmap = BitmapFactory.decodeStream(is);
+					conn.disconnect();
+					Message message = Message.obtain();
+					message.obj = bitmap;
+					mHandler.sendMessage(message);
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						if (is != null)
+							is.close();
+					} catch (IOException e) {
+					}
+				}
+			}
+		});
+
 	}
 
 	private static boolean getBitmapUrlToStream(String urlString, OutputStream outputStream) {

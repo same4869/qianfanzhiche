@@ -86,7 +86,13 @@ public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
 		if (data.get(position).getAuthor() != null && data.get(position).getAuthor().getAvatar() != null) {
 			avatarUrl = data.get(position).getAuthor().getAvatar().getFileUrl(mContext);
 		}
-		mImageLoader.showImage(avatarUrl, viewHolder.itemAvater, R.drawable.user_icon_default);
+		if (avatarUrl == null) {
+			viewHolder.itemAvater.setImageResource(R.drawable.user_icon_default);
+		} else {
+			//TODO
+			//viewHolder.itemAvater.setTag(avatarUrl);
+			mImageLoader.setImageFromUrl(avatarUrl, viewHolder.itemAvater, R.drawable.user_icon_default);
+		}
 		viewHolder.itemAvater.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -184,7 +190,7 @@ public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
 			}
 		});
 		viewHolder.itemComment.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(mContext, CommunityDetailActivity.class);

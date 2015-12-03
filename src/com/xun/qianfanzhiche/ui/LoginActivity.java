@@ -105,6 +105,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 						@Override
 						public void run() {
+							setResult(RESULT_OK);
 							finish();
 						}
 					}, 3000);
@@ -522,11 +523,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			qqAuthorize();
 			break;
 		case R.id.login_auth_weixin_button:
-			 // send oauth request 
-		    final SendAuth.Req req = new SendAuth.Req();
-		    req.scope = "snsapi_userinfo";
-		    req.state = "wechat_sdk_qianfanzhiche";
-		    ZhiCheApp.api.sendReq(req);
+			// send oauth request
+			final SendAuth.Req req = new SendAuth.Req();
+			req.scope = "snsapi_userinfo";
+			req.state = "wechat_sdk_qianfanzhiche";
+			ZhiCheApp.api.sendReq(req);
 			break;
 		default:
 			break;

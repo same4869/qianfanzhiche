@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-
     <ScrollView
         android:id="@+id/commit_scroll"
         android:layout_width="match_parent"
@@ -63,7 +62,7 @@
             android:layout_weight="1"
             android:background="@drawable/selector_edittext_account"
             android:ems="10"
-            android:hint="来评论一句吧"
+            android:hint="求求您来评论一句吧"
             android:minHeight="40dp"
             android:paddingLeft="4dip" >
 

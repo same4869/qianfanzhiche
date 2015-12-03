@@ -11,7 +11,7 @@
         android:layout_margin="16dp"
         android:background="@drawable/selector_edittext"
         android:gravity="left|top"
-        android:hint="说说这段风景的故事吧"
+        android:hint="在这里添加文字内容"
         android:inputType="textMultiLine"
         android:minLines="8"
         android:paddingLeft="4dip"
@@ -26,7 +26,19 @@
         android:layout_height="100dp"
         android:layout_below="@+id/edit_content"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_launcher" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/basic_elaboration_todolist_plus" />
+
+    <TextView
+        android:id="@+id/selectedImgTip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/selectedImg"
+        android:layout_margin="6dp"
+        android:layout_toRightOf="@+id/selectedImg"
+        android:src="@drawable/basic_elaboration_todolist_plus"
+        android:text="&lt;-点击左侧添加图片"
+        android:textColor="#cccccc" />
 
     <RelativeLayout
         android:id="@+id/pic_content"

@@ -65,6 +65,10 @@ public class BaseActivity extends Activity implements ActionBarListener {
 	public void setActionBarTitle(String string) {
 		zhiCheActionBar.setTitle(string);
 	}
+	
+	public ZhiCheActionBar getZhiCheActionBar() {
+		return zhiCheActionBar;
+	}
 
 	@Override
 	public void onBackImgClick() {
