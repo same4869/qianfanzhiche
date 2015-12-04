@@ -51,6 +51,7 @@ public class FavActivity extends BaseActivity {
 	private MyScrollListener myScrollListener;
 	private List<CommunityItem> data = new ArrayList<CommunityItem>();
 	private List<String> imgUrls = new ArrayList<String>();
+	private List<String> imgUrlsAvatar = new ArrayList<String>();
 	private int pageNum = 0;
 	private int start, end;
 	private boolean mFirstFlag = true;
@@ -75,11 +76,17 @@ public class FavActivity extends BaseActivity {
 
 	private void putImgData(List<CommunityItem> object) {
 		imgUrls.clear();
+		imgUrlsAvatar.clear();
 		for (int i = 0; i < object.size(); i++) {
 			if (object.get(i).getImage() == null) {
 				imgUrls.add("null");
 			} else {
 				imgUrls.add(object.get(i).getImage().getFileUrl(getApplicationContext()));
+			}
+			if (object.get(i).getAuthor() != null && object.get(i).getAuthor().getAvatar() != null) {
+				imgUrlsAvatar.add(object.get(i).getAuthor().getAvatar().getFileUrl(getApplicationContext()));
+			} else {
+				imgUrlsAvatar.add("null");
 			}
 		}
 	}
@@ -117,6 +124,7 @@ public class FavActivity extends BaseActivity {
 					}
 					putImgData(data);
 					mImageLoader.setImgUrls(imgUrls);
+					mImageLoader.setAvatarImgUrls(imgUrlsAvatar);
 					favListAdapter.notifyDataSetChanged();
 					favListView.setOnScrollListener(myScrollListener);
 					setState(LOADING_COMPLETED);
@@ -156,6 +164,7 @@ public class FavActivity extends BaseActivity {
 		public void onScrollStateChanged(AbsListView arg0, int scrollState) {
 			if (scrollState == SCROLL_STATE_IDLE) {
 				mImageLoader.loadImages(start, end);
+				mImageLoader.loadAvatar(start, end);
 			} else {
 				mImageLoader.cancelAllTask();
 			}
@@ -167,6 +176,7 @@ public class FavActivity extends BaseActivity {
 			end = firstVisibleItem + visibleItemCount;
 			if (mFirstFlag && visibleItemCount > 0) {
 				mImageLoader.loadImages(start, end);
+				mImageLoader.loadAvatar(start, end);
 				mFirstFlag = false;
 			}
 			if (end > totalItemCount - PRE_LOAD_OFFSET && !isAllLoaded) {

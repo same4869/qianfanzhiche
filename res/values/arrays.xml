@@ -40,6 +40,17 @@
         <item>77</item>
         <item>84</item>
         <item>40</item>
+        <item>42</item>
+        <item>57</item>
+        <item>65</item>
+        <item>52</item>
+        <item>20</item>
+        <item>67</item>
+        <item>70</item>
+        <item>9</item>
+        <item>47</item>
+        <item>49</item>
+        <item>72</item>
     </string-array>
     <string-array name="car_grid_name">
         <item>大众-2</item>
@@ -62,6 +73,17 @@
         <item>长城-0</item>
         <item>江淮-0</item>
         <item>保时捷-2</item>
+        <item>法拉利-7</item>
+        <item>马萨拉蒂-7</item>
+        <item>斯巴鲁-1</item>
+        <item>雷克萨斯-1</item>
+        <item>MG-0</item>
+        <item>斯柯达-7</item>
+        <item>沃尔沃-7</item>
+        <item>克莱斯勒-5</item>
+        <item>凯迪拉克-5</item>
+        <item>陆虎-4</item>
+        <item>雪铁龙-3</item>
     </string-array>
     <!-- 这个key是在百度百科的index -->
     <string-array name="car_grid_baike_key">
@@ -74,6 +96,18 @@
         <item>2450</item>
         <item>726716</item>
         <item>13873</item>
+        <item>5345033</item>
+        <item>29774</item>
+        <item>19411</item>
+        <item>94157</item>
+        <item>29841</item>
+        <item>79198</item>
+        <item>897170</item>
+        <item>2480529</item>
+        <item>4396</item>
+        <item>672538</item>
+        <item>5523</item>
+        
         <item>5345033</item>
         <item>29774</item>
         <item>19411</item>

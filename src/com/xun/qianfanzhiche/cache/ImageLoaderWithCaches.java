@@ -37,6 +37,7 @@ public class ImageLoaderWithCaches {
 	private Set<ASyncDownloadImage> mTask;
 	private DiskLruCache mDiskCaches;
 	private List<String> imgUrls;
+	private List<String> imgUrlsAvatar;
 
 	private ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
 
@@ -79,6 +80,10 @@ public class ImageLoaderWithCaches {
 
 	public void setImgUrls(List<String> imgUrls) {
 		this.imgUrls = imgUrls;
+	}
+	
+	public void setAvatarImgUrls(List<String> imgUrlsAvatar){
+		this.imgUrlsAvatar = imgUrlsAvatar;
 	}
 
 	public void showImage(String url, ImageView imageView, int defaultImg) {
@@ -246,6 +251,24 @@ public class ImageLoaderWithCaches {
 			task.execute(url);
 		} else {
 			imageView.setImageBitmap(bitmap);
+		}
+	}
+
+	public void loadAvatar(int start, int end) {
+		for (int i = start; i < end; i++) {
+			String url = imgUrlsAvatar.get(i);
+			if (url.equals("null")) {
+				continue;
+			}
+			Bitmap bitmap = getBitmapFromMemoryCaches(url);
+			if (bitmap == null) {
+				ASyncDownloadImage task = new ASyncDownloadImage(url, null);
+				mTask.add(task);
+				task.execute(url);
+			} else {
+				ImageView imageView = (ImageView) listView.findViewWithTag(url);
+				imageView.setImageBitmap(bitmap);
+			}
 		}
 	}
 
