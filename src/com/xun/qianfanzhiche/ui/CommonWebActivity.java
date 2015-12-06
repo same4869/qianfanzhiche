@@ -51,6 +51,7 @@ public class CommonWebActivity extends BaseActivity {
 
 		commonWebView = (WebView) findViewById(R.id.common_webview);
 		initSetting();
+
 		myWebChromeClient = new MyWebChromeClient();
 		commonWebView.setWebChromeClient(myWebChromeClient);
 		commonWebView.setWebViewClient(new MyWebViewClient());

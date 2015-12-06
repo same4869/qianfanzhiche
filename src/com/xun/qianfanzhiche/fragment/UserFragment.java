@@ -61,7 +61,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 	private ImageView avaterImg;
 	private TextView avaterText;
 	private ItemBar sexItemBar, changePasswordItemBar, resetPasswordItemBar, logoutItemBar, userHelperItemBar, userCardItemBar, carItemBar, signatureItemBar;
-	private AlertDialog albumDialog, editDialog, logoutDialog;
+	private AlertDialog albumDialog, editDialog;
 
 	private ImageLoaderWithCaches mImageLoaderWithCaches;
 

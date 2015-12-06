@@ -74,6 +74,7 @@ public class CommunityNewPublishActivity extends BaseActivity implements OnClick
 		takeLayout = (LinearLayout) findViewById(R.id.take_layout);
 		takeLayout.setOnClickListener(this);
 		selectedImg = (ImageView) findViewById(R.id.selectedImg);
+		selectedImg.setOnClickListener(this);
 		setActionBarTitle("发布新帖");
 		getZhiCheActionBar().setAddImgResource(R.drawable.basic_elaboration_todolist_check);
 	}
@@ -97,20 +98,34 @@ public class CommunityNewPublishActivity extends BaseActivity implements OnClick
 				ToastUtil.show(CommunityNewPublishActivity.this, "发表成功！");
 				setResult(RESULT_OK);
 				isPublishing = false;
+				publishingState(isPublishing);
 				finish();
 			}
 
 			@Override
 			public void onFailure(int arg0, String arg1) {
 				isPublishing = false;
+				publishingState(isPublishing);
 				ToastUtil.show(CommunityNewPublishActivity.this, "发表失败" + arg1);
 			}
 		});
 	}
 
+	private void publishingState(boolean isPublishing) {
+		if (isPublishing) {
+			getZhiCheActionBar().getaddImg().setVisibility(View.GONE);
+			getZhiCheActionBar().getTextTv().setVisibility(View.VISIBLE);
+			getZhiCheActionBar().getTextTv().setText("发布中···");
+		} else {
+			getZhiCheActionBar().getaddImg().setVisibility(View.VISIBLE);
+			getZhiCheActionBar().getTextTv().setVisibility(View.GONE);
+		}
+	}
+
 	// 发表图文内容
 	private void publishWithImg(final String content, String targeturl) {
 		isPublishing = true;
+		publishingState(isPublishing);
 		final BmobFile figureFile = new BmobFile(new File(targeturl));
 		figureFile.upload(getApplicationContext(), new UploadFileListener() {
 
@@ -124,6 +139,7 @@ public class CommunityNewPublishActivity extends BaseActivity implements OnClick
 			public void onFailure(int arg0, String arg1) {
 				LogUtil.d(LogUtil.TAG, "文件上传失败 --> " + arg1);
 				isPublishing = false;
+				publishingState(isPublishing);
 			}
 		});
 	}
@@ -181,7 +197,9 @@ public class CommunityNewPublishActivity extends BaseActivity implements OnClick
 			camera.putExtra(MediaStore.EXTRA_OUTPUT, uri);
 			startActivityForResult(camera, REQUEST_CODE_CAMERA);
 			break;
-
+		case R.id.selectedImg:
+			ToastUtil.show(getApplicationContext(), "选择的图片在这里显示噢");
+			break;
 		default:
 			break;
 		}

@@ -45,10 +45,19 @@ public class ZhiCheActionBar extends FrameLayout implements OnClickListener {
 		backImg.setOnClickListener(this);
 		addImg.setOnClickListener(this);
 		textTv.setOnClickListener(this);
+		addImg.setVisibility(View.GONE);
 	}
 
 	public ImageView getBackImg() {
 		return backImg;
+	}
+
+	public ImageView getaddImg() {
+		return addImg;
+	}
+
+	public TextView getTextTv() {
+		return textTv;
 	}
 
 	public void setOnActionBarListener(ActionBarListener actionBarListener) {
@@ -64,8 +73,8 @@ public class ZhiCheActionBar extends FrameLayout implements OnClickListener {
 		textTv.setVisibility(View.VISIBLE);
 		textTv.setText(string);
 	}
-	
-	public void setAddImgResource(int resourceId){
+
+	public void setAddImgResource(int resourceId) {
 		addImg.setImageResource(resourceId);
 	}
 

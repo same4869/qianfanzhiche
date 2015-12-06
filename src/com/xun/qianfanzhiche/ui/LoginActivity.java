@@ -146,7 +146,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		loginLayout = (RelativeLayout) findViewById(R.id.login_layout);
 		loginAuthQQBtn = (ImageView) findViewById(R.id.login_auth_qq_button);
 		loginAuthWeixinBtn = (ImageView) findViewById(R.id.login_auth_weixin_button);
-
+		
 		bg = BitmapFactory.decodeResource(getResources(), R.drawable.bg);
 		mbIsSlidingBack = false;
 		miLastX = 0;

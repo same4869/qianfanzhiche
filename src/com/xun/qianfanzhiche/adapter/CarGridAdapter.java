@@ -67,6 +67,7 @@ public class CarGridAdapter extends BaseContentAdapter<CarGridBean> {
 			public void onClick(View v) {
 				Intent intent = new Intent(context, CommonWebActivity.class);
 				intent.putExtra(CommonWebActivity.COMMON_WEB_URL, dataList.get(position).getCarDetailUrl());
+				intent.putExtra(CommonWebActivity.COMMON_WEB_TITLE, "品牌介绍");
 				context.startActivity(intent);
 			}
 		});
@@ -79,6 +80,7 @@ public class CarGridAdapter extends BaseContentAdapter<CarGridBean> {
 				String url = ConstantsUtil.getConstantFromLocalOrRemote("AUTO_HOME_BASE_URL") + carKey.get(position)
 						+ ConstantsUtil.getConstantFromLocalOrRemote("AUTO_HOME_BASE_URL_SUFFIX");
 				intent.putExtra(CommonWebActivity.COMMON_WEB_URL, url);
+				intent.putExtra(CommonWebActivity.COMMON_WEB_TITLE, "品牌报价");
 				context.startActivity(intent);
 			}
 		});

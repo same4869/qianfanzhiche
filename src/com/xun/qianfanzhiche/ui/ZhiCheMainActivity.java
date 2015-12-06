@@ -72,6 +72,7 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 		zhiCheActionBar.setOnActionBarListener(this);
 		zhiCheActionBar.getBackImg().setVisibility(View.GONE);
 		zhiCheActionBar.setTitle("汽车品牌");
+		zhiCheActionBar.getaddImg().setVisibility(View.VISIBLE);
 	}
 
 	private void initFragment() {
