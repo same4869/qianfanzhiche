@@ -96,7 +96,12 @@ public class ExtendFragment extends BaseFragment implements OnClickListener, net
 			startActivity(carActivityIntent);
 			break;
 		case R.id.pay_me:
+			boolean isLogined = false;
+			if (BmobUtil.getCurrentUser(getContext()) != null) {
+				isLogined = true;
+			}
 			Intent payIntent = new Intent(getActivity(), PayMeActivity.class);
+			payIntent.putExtra("isLogined", isLogined);
 			startActivity(payIntent);
 			break;
 		case R.id.car_video:

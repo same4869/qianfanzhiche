@@ -80,6 +80,14 @@
         </activity>
         <activity android:name=".ui.PayMeActivity" >
         </activity>
+        <activity android:name=".ui.RegisterActivity" >
+        </activity>
+        <activity android:name=".ui.LoginOneKeyActivity" >
+        </activity>
+        <activity android:name=".ui.ResetPasswordActivity" >
+        </activity>
+        <activity android:name=".ui.UserBindPhoneActivity" >
+        </activity>
         <activity
             android:name=".ui.PersonalActivity"
             android:launchMode="singleTop" >

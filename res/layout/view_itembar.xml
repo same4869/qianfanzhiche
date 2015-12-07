@@ -29,6 +29,9 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="30dp"
+        android:ellipsize="end"
+        android:maxEms="8"
+        android:singleLine="true"
         android:textColor="#777777"
         android:textSize="18sp" />
 

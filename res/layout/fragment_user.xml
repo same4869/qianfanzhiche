@@ -78,6 +78,12 @@
         </com.xun.qianfanzhiche.view.ItemBar>
 
         <com.xun.qianfanzhiche.view.ItemBar
+            android:id="@+id/bind_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </com.xun.qianfanzhiche.view.ItemBar>
+
+        <com.xun.qianfanzhiche.view.ItemBar
             android:id="@+id/user_helper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
@@ -86,7 +92,8 @@
         <com.xun.qianfanzhiche.view.ItemBar
             android:id="@+id/logout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp" >
         </com.xun.qianfanzhiche.view.ItemBar>
     </LinearLayout>
 

@@ -27,12 +27,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import cn.bmob.v3.BmobSMS;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.RequestSMSCodeListener;
-import cn.bmob.v3.listener.ResetPasswordByCodeListener;
 import cn.bmob.v3.listener.ResetPasswordByEmailListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
@@ -43,6 +39,8 @@ import com.xun.qianfanzhiche.bean.User;
 import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
 import com.xun.qianfanzhiche.ui.LoginActivity;
 import com.xun.qianfanzhiche.ui.PersonalActivity;
+import com.xun.qianfanzhiche.ui.ResetPasswordActivity;
+import com.xun.qianfanzhiche.ui.UserBindPhoneActivity;
 import com.xun.qianfanzhiche.ui.UserHelperActivity;
 import com.xun.qianfanzhiche.utils.CacheUtil;
 import com.xun.qianfanzhiche.utils.LogUtil;
@@ -60,8 +58,9 @@ import com.xun.qianfanzhiche.view.ItemBar;
 public class UserFragment extends BaseFragment implements OnClickListener {
 	private ImageView avaterImg;
 	private TextView avaterText;
-	private ItemBar sexItemBar, changePasswordItemBar, resetPasswordItemBar, logoutItemBar, userHelperItemBar, userCardItemBar, carItemBar, signatureItemBar;
-	private AlertDialog albumDialog, editDialog;
+	private ItemBar sexItemBar, changePasswordItemBar, resetPasswordItemBar, logoutItemBar, userHelperItemBar, userCardItemBar, carItemBar, signatureItemBar,
+			bindPhoneItemBar;
+	private AlertDialog albumDialog, editDialog, modifyPasswordDialog;
 
 	private ImageLoaderWithCaches mImageLoaderWithCaches;
 
@@ -102,6 +101,9 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		signatureItemBar = (ItemBar) root.findViewById(R.id.user_signature);
 		signatureItemBar.setOnClickListener(this);
 		signatureItemBar.setItemBarTitle("个性签名");
+		bindPhoneItemBar = (ItemBar) root.findViewById(R.id.bind_phone);
+		bindPhoneItemBar.setOnClickListener(this);
+		bindPhoneItemBar.setItemBarTitle("绑定手机");
 		loadData();
 		return root;
 	}
@@ -114,6 +116,9 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 			sexItemBar.setItemBarContent(user.getSex());
 			signatureItemBar.setItemBarContent(user.getSignature());
 			carItemBar.setItemBarContent(user.getCar());
+			if (user.getMobilePhoneNumberVerified() != null && user.getMobilePhoneNumberVerified()) {
+				bindPhoneItemBar.setItemBarContent(user.getMobilePhoneNumber());
+			}
 			BmobFile avatarFile = user.getAvatar();
 			if (avatarFile != null) {
 				mImageLoaderWithCaches.setImageFromUrl(avatarFile.getFileUrl(getContext()), avaterImg, R.drawable.user_icon_default);
@@ -235,6 +240,37 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		});
 	}
 
+	public void showModifyPasswordDialog() {
+		modifyPasswordDialog = new AlertDialog.Builder(getContext()).create();
+		modifyPasswordDialog.setCanceledOnTouchOutside(false);
+		View v = LayoutInflater.from(getContext()).inflate(R.layout.dialog_modifypassword, null);
+		modifyPasswordDialog.show();
+		modifyPasswordDialog.setContentView(v);
+		modifyPasswordDialog.getWindow().setGravity(Gravity.CENTER);
+		// 只用下面这一行弹出对话框时需要点击输入框才能弹出软键盘
+		modifyPasswordDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+		// 加上下面这一行弹出对话框时软键盘随之弹出
+		modifyPasswordDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+
+		final EditText resEditText = (EditText) v.findViewById(R.id.user_edit_edittext);
+		final EditText tarEditText = (EditText) v.findViewById(R.id.user_edit_edittext2);
+		Button button = (Button) v.findViewById(R.id.user_edit_btn_ok);
+
+		button.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				String resString = resEditText.getText().toString();
+				String tarString = tarEditText.getText().toString();
+				if (StringUtil.isStringNullorBlank(resString) || StringUtil.isStringNullorBlank(tarString)) {
+					ToastUtil.show(getContext(), "新旧密码都不能为空噢");
+					return;
+				}
+				modifyPassword(resString, tarString);
+			}
+		});
+	}
+
 	public void showLogoutDialog() {
 		Builder logoutDialogBuilder = new AlertDialog.Builder(getContext());
 		logoutDialogBuilder.setTitle("登出");
@@ -263,6 +299,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 			sexItemBar.setItemBarContent("");
 			signatureItemBar.setItemBarContent("");
 			carItemBar.setItemBarContent("");
+			bindPhoneItemBar.setItemBarContent("");
 			avaterImg.setImageResource(R.drawable.user_icon_default);
 		} else {
 			loadData();
@@ -275,11 +312,13 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 			@Override
 			public void onSuccess() {
 				ToastUtil.show(getContext(), "密码修改成功，可以用新密码进行登录啦");
+				modifyPasswordDialog.dismiss();
 			}
 
 			@Override
 			public void onFailure(int code, String msg) {
-				ToastUtil.show(getContext(), "密码修改失败：" + msg + "(" + code + ")");
+				ToastUtil.show(getContext(), "密码修改失败,请检查网络或旧密码输入是否正确");
+				modifyPasswordDialog.dismiss();
 			}
 		});
 	}
@@ -294,32 +333,6 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 			@Override
 			public void onFailure(int code, String e) {
 				ToastUtil.show(getContext(), "重置密码失败:" + e);
-			}
-		});
-	}
-
-	private void resetPasswordByPhoneBefore(final String phoneNum) {
-		BmobSMS.requestSMSCode(getContext(), phoneNum, "模板名称", new RequestSMSCodeListener() {
-
-			@Override
-			public void done(Integer smsId, BmobException ex) {
-				if (ex == null) {// 验证码发送成功
-					ToastUtil.show(getContext(), "验证码发送成功");
-				}
-			}
-		});
-	}
-
-	private void resetPasswordByPhoneAfter(String code, String newPassword) {
-		BmobUser.resetPasswordBySMSCode(getContext(), code, newPassword, new ResetPasswordByCodeListener() {
-
-			@Override
-			public void done(BmobException ex) {
-				if (ex == null) {
-					ToastUtil.show(getContext(), "密码重置成功");
-				} else {
-					ToastUtil.show(getContext(), "重置失败：code =" + ex.getErrorCode() + ",msg = " + ex.getLocalizedMessage());
-				}
 			}
 		});
 	}
@@ -433,14 +446,20 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 			if (!isLogin) {
 				ToastUtil.show(getContext(), "未登录，请先登录");
 			} else {
-
+				showModifyPasswordDialog();
 			}
 			break;
 		case R.id.change_user:
 			if (!isLogin) {
 				ToastUtil.show(getContext(), "未登录，请先登录");
 			} else {
-
+				User user = BmobUser.getCurrentUser(getActivity(), User.class);
+				if (user.getMobilePhoneNumberVerified() != null && user.getMobilePhoneNumberVerified()) {
+					Intent resetPwdIntent = new Intent(getActivity(), ResetPasswordActivity.class);
+					startActivity(resetPwdIntent);
+				} else {
+					ToastUtil.show(getContext(), "必须绑定了手机才能重置密码噢");
+				}
 			}
 			break;
 		case R.id.user_helper:
@@ -476,6 +495,19 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 				ToastUtil.show(getContext(), "未登录，请先登录");
 			} else {
 				showEditDialog("设置个性签名", 3);
+			}
+			break;
+		case R.id.bind_phone:
+			if (!isLogin) {
+				ToastUtil.show(getContext(), "未登录，请先登录");
+			} else {
+				User user = BmobUser.getCurrentUser(getActivity(), User.class);
+				if (user.getMobilePhoneNumberVerified() != null && user.getMobilePhoneNumberVerified()) {
+					ToastUtil.show(getContext(), "这个账号已经绑定了手机号了哟");
+				} else {
+					Intent bindPhoneIntent = new Intent(getActivity(), UserBindPhoneActivity.class);
+					startActivity(bindPhoneIntent);
+				}
 			}
 			break;
 		default:
