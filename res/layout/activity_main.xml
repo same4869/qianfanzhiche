@@ -13,6 +13,7 @@
         android:id="@+id/main_body_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#eeeeee"
         android:layout_above="@+id/main_footer"
         android:layout_below="@id/actionbar" >
     </android.support.v4.view.ViewPager>

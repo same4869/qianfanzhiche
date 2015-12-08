@@ -92,8 +92,15 @@
         <com.xun.qianfanzhiche.view.ItemBar
             android:id="@+id/logout"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </com.xun.qianfanzhiche.view.ItemBar>
+
+        <com.xun.qianfanzhiche.view.ItemBar
+            android:id="@+id/about"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp" >
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="16dp" >
         </com.xun.qianfanzhiche.view.ItemBar>
     </LinearLayout>
 

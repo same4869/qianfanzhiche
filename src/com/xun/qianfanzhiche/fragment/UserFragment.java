@@ -37,6 +37,7 @@ import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.base.BaseFragment;
 import com.xun.qianfanzhiche.bean.User;
 import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
+import com.xun.qianfanzhiche.ui.AboutActivity;
 import com.xun.qianfanzhiche.ui.LoginActivity;
 import com.xun.qianfanzhiche.ui.PersonalActivity;
 import com.xun.qianfanzhiche.ui.ResetPasswordActivity;
@@ -59,7 +60,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 	private ImageView avaterImg;
 	private TextView avaterText;
 	private ItemBar sexItemBar, changePasswordItemBar, resetPasswordItemBar, logoutItemBar, userHelperItemBar, userCardItemBar, carItemBar, signatureItemBar,
-			bindPhoneItemBar;
+			bindPhoneItemBar, aboutPhoneItemBar;
 	private AlertDialog albumDialog, editDialog, modifyPasswordDialog;
 
 	private ImageLoaderWithCaches mImageLoaderWithCaches;
@@ -104,6 +105,10 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		bindPhoneItemBar = (ItemBar) root.findViewById(R.id.bind_phone);
 		bindPhoneItemBar.setOnClickListener(this);
 		bindPhoneItemBar.setItemBarTitle("绑定手机");
+		aboutPhoneItemBar = (ItemBar) root.findViewById(R.id.about);
+		aboutPhoneItemBar.setTopLineVisible();
+		aboutPhoneItemBar.setOnClickListener(this);
+		aboutPhoneItemBar.setItemBarTitle("关于我们");
 		loadData();
 		return root;
 	}
@@ -209,7 +214,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 	}
 
 	public void showAlbumDialog() {
-		albumDialog = new AlertDialog.Builder(getContext()).create();
+		albumDialog = new AlertDialog.Builder(getActivity()).create();
 		albumDialog.setCanceledOnTouchOutside(false);
 		View v = LayoutInflater.from(getContext()).inflate(R.layout.dialog_usericon, null);
 		albumDialog.show();
@@ -241,7 +246,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 	}
 
 	public void showModifyPasswordDialog() {
-		modifyPasswordDialog = new AlertDialog.Builder(getContext()).create();
+		modifyPasswordDialog = new AlertDialog.Builder(getActivity()).create();
 		modifyPasswordDialog.setCanceledOnTouchOutside(false);
 		View v = LayoutInflater.from(getContext()).inflate(R.layout.dialog_modifypassword, null);
 		modifyPasswordDialog.show();
@@ -272,7 +277,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 	}
 
 	public void showLogoutDialog() {
-		Builder logoutDialogBuilder = new AlertDialog.Builder(getContext());
+		Builder logoutDialogBuilder = new AlertDialog.Builder(getActivity());
 		logoutDialogBuilder.setTitle("登出");
 		logoutDialogBuilder.setMessage("确定要登出吗？");
 		logoutDialogBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -509,6 +514,9 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 					startActivity(bindPhoneIntent);
 				}
 			}
+		case R.id.about:
+			Intent aboutIntent = new Intent(getActivity(), AboutActivity.class);
+			startActivity(aboutIntent);
 			break;
 		default:
 			break;

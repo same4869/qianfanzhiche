@@ -118,7 +118,11 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 
 	private void updatePersonalInfo(User user) {
 		personalName.setText(user.getUsername());
-		personalSign.setText(user.getSignature() + "(" + user.getCar() + " 车主)");
+		if (user.getCar() == null) {
+			personalSign.setText(user.getSignature());
+		} else {
+			personalSign.setText(user.getSignature() + "(" + user.getCar() + " 车主)");
+		}
 		if (user.getAvatar() != null) {
 			mImageLoader.loadImagesWithUrl(personalIcon, user.getAvatar().getFileUrl(getApplicationContext()));
 		}

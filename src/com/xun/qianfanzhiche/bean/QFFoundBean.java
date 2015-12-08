@@ -11,7 +11,7 @@ public class QFFoundBean extends BmobObject {
 	private String failWhy;
 	private Double price;
 	private String payInfo;
-	
+
 	public String getUsername() {
 		return username;
 	}
