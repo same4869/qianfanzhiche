@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.message.PushAgent;
 import com.umeng.update.UmengUpdateAgent;
 import com.xun.qianfanzhiche.common.Constant;
 
@@ -19,6 +20,10 @@ public class BaseFragmentActivity extends FragmentActivity {
 		
 		AdManager.getInstance(getApplicationContext()).init(Constant.YOU_MI_APP_ID, Constant.YOU_MI_APP_SECRET, true);
 		OffersManager.getInstance(getApplicationContext()).onAppLaunch();
+		
+		PushAgent mPushAgent = PushAgent.getInstance(getApplicationContext());
+		mPushAgent.enable();
+		PushAgent.getInstance(getApplicationContext()).onAppStart();
 	}
 
 	@Override

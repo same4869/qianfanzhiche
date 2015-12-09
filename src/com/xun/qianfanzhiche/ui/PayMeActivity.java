@@ -23,6 +23,8 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -45,8 +47,14 @@ import com.xun.qianfanzhiche.utils.LogUtil;
 import com.xun.qianfanzhiche.utils.StringUtil;
 
 public class PayMeActivity extends BaseActivity implements OnClickListener {
+	private static final int NUMBERS_PER_PAGE = 30;// 榜单1次拉30条
+	private static final int PRE_LOAD_OFFSET = 3;// 拉到距离底部多少条的时候加载下一页
+
 	private Button payAliBtn, payWxBtn;
 	private PayMeDetailAdapter payMeDetailAdapter, payMeDetailAdapter2;
+	private ListView payListView, payListView2;
+	private MyScrollListener myScrollListener;
+	private MyScrollListener2 myScrollListener2;
 
 	private String username, orderId;
 	// 1都是最新榜，2都是感谢榜
@@ -59,6 +67,11 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 	private int offset = 0;// 动画图片偏移量
 	private int currIndex = 0;// 当前页卡编号
 	private int bmpW;// 动画图片宽度
+
+	private int pageNum = 0;
+	private int pageNum2 = 0;
+	private int start, end;
+	private boolean isCleared, isAllLoaded, isAllLoaded2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -107,13 +120,13 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 		listViews.add(mainView);
 
 		View payMeListView = mInflater.inflate(R.layout.view_pay_me_list, null);
-		ListView payListView = (ListView) payMeListView.findViewById(R.id.pay_info_list);
+		payListView = (ListView) payMeListView.findViewById(R.id.pay_info_list);
 		payMeDetailAdapter = new PayMeDetailAdapter(getApplicationContext(), datas);
 		payListView.setAdapter(payMeDetailAdapter);
 		listViews.add(payMeListView);
 
 		View payMeListView2 = mInflater.inflate(R.layout.view_pay_me_list2, null);
-		ListView payListView2 = (ListView) payMeListView2.findViewById(R.id.pay_info_list2);
+		payListView2 = (ListView) payMeListView2.findViewById(R.id.pay_info_list2);
 		payMeDetailAdapter2 = new PayMeDetailAdapter(getApplicationContext(), datas);
 		payListView2.setAdapter(payMeDetailAdapter2);
 		listViews.add(payMeListView2);
@@ -122,6 +135,8 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 		mPager.setCurrentItem(0);
 		mPager.addOnPageChangeListener(new MyOnPageChangeListener());
 
+		myScrollListener = new MyScrollListener();
+		myScrollListener2 = new MyScrollListener2();
 	}
 
 	// 把所有支持成功的订单号查询出来显示
@@ -129,22 +144,36 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 		BmobQuery<QFFoundBean> query = new BmobQuery<QFFoundBean>();
 		// 查询playerName叫“比目”的数据
 		query.addWhereEqualTo("payStatus", true);
-		// 返回50条数据，如果不加上这条语句，默认返回10条数据
 		query.order("-createdAt");
-		query.setLimit(50);
+		query.setLimit(NUMBERS_PER_PAGE);
+		query.setSkip(NUMBERS_PER_PAGE * (pageNum++));
 		// 执行查询方法
 		query.findObjects(this, new FindListener<QFFoundBean>() {
 			@Override
-			public void onSuccess(List<QFFoundBean> object) {
-				LogUtil.d(LogUtil.TAG, "捐助成功的条目为 object.size() -->" + object.size());
-				datas = object;
-				payMeDetailAdapter.setDataList(datas);
-				payMeDetailAdapter.notifyDataSetChanged();
+			public void onSuccess(List<QFFoundBean> list) {
+				LogUtil.d(LogUtil.TAG, "捐助成功的条目为 list.size() -->" + list.size());
+				if (list.size() != 0 && list.get(list.size() - 1) != null) {
+					if (isCleared == false) {
+						datas.clear();
+						isCleared = true;
+					}
+					if (list.size() < NUMBERS_PER_PAGE) {
+						isAllLoaded = true;
+					}
+					datas.addAll(list);
+					payMeDetailAdapter.setDataList(datas);
+					payMeDetailAdapter.notifyDataSetChanged();
+					payListView.setOnScrollListener(myScrollListener);
+				} else {
+					isAllLoaded = true;
+					pageNum--;
+				}
 			}
 
 			@Override
 			public void onError(int code, String msg) {
 				LogUtil.d(LogUtil.TAG, "捐助 查询失败：" + msg);
+				pageNum--;
 			}
 		});
 	}
@@ -155,21 +184,35 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 		// 查询playerName叫“比目”的数据
 		query.addWhereEqualTo("payStatus", true);
 		query.order("-price");
-		// 返回50条数据，如果不加上这条语句，默认返回10条数据
-		query.setLimit(50);
+		query.setLimit(NUMBERS_PER_PAGE);
+		query.setSkip(NUMBERS_PER_PAGE * (pageNum2++));
 		// 执行查询方法
 		query.findObjects(this, new FindListener<QFFoundBean>() {
 			@Override
-			public void onSuccess(List<QFFoundBean> object) {
-				LogUtil.d(LogUtil.TAG, "捐助成功的条目为 object.size() -->" + object.size());
-				datas2 = object;
-				payMeDetailAdapter2.setDataList(datas2);
-				payMeDetailAdapter2.notifyDataSetChanged();
+			public void onSuccess(List<QFFoundBean> list) {
+				LogUtil.d(LogUtil.TAG, "捐助成功2的条目为 list.size() -->" + list.size());
+				if (list.size() != 0 && list.get(list.size() - 1) != null) {
+					if (isCleared == false) {
+						datas2.clear();
+						isCleared = true;
+					}
+					if (list.size() < NUMBERS_PER_PAGE) {
+						isAllLoaded2 = true;
+					}
+					datas2.addAll(list);
+					payMeDetailAdapter2.setDataList(datas2);
+					payMeDetailAdapter2.notifyDataSetChanged();
+					payListView2.setOnScrollListener(myScrollListener2);
+				} else {
+					isAllLoaded2 = true;
+					pageNum2--;
+				}
 			}
 
 			@Override
 			public void onError(int code, String msg) {
-				LogUtil.d(LogUtil.TAG, "捐助 查询失败：" + msg);
+				LogUtil.d(LogUtil.TAG, "捐助2 查询失败：" + msg);
+				pageNum2--;
 			}
 		});
 	}
@@ -180,6 +223,40 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 		payWxBtn = (Button) findViewById(R.id.pay_wx_btn);
 		payAliBtn.setOnClickListener(this);
 		payWxBtn.setOnClickListener(this);
+	}
+
+	private class MyScrollListener implements OnScrollListener {
+
+		@Override
+		public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+		}
+
+		@Override
+		public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+			start = firstVisibleItem;
+			end = firstVisibleItem + visibleItemCount;
+			if (end > totalItemCount - PRE_LOAD_OFFSET && !isAllLoaded) {
+				initData();
+			}
+		}
+	}
+
+	private class MyScrollListener2 implements OnScrollListener {
+
+		@Override
+		public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+		}
+
+		@Override
+		public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+			start = firstVisibleItem;
+			end = firstVisibleItem + visibleItemCount;
+			if (end > totalItemCount - PRE_LOAD_OFFSET && !isAllLoaded2) {
+				initData2();
+			}
+		}
 
 	}
 

@@ -36,8 +36,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp"
-        android:text="same4869@126.com"
+        android:layout_marginBottom="35dp"
+        android:text="Email:same4869@126.com"
         android:textColor="#888888" />
 
     <TextView
@@ -59,6 +59,17 @@
         android:layout_marginBottom="8dp"
         android:text="Author:xwang"
         android:textColor="#888888"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/about_weibo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:text="\@千帆知车V"
+        android:textColor="#33bbff"
         android:textSize="16sp" />
 
 </RelativeLayout>

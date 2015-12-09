@@ -4,6 +4,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <TextView
+        android:id="@+id/level_intro_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="5dp"
+        android:text="社区等级规则"
+        android:textColor="#33bbff"
+        android:textSize="16sp" />
+
     <ListView
         android:id="@+id/level_intro_list"
         android:layout_width="match_parent"
