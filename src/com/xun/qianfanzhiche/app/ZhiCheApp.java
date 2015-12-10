@@ -37,6 +37,11 @@ public class ZhiCheApp extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		if (!checkSignature()) {
+			System.exit(-1);
+			return;
+		}
+
 		mApplication = this;
 		Bmob.initialize(getApplicationContext(), Constant.BMOB_APP_ID);
 		register2WX();
@@ -58,13 +63,14 @@ public class ZhiCheApp extends Application {
 			@Override
 			public void onSuccess(List<ConstantsBean> object) {
 				for (ConstantsBean constantsBean : object) {
-					LogUtil.d(LogUtil.TAG,
-							"constantsBean.getQiniuBaseUrl() --> " + constantsBean.getQiniuBaseUrl() + " constantsBean.getAutoHomeBaseUrl() --> "
-									+ constantsBean.getAutoHomeBaseUrl() + " constantsBean.getBaiduBaiKeBaseUrl() --> " + constantsBean.getBaiduBaiKeBaseUrl()
-									+ " constantsBean.getCarActivityUrl() --> " + constantsBean.getCarActivityUrl() + " constantsBean.getCarVideoUrl() --> "
-									+ constantsBean.getCarVideoUrl() + " constantsBean.getCarNewsUrl() --> " + constantsBean.getCarNewsUrl()
-									+ " constantsBean.isUseLocalConstants() --> " + constantsBean.isUseLocalConstants() + " constantsBean.isShowPayMe() --> "
-									+ constantsBean.isShowPayMe());
+					LogUtil.d(LogUtil.TAG, "constantsBean.getQiniuBaseUrl() --> " + constantsBean.getQiniuBaseUrl()
+							+ " constantsBean.getAutoHomeBaseUrl() --> " + constantsBean.getAutoHomeBaseUrl()
+							+ " constantsBean.getBaiduBaiKeBaseUrl() --> " + constantsBean.getBaiduBaiKeBaseUrl()
+							+ " constantsBean.getCarActivityUrl() --> " + constantsBean.getCarActivityUrl()
+							+ " constantsBean.getCarVideoUrl() --> " + constantsBean.getCarVideoUrl()
+							+ " constantsBean.getCarNewsUrl() --> " + constantsBean.getCarNewsUrl()
+							+ " constantsBean.isUseLocalConstants() --> " + constantsBean.isUseLocalConstants()
+							+ " constantsBean.isShowPayMe() --> " + constantsBean.isShowPayMe());
 					ZhiCheSPUtil.setQiniuBaseUrl(constantsBean.getQiniuBaseUrl());
 					ZhiCheSPUtil.setAutoHomeBaseUrl(constantsBean.getAutoHomeBaseUrl());
 					ZhiCheSPUtil.setAutoHomeBaseUrlSuffix(constantsBean.getAutoHomeBaseUrlSuffix());
@@ -115,6 +121,18 @@ public class ZhiCheApp extends Application {
 				// ToastUtil.show(getApplicationContext(), "初始化常量失败");
 			}
 		});
+	}
+
+	private boolean checkSignature() {
+		byte[] sig = a.getSign(this);
+
+		String hash = a.digest(sig, "MD5").toUpperCase();
+
+		if (hash.equals("AAA224F4C8A3567941A6F4ACAE0B2C93") || hash.equals("7456F65E98B49AFB201FB0F14EF6842F")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public CommunityItem getCurrentCommunityItem() {
