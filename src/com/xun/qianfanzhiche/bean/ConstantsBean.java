@@ -12,7 +12,27 @@ public class ConstantsBean extends BmobObject {
 	private String baiduBaiKeBaseUrl;
 	private String sinaCarMaintenanceUrl;
 	private String carActivityUrl;
+	private String carVideoUrl;
+	private String carNewsUrl;
+
 	private boolean isUseLocalConstants;
+	private boolean isShowPayMe;
+
+	public String getCarVideoUrl() {
+		return carVideoUrl;
+	}
+
+	public void setCarVideoUrl(String carVideoUrl) {
+		this.carVideoUrl = carVideoUrl;
+	}
+
+	public String getCarNewsUrl() {
+		return carNewsUrl;
+	}
+
+	public void setCarNewsUrl(String carNewsUrl) {
+		this.carNewsUrl = carNewsUrl;
+	}
 
 	public String getSinaCarMaintenanceUrl() {
 		return sinaCarMaintenanceUrl;
@@ -68,6 +88,14 @@ public class ConstantsBean extends BmobObject {
 
 	public void setBaiduBaiKeBaseUrl(String baiduBaiKeBaseUrl) {
 		this.baiduBaiKeBaseUrl = baiduBaiKeBaseUrl;
+	}
+
+	public boolean isShowPayMe() {
+		return isShowPayMe;
+	}
+
+	public void setShowPayMe(boolean isShowPayMe) {
+		this.isShowPayMe = isShowPayMe;
 	}
 
 }

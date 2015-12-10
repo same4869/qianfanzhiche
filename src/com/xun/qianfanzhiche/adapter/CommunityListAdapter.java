@@ -26,6 +26,7 @@ import com.xun.qianfanzhiche.ui.CommunityDetailActivity;
 import com.xun.qianfanzhiche.ui.LoginActivity;
 import com.xun.qianfanzhiche.ui.PersonalActivity;
 import com.xun.qianfanzhiche.utils.BmobUtil;
+import com.xun.qianfanzhiche.utils.StringUtil;
 import com.xun.qianfanzhiche.utils.ToastUtil;
 
 public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
@@ -74,7 +75,11 @@ public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
 			return convertView;
 		}
 		viewHolder.itemContent.setText(data.get(position).getContent());
-		viewHolder.itemName.setText(data.get(position).getAuthor().getUsername());
+		if (!StringUtil.isStringNullorBlank(data.get(position).getAuthor().getNickName())) {
+			viewHolder.itemName.setText(data.get(position).getAuthor().getNickName());
+		} else {
+			viewHolder.itemName.setText(data.get(position).getAuthor().getUsername());
+		}
 		if (data.get(position).getImage() != null) {
 			viewHolder.itemImg.setVisibility(View.VISIBLE);
 			viewHolder.itemImg.setTag(data.get(position).getImage().getFileUrl(mContext));
@@ -117,7 +122,7 @@ public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
 
 			@Override
 			public void onClick(View arg0) {
-				ShareManager.getInstance().showShare(mContext, data.get(position).getImage().getFileUrl(mContext));
+				ShareManager.getInstance().showShare(mContext, data.get(position));
 			}
 		});
 

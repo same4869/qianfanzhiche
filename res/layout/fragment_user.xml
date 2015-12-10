@@ -52,6 +52,12 @@
         </com.xun.qianfanzhiche.view.ItemBar>
 
         <com.xun.qianfanzhiche.view.ItemBar
+            android:id="@+id/user_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </com.xun.qianfanzhiche.view.ItemBar>
+
+        <com.xun.qianfanzhiche.view.ItemBar
             android:id="@+id/user_signature"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >

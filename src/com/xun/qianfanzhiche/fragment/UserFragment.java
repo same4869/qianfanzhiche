@@ -26,6 +26,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
@@ -60,8 +61,8 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 	private ImageView avaterImg;
 	private TextView avaterText;
 	private ItemBar sexItemBar, changePasswordItemBar, resetPasswordItemBar, logoutItemBar, userHelperItemBar, userCardItemBar, carItemBar, signatureItemBar,
-			bindPhoneItemBar, aboutPhoneItemBar;
-	private AlertDialog albumDialog, editDialog, modifyPasswordDialog;
+			bindPhoneItemBar, aboutPhoneItemBar, userNicknameItemBar;
+	private AlertDialog albumDialog, editDialog, modifyPasswordDialog, selectSexDialog;
 
 	private ImageLoaderWithCaches mImageLoaderWithCaches;
 
@@ -109,6 +110,9 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		aboutPhoneItemBar.setTopLineVisible();
 		aboutPhoneItemBar.setOnClickListener(this);
 		aboutPhoneItemBar.setItemBarTitle("关于我们");
+		userNicknameItemBar = (ItemBar) root.findViewById(R.id.user_nickname);
+		userNicknameItemBar.setOnClickListener(this);
+		userNicknameItemBar.setItemBarTitle("昵称");
 		loadData();
 		return root;
 	}
@@ -118,9 +122,16 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		User user = BmobUser.getCurrentUser(getActivity(), User.class);
 		if (user != null) {
 			avaterText.setText(user.getUsername());
-			sexItemBar.setItemBarContent(user.getSex());
+			if (user.getSex() != null) {
+				if (user.getSex().equals("0")) {
+					sexItemBar.setItemBarContent("美女");
+				} else {
+					sexItemBar.setItemBarContent("帅哥");
+				}
+			}
 			signatureItemBar.setItemBarContent(user.getSignature());
 			carItemBar.setItemBarContent(user.getCar());
+			userNicknameItemBar.setItemBarContent(user.getNickName());
 			if (user.getMobilePhoneNumberVerified() != null && user.getMobilePhoneNumberVerified()) {
 				bindPhoneItemBar.setItemBarContent(user.getMobilePhoneNumber());
 			}
@@ -147,6 +158,9 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		case 3:
 			user.setSignature(info);
 			break;
+		case 4:
+			user.setNickName(info);
+			break;
 		default:
 			return;
 		}
@@ -168,6 +182,9 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 				case 3:
 					signatureItemBar.setItemBarContent(info);
 					break;
+				case 4:
+					userNicknameItemBar.setItemBarContent(info);
+					break;
 				default:
 					return;
 				}
@@ -180,8 +197,8 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		});
 	}
 
-	// type = 1 性别 2 座驾 3 个性签名
-	public void showEditDialog(String title, final int type) {
+	// type = 1 性别 2 座驾 3 个性签名 4 昵称
+	public void showEditDialog(String originContent, String title, final int type) {
 		editDialog = new AlertDialog.Builder(getContext()).create();
 		editDialog.setCanceledOnTouchOutside(false);
 		View v = LayoutInflater.from(getContext()).inflate(R.layout.dialog_useredit, null);
@@ -195,6 +212,10 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 
 		TextView titleTv = (TextView) v.findViewById(R.id.user_edit_title);
 		final EditText editText = (EditText) v.findViewById(R.id.user_edit_edittext);
+		editText.setText(originContent);
+		if (type == 4) {
+			editText.setHint("无昵称则使用用户名为社区昵称");
+		}
 		Button button = (Button) v.findViewById(R.id.user_edit_btn_ok);
 
 		titleTv.setText(title);
@@ -203,14 +224,68 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 			@Override
 			public void onClick(View v) {
 				String editString = editText.getText().toString();
+				editString = editString.trim();
 				if (StringUtil.isStringNullorBlank(editString)) {
 					ToastUtil.show(getContext(), "不能为空噢~");
 					return;
+				}
+				if (type == 4) {
+					if (editString.length() > 10) {
+						ToastUtil.show(getContext(), "昵称不能超过10位噢~");
+						return;
+					}
 				}
 				updateUserInfo(editString, type);
 			}
 		});
 
+	}
+
+	public void showSelectSexDialog(int originContent, String title) {
+		selectSexDialog = new AlertDialog.Builder(getContext()).create();
+		selectSexDialog.setCanceledOnTouchOutside(false);
+		final View v = LayoutInflater.from(getContext()).inflate(R.layout.dialog_select_sex, null);
+		selectSexDialog.show();
+		selectSexDialog.setContentView(v);
+		selectSexDialog.getWindow().setGravity(Gravity.CENTER);
+
+		TextView titleTv = (TextView) v.findViewById(R.id.user_edit_title);
+		final RadioButton femaleButton = (RadioButton) v.findViewById(R.id.radioFemale);
+		final RadioButton maleButton = (RadioButton) v.findViewById(R.id.radioMale);
+		if (originContent == 0) {
+			femaleButton.setChecked(true);
+		} else {
+			maleButton.setChecked(true);
+		}
+
+		Button button = (Button) v.findViewById(R.id.user_edit_btn_ok);
+
+		titleTv.setText(title);
+		button.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				User user = BmobUser.getCurrentUser(getContext(), User.class);
+				if (femaleButton.isChecked()) {
+					user.setSex("0");
+				} else if (maleButton.isChecked()) {
+					user.setSex("1");
+				}
+				user.update(getContext(), new UpdateListener() {
+
+					@Override
+					public void onSuccess() {
+						ToastUtil.show(getActivity(), "更新信息成功。");
+					}
+
+					@Override
+					public void onFailure(int arg0, String arg1) {
+						ToastUtil.show(getActivity(), "更新信息失败。请检查网络~");
+					}
+				});
+				selectSexDialog.dismiss();
+			}
+		});
 	}
 
 	public void showAlbumDialog() {
@@ -444,7 +519,14 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 			if (!isLogin) {
 				ToastUtil.show(getContext(), "未登录，请先登录");
 			} else {
-				showEditDialog("设置性别", 1);
+				User user = BmobUser.getCurrentUser(getActivity(), User.class);
+				int sex = 1;
+				if (user.getSex() != null) {
+					if (user.getSex().equals("0")) {
+						sex = 0;
+					}
+				}
+				showSelectSexDialog(sex, "设置性别");
 			}
 			break;
 		case R.id.update_password:
@@ -492,14 +574,14 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 			if (!isLogin) {
 				ToastUtil.show(getContext(), "未登录，请先登录");
 			} else {
-				showEditDialog("您的座驾", 2);
+				showEditDialog(carItemBar.getItemBarContent(), "您的座驾", 2);
 			}
 			break;
 		case R.id.user_signature:
 			if (!isLogin) {
 				ToastUtil.show(getContext(), "未登录，请先登录");
 			} else {
-				showEditDialog("设置个性签名", 3);
+				showEditDialog(signatureItemBar.getItemBarContent(), "设置个性签名", 3);
 			}
 			break;
 		case R.id.bind_phone:
@@ -517,6 +599,13 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		case R.id.about:
 			Intent aboutIntent = new Intent(getActivity(), AboutActivity.class);
 			startActivity(aboutIntent);
+			break;
+		case R.id.user_nickname:
+			if (!isLogin) {
+				ToastUtil.show(getContext(), "未登录，请先登录");
+			} else {
+				showEditDialog(userNicknameItemBar.getItemBarContent(), "设置昵称", 4);
+			}
 			break;
 		default:
 			break;

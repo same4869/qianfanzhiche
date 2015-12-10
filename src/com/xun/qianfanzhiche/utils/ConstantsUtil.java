@@ -44,19 +44,19 @@ public class ConstantsUtil {
 			if (isUseLocalConstants) {
 				return Constant.CAR_ACTIVITY;
 			} else {
-				return ZhiCheSPUtil.getBaiduBaiKeBaseUrl();
+				return ZhiCheSPUtil.getCarActivityUrl();
 			}
 		} else if (constantKey.equals("CAR_VIDEO")) {
 			if (isUseLocalConstants) {
 				return Constant.CAR_VIDEO;
 			} else {
-				return ZhiCheSPUtil.getBaiduBaiKeBaseUrl();
+				return ZhiCheSPUtil.getCarVideoUrl();
 			}
 		} else if (constantKey.equals("CAR_NEWS")) {
 			if (isUseLocalConstants) {
 				return Constant.CAR_NEWS;
 			} else {
-				return ZhiCheSPUtil.getBaiduBaiKeBaseUrl();
+				return ZhiCheSPUtil.getCarVideoUrl();
 			}
 		}
 		return constantKey;

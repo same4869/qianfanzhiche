@@ -47,5 +47,9 @@ public class ItemBar extends FrameLayout {
 	public void setItemBarContent(String string) {
 		itemBarContent.setText(string);
 	}
+	
+	public String getItemBarContent(){
+		return itemBarContent.getText().toString();
+	}
 
 }

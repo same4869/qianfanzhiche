@@ -50,7 +50,8 @@
         android:text="沉舟侧畔千帆过，带你知车带你飞"
         android:textSize="16sp" />
 
-    <TextView
+    <!--
+         <TextView
         android:id="@+id/programar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -60,6 +61,7 @@
         android:text="Author:xwang"
         android:textColor="#888888"
         android:textSize="16sp" />
+    -->
 
     <TextView
         android:id="@+id/about_weibo"

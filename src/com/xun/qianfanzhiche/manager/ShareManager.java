@@ -1,8 +1,12 @@
 package com.xun.qianfanzhiche.manager;
 
+import java.util.Random;
+
 import android.content.Context;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+
+import com.xun.qianfanzhiche.bean.CommunityItem;
 
 /**
  * 分享管理
@@ -30,7 +34,10 @@ public class ShareManager {
 		}
 	}
 
-	public void showShare(Context context, String imgUrl) {
+	public void showShare(Context context, CommunityItem communityItem) {
+		if (communityItem == null) {
+			return;
+		}
 		ShareSDK.initSDK(context);
 		OnekeyShare oks = new OnekeyShare();
 		// 关闭sso授权
@@ -40,20 +47,29 @@ public class ShareManager {
 		// oks.setNotification(R.drawable.ic_launcher,
 		// getString(R.string.app_name));
 		// title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-		oks.setTitle("呵呵呵呵呵");
+		// oks.setTitle(communityItem.getTitle());
 		// titleUrl是标题的网络链接，仅在人人网和QQ空间使用
 		oks.setTitleUrl("http://sharesdk.cn");
 		// text是分享文本，所有平台都需要这个字段
-		oks.setText("我是分享文本");
+		oks.setText(communityItem.getContent());
 		// imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
 		// oks.setImagePath("/sdcard/test.jpg");// 确保SDcard下面存在此张图片
+		String imgUrl;
+		if (communityItem.getImage() == null) {
+			Random random = new java.util.Random();// 定义随机类
+			String[] indexs = { "1", "10", "11", "110", "12", "13", "14", "15", "20", "25", "26", "3", "33" };
+			int index = random.nextInt(14);
+			imgUrl = "http://7xnmgu.com1.z0.glb.clouddn.com/chebiao-" + indexs[index] + ".jpg";
+		} else {
+			imgUrl = communityItem.getImage().getFileUrl(context);
+		}
 		oks.setImageUrl(imgUrl);
 		// url仅在微信（包括好友和朋友圈）中使用
 		oks.setUrl("http://sharesdk.cn");
 		// comment是我对这条分享的评论，仅在人人网和QQ空间使用
-		oks.setComment("我是测试评论文本");
+		oks.setComment("千帆知车");
 		// site是分享此内容的网站名称，仅在QQ空间使用
-		oks.setSite("hahahahaha");
+		oks.setSite("千帆知车");
 		// siteUrl是分享此内容的网站地址，仅在QQ空间使用
 		oks.setSiteUrl("http://sharesdk.cn");
 

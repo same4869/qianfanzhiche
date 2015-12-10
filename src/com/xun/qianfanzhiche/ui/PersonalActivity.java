@@ -27,6 +27,7 @@ import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
 import com.xun.qianfanzhiche.common.Constant;
 import com.xun.qianfanzhiche.db.DatabaseManager;
 import com.xun.qianfanzhiche.utils.BmobUtil;
+import com.xun.qianfanzhiche.utils.StringUtil;
 import com.xun.qianfanzhiche.utils.ToastUtil;
 
 /**
@@ -42,7 +43,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 	private ImageView personalIcon;
 	private TextView personalName;
 	private TextView personalSign;
-	private ImageView goSettings;
+	private ImageView personalSex;
 	private TextView personalTitle;
 	private ListView mListView;
 	private ProgressBar progressBar;
@@ -73,13 +74,19 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 		mImageLoader = new ImageLoaderWithCaches(getApplicationContext(), null, null);
 		if (isCurrentUser(mUser)) {
 			personalTitle.setText("我发表过的");
-			goSettings.setVisibility(View.VISIBLE);
+			personalSex.setVisibility(View.VISIBLE);
 			User user = BmobUser.getCurrentUser(getApplicationContext(), User.class);
 			updatePersonalInfo(user);
 		} else {
-			goSettings.setVisibility(View.GONE);
 			if (mUser != null) {
 				personalTitle.setText("TA发表过的");
+			}
+		}
+		if (mUser != null && mUser.getSex() != null) {
+			if (mUser.getSex().equals("0")) {
+				personalSex.setImageResource(R.drawable.basic_female);
+			} else if (mUser.getSex().equals("1")) {
+				personalSex.setImageResource(R.drawable.basic_male);
 			}
 		}
 
@@ -97,7 +104,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 		personalIcon = (ImageView) findViewById(R.id.personal_icon);
 		personalName = (TextView) findViewById(R.id.personl_name);
 		personalSign = (TextView) findViewById(R.id.personl_signature);
-		goSettings = (ImageView) findViewById(R.id.go_settings);
+		personalSex = (ImageView) findViewById(R.id.personal_sex);
 		personalTitle = (TextView) findViewById(R.id.personl_title);
 		mListView = (ListView) findViewById(R.id.personal_list);
 		progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -117,7 +124,11 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void updatePersonalInfo(User user) {
-		personalName.setText(user.getUsername());
+		if (!StringUtil.isStringNullorBlank(user.getNickName())) {
+			personalName.setText(user.getNickName() + "(" + user.getUsername() + ")");
+		} else {
+			personalName.setText(user.getUsername());
+		}
 		if (user.getCar() == null) {
 			personalSign.setText(user.getSignature());
 		} else {

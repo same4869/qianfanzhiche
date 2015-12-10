@@ -11,6 +11,7 @@ public class User extends BmobUser {
 	private BmobRelation favorite;
 	private String sex;
 	private String car;
+	private String nickName;
 
 	public String getSignature() {
 		return signature;
@@ -50,6 +51,14 @@ public class User extends BmobUser {
 
 	public void setCar(String car) {
 		this.car = car;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 }

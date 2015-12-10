@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/user_edit_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="标题"
+        android:textColor="#33bbff"
+        android:textSize="19sp" />
+
+    <View
+        android:id="@+id/user_edit_line"
+        android:layout_width="wrap_content"
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:background="#eeeeee" />
+
+    <RadioGroup
+        android:id="@+id/select_sex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/radioMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="帅哥" >
+        </RadioButton>
+
+        <RadioButton
+            android:id="@+id/radioFemale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="美女" >
+        </RadioButton>
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/user_edit_btn_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/selector_button"
+        android:text="确认"
+        android:textColor="#FFFFFF" />
+
+</LinearLayout>

@@ -20,6 +20,7 @@ import com.xun.qianfanzhiche.ui.PayMeActivity;
 import com.xun.qianfanzhiche.utils.BmobUtil;
 import com.xun.qianfanzhiche.utils.ConstantsUtil;
 import com.xun.qianfanzhiche.utils.LogUtil;
+import com.xun.qianfanzhiche.utils.ZhiCheSPUtil;
 import com.xun.qianfanzhiche.view.ItemBar;
 
 /**
@@ -52,7 +53,7 @@ public class ExtendFragment extends BaseFragment implements OnClickListener, net
 		carActivity.setOnClickListener(this);
 		carActivity.setTopLineVisible();
 		payMeItemBar = (ItemBar) root.findViewById(R.id.pay_me);
-		payMeItemBar.setItemBarTitle("千帆基金");
+		payMeItemBar.setItemBarTitle("千帆微打赏");
 		payMeItemBar.setOnClickListener(this);
 		payMeItemBar.setTopLineVisible();
 		carVideoItemBar = (ItemBar) root.findViewById(R.id.car_video);
@@ -64,6 +65,9 @@ public class ExtendFragment extends BaseFragment implements OnClickListener, net
 		carNewsItemBar = (ItemBar) root.findViewById(R.id.car_news);
 		carNewsItemBar.setItemBarTitle("汽车新闻");
 		carNewsItemBar.setOnClickListener(this);
+		if (!ZhiCheSPUtil.getIsShowPayMe()) {
+			payMeItemBar.setVisibility(View.GONE);
+		}
 		return root;
 	}
 

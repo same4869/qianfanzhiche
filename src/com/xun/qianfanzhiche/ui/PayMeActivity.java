@@ -115,7 +115,7 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 			usernameTv.setText("尊敬的" + BmobUtil.getCurrentUser(getApplicationContext()).getUsername() + "，您好！");
 		} else {
 			usernameTv.setTextColor(Color.RED);
-			usernameTv.setText("亲爱的用户，您还没有登录噢，这样捐助会自动命名为“低调用户”噢。");
+			usernameTv.setText("亲爱的用户，您还没有登录噢，这样打赏会自动命名为“低调用户”噢。");
 		}
 		listViews.add(mainView);
 
@@ -151,7 +151,7 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 		query.findObjects(this, new FindListener<QFFoundBean>() {
 			@Override
 			public void onSuccess(List<QFFoundBean> list) {
-				LogUtil.d(LogUtil.TAG, "捐助成功的条目为 list.size() -->" + list.size());
+				LogUtil.d(LogUtil.TAG, "打赏成功的条目为 list.size() -->" + list.size());
 				if (list.size() != 0 && list.get(list.size() - 1) != null) {
 					if (isCleared == false) {
 						datas.clear();
@@ -172,7 +172,7 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 
 			@Override
 			public void onError(int code, String msg) {
-				LogUtil.d(LogUtil.TAG, "捐助 查询失败：" + msg);
+				LogUtil.d(LogUtil.TAG, "打赏 查询失败：" + msg);
 				pageNum--;
 			}
 		});
@@ -190,7 +190,7 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 		query.findObjects(this, new FindListener<QFFoundBean>() {
 			@Override
 			public void onSuccess(List<QFFoundBean> list) {
-				LogUtil.d(LogUtil.TAG, "捐助成功2的条目为 list.size() -->" + list.size());
+				LogUtil.d(LogUtil.TAG, "打赏成功2的条目为 list.size() -->" + list.size());
 				if (list.size() != 0 && list.get(list.size() - 1) != null) {
 					if (isCleared == false) {
 						datas2.clear();
@@ -211,14 +211,14 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 
 			@Override
 			public void onError(int code, String msg) {
-				LogUtil.d(LogUtil.TAG, "捐助2 查询失败：" + msg);
+				LogUtil.d(LogUtil.TAG, "打赏2 查询失败：" + msg);
 				pageNum2--;
 			}
 		});
 	}
 
 	private void initView() {
-		setActionBarTitle("千帆基金");
+		setActionBarTitle("千帆微打赏");
 		payAliBtn = (Button) findViewById(R.id.pay_ali_btn);
 		payWxBtn = (Button) findViewById(R.id.pay_wx_btn);
 		payAliBtn.setOnClickListener(this);
@@ -313,14 +313,14 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 				// 当code为-2,意味着用户中断了操作
 				// code为-3意味着没有安装BmobPlugin插件
 				if (arg0 == -3) {
-					new AlertDialog.Builder(PayMeActivity.this).setMessage("监测到你尚未安装支付插件,无法进行微信支付,请选择安装插件(已打包在本地,无流量消耗)还是用支付宝支付")
+					new AlertDialog.Builder(PayMeActivity.this).setMessage("监测到你尚未安装支付插件,无法进行微信打赏,请选择安装插件(已打包在本地,无流量消耗)还是用支付宝打赏")
 							.setPositiveButton("安装", new DialogInterface.OnClickListener() {
 
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									ApkUtil.installBmobPayPlugin(getApplicationContext(), "BmobPayPlugin.apk");
 								}
-							}).setNegativeButton("支付宝支付", new DialogInterface.OnClickListener() {
+							}).setNegativeButton("支付宝打赏", new DialogInterface.OnClickListener() {
 
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
@@ -360,12 +360,12 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void onSuccess() {
 				LogUtil.d(LogUtil.TAG,
-						"添加支付数据成功 用户名 --》" + qFFoundBean.getUsername() + " 订单号 --》" + qFFoundBean.getOrderId() + " 支付状态 --》" + qFFoundBean.isPayStatus());
+						"添加打赏数据成功 用户名 --》" + qFFoundBean.getUsername() + " 订单号 --》" + qFFoundBean.getOrderId() + " 打赏状态 --》" + qFFoundBean.isPayStatus());
 			}
 
 			@Override
 			public void onFailure(int code, String arg0) {
-				LogUtil.d(LogUtil.TAG, "添加支付数据失败 code --> " + code + " arg0 --> " + arg0);
+				LogUtil.d(LogUtil.TAG, "添加打赏数据失败 code --> " + code + " arg0 --> " + arg0);
 			}
 		});
 	}
@@ -501,7 +501,7 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 		editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 		Button button = (Button) v.findViewById(R.id.user_edit_btn_ok);
 
-		titleTv.setText("非常感谢，请输入捐助金额（元）");
+		titleTv.setText("非常感谢，请输入打赏金额（元）");
 		button.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -511,9 +511,9 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 					return;
 				}
 				if (type == 0) {
-					startAliPay(Double.parseDouble(editString), "我来自支付宝支付");
+					startAliPay(Double.parseDouble(editString), "我来自支付宝打赏");
 				} else if (type == 1) {
-					startWxPay(Double.parseDouble(editString), "我来自支付宝支付");
+					startWxPay(Double.parseDouble(editString), "我来自支付宝打赏");
 				}
 			}
 		});

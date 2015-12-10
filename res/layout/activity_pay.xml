@@ -20,15 +20,6 @@
         android:flipInterval="30"
         android:persistentDrawingCache="animation" />
 
-    <!--
-    <ListView
-        android:id="@+id/pay_info_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
-    </ListView>
-    -->
-
     <LinearLayout
         android:id="@+id/pay_layout"
         android:layout_width="match_parent"
@@ -42,7 +33,7 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:background="@drawable/selector_button"
-            android:text="支付宝捐助"
+            android:text="支付宝打赏"
             android:textColor="#ffffff" />
 
         <Button
@@ -52,7 +43,7 @@
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:background="@drawable/selector_button"
-            android:text="微信捐助"
+            android:text="微信打赏"
             android:textColor="#ffffff" />
     </LinearLayout>
 

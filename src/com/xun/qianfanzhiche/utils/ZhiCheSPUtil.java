@@ -9,7 +9,27 @@ public class ZhiCheSPUtil {
 	private static final String BAIDU_BAIKE_BASE_URL = "baidu_baike_base_url";
 	private static final String SINA_CAR_MAINTENANCE = "sina_car_maintenance";
 	private static final String CAR_ACTIVITY = "car_activity";
+	private static final String CAR_VIDEO = "car_video";
+	private static final String CAR_NEWS = "car_news";
+
 	private static final String IS_USE_LOCAL_CONSTANTS = "is_use_local_constants";
+	private static final String IS_SHOW_PAY_ME_CONSTANTS = "is_show_pay_me_constants";
+
+	public static void setCarVideoUrl(String string) {
+		SPUtil.putString(TABLE_CONSTANTS, CAR_VIDEO, string);
+	}
+
+	public static String getCarVideoUrl() {
+		return SPUtil.getString(TABLE_CONSTANTS, CAR_VIDEO, null);
+	}
+
+	public static void setCarNewsUrl(String string) {
+		SPUtil.putString(TABLE_CONSTANTS, CAR_NEWS, string);
+	}
+
+	public static String getCarNewsUrl() {
+		return SPUtil.getString(TABLE_CONSTANTS, CAR_NEWS, null);
+	}
 
 	public static void setQiniuBaseUrl(String string) {
 		SPUtil.putString(TABLE_CONSTANTS, QINIU_BASE_URL, string);
@@ -65,5 +85,13 @@ public class ZhiCheSPUtil {
 
 	public static boolean getIsUseLocalConstants() {
 		return SPUtil.getBoolean(TABLE_CONSTANTS, IS_USE_LOCAL_CONSTANTS, true);
+	}
+
+	public static void setIsShowPayMe(boolean isPayMe) {
+		SPUtil.putBoolean(TABLE_CONSTANTS, IS_SHOW_PAY_ME_CONSTANTS, isPayMe);
+	}
+
+	public static boolean getIsShowPayMe() {
+		return SPUtil.getBoolean(TABLE_CONSTANTS, IS_SHOW_PAY_ME_CONSTANTS, false);
 	}
 }

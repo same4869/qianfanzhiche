@@ -39,6 +39,7 @@ import com.xun.qianfanzhiche.db.DatabaseManager;
 import com.xun.qianfanzhiche.manager.ShareManager;
 import com.xun.qianfanzhiche.utils.BmobUtil;
 import com.xun.qianfanzhiche.utils.LogUtil;
+import com.xun.qianfanzhiche.utils.StringUtil;
 import com.xun.qianfanzhiche.utils.ToastUtil;
 
 /**
@@ -83,11 +84,17 @@ public class CommunityDetailActivity extends BaseActivity implements OnClickList
 		imageLoaderWithCaches = new ImageLoaderWithCaches(getApplicationContext(), null, null);
 		Intent intent = getIntent();
 		communityItem = (CommunityItem) intent.getSerializableExtra("data");
-		userName.setText(communityItem.getAuthor().getUsername());
+		if (!StringUtil.isStringNullorBlank(communityItem.getAuthor().getNickName())) {
+			userName.setText(communityItem.getAuthor().getNickName());
+		} else {
+			userName.setText(communityItem.getAuthor().getUsername());
+		}
 		timeTv.setText(communityItem.getCreatedAt());
 		commentItemContent.setText(communityItem.getContent());
 		if (communityItem.getImage() != null) {
 			imageLoaderWithCaches.loadImagesWithUrl(commentItemImage, communityItem.getImage().getFileUrl(getApplicationContext()));
+		} else {
+			commentItemImage.setVisibility(View.GONE);
 		}
 		BmobUtil.queryCountForUserLevel(getApplicationContext(), userLevelTv, communityItem.getAuthor().getObjectId());
 		// data.getImage().loadImage(getApplicationContext(), commentItemImage);
@@ -262,7 +269,7 @@ public class CommunityDetailActivity extends BaseActivity implements OnClickList
 			}
 			break;
 		case R.id.item_action_share:
-			ShareManager.getInstance().showShare(getApplicationContext(), communityItem.getImage().getFileUrl(getApplicationContext()));
+			ShareManager.getInstance().showShare(getApplicationContext(), communityItem);
 			break;
 		case R.id.item_action_love:
 			final boolean oldFav = communityItem.isMyFav();
