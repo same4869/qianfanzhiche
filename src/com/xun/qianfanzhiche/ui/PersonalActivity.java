@@ -31,7 +31,7 @@ import com.xun.qianfanzhiche.utils.StringUtil;
 import com.xun.qianfanzhiche.utils.ToastUtil;
 
 /**
- * 个人中心
+ * 个人中心，我的帖子，消息中心
  * 
  * @author xunwang
  * 
@@ -60,6 +60,8 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 	private boolean isFromUserCenter;
 	private List<String> imgUrls = new ArrayList<String>();
 	private List<CommunityItem> data = new ArrayList<CommunityItem>();
+
+	private int type = 0;// 0.我的帖子，个人中心 1.消息中心
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +92,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 			}
 		}
 
-		loadData();
+		loadData(type);
 
 		myScrollListener = new MyScrollListener();
 		mImageLoader = new ImageLoaderWithCaches(getApplicationContext(), mListView, imgUrls);
@@ -109,17 +111,20 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 		mListView = (ListView) findViewById(R.id.personal_list);
 		progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-		setActionBarTitle("个人中心");
-
 		Intent intent = getIntent();
 		if (intent.getBooleanExtra("isFromUserCenter", false)) {
 			isFromUserCenter = true;
 		}
+		if (intent.getBooleanExtra("isFromNotifyCenter", false)) {
+			type = 1;
+		}
 
 		if (!isFromUserCenter) {
 			mUser = ZhiCheApp.getInstance().getCurrentCommunityItem().getAuthor();
+			setActionBarTitle("我的帖子");
 		} else {
 			mUser = BmobUtil.getCurrentUser(getApplicationContext());
+			setActionBarTitle("个人中心");
 		}
 	}
 
@@ -154,7 +159,8 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 		return false;
 	}
 
-	private void loadData() {
+	// type 0.我的帖子 1.消息中心
+	private void loadData(int type) {
 		progressBar.setVisibility(View.VISIBLE);
 		BmobQuery<CommunityItem> query = new BmobQuery<CommunityItem>();
 		query.setLimit(Constant.NUMBERS_PER_PAGE);
@@ -162,6 +168,9 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 		query.order("-createdAt");
 		query.include("author");
 		query.addWhereEqualTo("author", mUser);
+		if (type == 1) {
+			query.addWhereEqualTo("isHaveNewComment", true);
+		}
 		query.findObjects(getApplicationContext(), new FindListener<CommunityItem>() {
 
 			@Override
@@ -230,7 +239,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 				mFirstFlag = false;
 			}
 			if (end > totalItemCount - PRE_LOAD_OFFSET && !isAllLoaded) {
-				loadData();
+				loadData(type);
 			}
 		}
 	}

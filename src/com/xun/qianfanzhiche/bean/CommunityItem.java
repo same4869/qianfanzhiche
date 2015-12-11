@@ -22,8 +22,18 @@ public class CommunityItem extends BmobObject {
 	private boolean myFav;// 收藏
 
 	private boolean myLove;// 赞
-	
+
 	private int love;
+
+	private boolean isHaveNewComment;// 如果有新评论，则在消息中心中显示该帖子
+
+	public boolean isHaveNewComment() {
+		return isHaveNewComment;
+	}
+
+	public void setHaveNewComment(boolean isHaveNewComment) {
+		this.isHaveNewComment = isHaveNewComment;
+	}
 
 	public boolean isMyFav() {
 		return myFav;

@@ -31,7 +31,8 @@ import com.xun.qianfanzhiche.view.ItemBar;
  *         2015-11-27
  */
 public class ExtendFragment extends BaseFragment implements OnClickListener, net.youmi.android.listener.Interface_ActivityListener {
-	private ItemBar carShowGirlItemBar, userFavItemBar, carMaintenance, carActivity, payMeItemBar, carVideoItemBar, appWallItemBar, carNewsItemBar;
+	private ItemBar carShowGirlItemBar, userFavItemBar, carMaintenance, carActivity, payMeItemBar, carVideoItemBar, appWallItemBar, carNewsItemBar,
+			notifyCenterItemBar;
 
 	@Override
 	@Nullable
@@ -65,6 +66,9 @@ public class ExtendFragment extends BaseFragment implements OnClickListener, net
 		carNewsItemBar = (ItemBar) root.findViewById(R.id.car_news);
 		carNewsItemBar.setItemBarTitle("汽车新闻");
 		carNewsItemBar.setOnClickListener(this);
+		notifyCenterItemBar = (ItemBar) root.findViewById(R.id.user_notify_center);
+		notifyCenterItemBar.setItemBarTitle("通知中心");
+		notifyCenterItemBar.setOnClickListener(this);
 		if (!ZhiCheSPUtil.getIsShowPayMe()) {
 			payMeItemBar.setVisibility(View.GONE);
 		}

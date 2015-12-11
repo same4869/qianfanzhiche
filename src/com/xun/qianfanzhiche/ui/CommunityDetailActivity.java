@@ -68,6 +68,8 @@ public class CommunityDetailActivity extends BaseActivity implements OnClickList
 	private ImageLoaderWithCaches imageLoaderWithCaches;
 	private CommentAdapter commentAdapter;
 
+	private User currentUser;
+
 	private List<Comment> comments = new ArrayList<Comment>();
 	private int pageNum;
 
@@ -81,6 +83,7 @@ public class CommunityDetailActivity extends BaseActivity implements OnClickList
 	}
 
 	private void initData() {
+		currentUser = BmobUser.getCurrentUser(this, User.class);
 		imageLoaderWithCaches = new ImageLoaderWithCaches(getApplicationContext(), null, null);
 		Intent intent = getIntent();
 		communityItem = (CommunityItem) intent.getSerializableExtra("data");
@@ -119,6 +122,21 @@ public class CommunityDetailActivity extends BaseActivity implements OnClickList
 		commentAdapter = new CommentAdapter(getApplicationContext(), comments);
 		commentList.setAdapter(commentAdapter);
 		fetchComment();
+
+		if (communityItem.getAuthor().getUsername().equals(currentUser.getUsername())) {
+			communityItem.setHaveNewComment(false);
+			communityItem.update(getApplicationContext(), new UpdateListener() {
+
+				@Override
+				public void onSuccess() {
+					LogUtil.d(LogUtil.TAG, "用户已读");
+				}
+
+				@Override
+				public void onFailure(int arg0, String arg1) {
+				}
+			});
+		}
 
 	}
 
@@ -187,7 +205,7 @@ public class CommunityDetailActivity extends BaseActivity implements OnClickList
 		});
 	}
 
-	private void publishComment(User user, String content) {
+	private void publishComment(final User user, String content) {
 		final Comment comment = new Comment();
 		comment.setUser(user);
 		comment.setCommentContent(content);
@@ -207,6 +225,9 @@ public class CommunityDetailActivity extends BaseActivity implements OnClickList
 				BmobRelation relation = new BmobRelation();
 				relation.add(comment);
 				communityItem.setRelation(relation);
+				if (!communityItem.getAuthor().getUsername().equals(user.getUsername())) {
+					communityItem.setHaveNewComment(true);
+				}
 				communityItem.update(getApplicationContext(), new UpdateListener() {
 
 					@Override
@@ -255,7 +276,7 @@ public class CommunityDetailActivity extends BaseActivity implements OnClickList
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.comment_commit:
-			User currentUser = BmobUser.getCurrentUser(this, User.class);
+
 			if (currentUser != null) {// 已登录
 				String commentEdit = commentContent.getText().toString().trim();
 				if (TextUtils.isEmpty(commentEdit)) {

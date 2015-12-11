@@ -89,10 +89,6 @@ public class CommonWebActivity extends BaseActivity {
 
 	@Override
 	public void onBackImgClick() {
-		if (commonWebView.canGoBack()) {
-			commonWebView.goBack();
-			return;
-		}
 		super.onBackPressed();
 	}
 

@@ -380,6 +380,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 			signatureItemBar.setItemBarContent("");
 			carItemBar.setItemBarContent("");
 			bindPhoneItemBar.setItemBarContent("");
+			userNicknameItemBar.setItemBarContent("");
 			avaterImg.setImageResource(R.drawable.user_icon_default);
 		} else {
 			loadData();
