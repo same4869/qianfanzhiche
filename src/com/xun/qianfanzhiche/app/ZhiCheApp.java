@@ -62,14 +62,19 @@ public class ZhiCheApp extends Application {
 			@Override
 			public void onSuccess(List<ConstantsBean> object) {
 				for (ConstantsBean constantsBean : object) {
-					LogUtil.d(LogUtil.TAG,
-							"constantsBean.getQiniuBaseUrl() --> " + constantsBean.getQiniuBaseUrl() + " constantsBean.getAutoHomeBaseUrl() --> "
-									+ constantsBean.getAutoHomeBaseUrl() + " constantsBean.getBaiduBaiKeBaseUrl() --> " + constantsBean.getBaiduBaiKeBaseUrl()
-									+ " constantsBean.getSinaCarMaintenanceUrl() --> " + constantsBean.getSinaCarMaintenanceUrl()
-									+ " constantsBean.getCarActivityUrl() --> " + constantsBean.getCarActivityUrl() + " constantsBean.getCarVideoUrl() --> "
-									+ constantsBean.getCarVideoUrl() + " constantsBean.getCarNewsUrl() --> " + constantsBean.getCarNewsUrl()
-									+ " constantsBean.isUseLocalConstants() --> " + constantsBean.isUseLocalConstants() + " constantsBean.isShowPayMe() --> "
-									+ constantsBean.isShowPayMe());
+					LogUtil.d(
+							LogUtil.TAG,
+							"constantsBean.getQiniuBaseUrl() --> " + constantsBean.getQiniuBaseUrl()
+									+ " constantsBean.getAutoHomeBaseUrl() --> " + constantsBean.getAutoHomeBaseUrl()
+									+ " constantsBean.getBaiduBaiKeBaseUrl() --> "
+									+ constantsBean.getBaiduBaiKeBaseUrl()
+									+ " constantsBean.getSinaCarMaintenanceUrl() --> "
+									+ constantsBean.getSinaCarMaintenanceUrl()
+									+ " constantsBean.getCarActivityUrl() --> " + constantsBean.getCarActivityUrl()
+									+ " constantsBean.getCarVideoUrl() --> " + constantsBean.getCarVideoUrl()
+									+ " constantsBean.getCarNewsUrl() --> " + constantsBean.getCarNewsUrl()
+									+ " constantsBean.isUseLocalConstants() --> " + constantsBean.isUseLocalConstants()
+									+ " constantsBean.isShowPayMe() --> " + constantsBean.isShowPayMe());
 					ZhiCheSPUtil.setQiniuBaseUrl(constantsBean.getQiniuBaseUrl());
 					ZhiCheSPUtil.setAutoHomeBaseUrl(constantsBean.getAutoHomeBaseUrl());
 					ZhiCheSPUtil.setAutoHomeBaseUrlSuffix(constantsBean.getAutoHomeBaseUrlSuffix());
@@ -125,7 +130,8 @@ public class ZhiCheApp extends Application {
 		String hash = a.digest(sig, "MD5").toUpperCase();
 		LogUtil.d(LogUtil.TAG, "hash --> " + hash);
 
-		if (hash.equals("AAA224F4C8A3567941A6F4ACAE0B2C93") || hash.equals("03A80264EC83F16F6AB52461C83B1AA7")) {
+		if (hash.equals("AAA224F4C8A3567941A6F4ACAE0B2C93") || hash.equals("03A80264EC83F16F6AB52461C83B1AA7")
+				|| hash.equals("8BAEDA5F5CE0C32E67E6166AE61CA3F0")) {
 			return true;
 		}
 

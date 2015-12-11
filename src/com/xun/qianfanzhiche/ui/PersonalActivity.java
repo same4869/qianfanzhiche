@@ -84,6 +84,9 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 				personalTitle.setText("TA发表过的");
 			}
 		}
+		if (type == 1) {
+			personalTitle.setText("我有新留言的帖子");
+		}
 		if (mUser != null && mUser.getSex() != null) {
 			if (mUser.getSex().equals("0")) {
 				personalSex.setImageResource(R.drawable.basic_female);
@@ -119,12 +122,15 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 			type = 1;
 		}
 
-		if (!isFromUserCenter) {
+		if (!isFromUserCenter && type == 0) {
 			mUser = ZhiCheApp.getInstance().getCurrentCommunityItem().getAuthor();
 			setActionBarTitle("我的帖子");
-		} else {
+		} else if (isFromUserCenter && type == 0) {
 			mUser = BmobUtil.getCurrentUser(getApplicationContext());
 			setActionBarTitle("个人中心");
+		} else if (type == 1) {
+			mUser = BmobUtil.getCurrentUser(getApplicationContext());
+			setActionBarTitle("通知中心");
 		}
 	}
 
