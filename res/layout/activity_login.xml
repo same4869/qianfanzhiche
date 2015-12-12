@@ -148,7 +148,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/ssdk_oks_skyblue_logo_wechat_checked" />
+            android:background="@drawable/ssdk_oks_skyblue_logo_wechat_checked"
+            android:visibility="gone" />
     </LinearLayout>
 
 </LinearLayout>

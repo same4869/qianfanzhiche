@@ -85,7 +85,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 			}
 		}
 		if (type == 1) {
-			personalTitle.setText("我有新留言的帖子");
+			personalTitle.setText("所有您有新留言的帖子");
 		}
 		if (mUser != null && mUser.getSex() != null) {
 			if (mUser.getSex().equals("0")) {

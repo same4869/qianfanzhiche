@@ -597,6 +597,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 					startActivity(bindPhoneIntent);
 				}
 			}
+			break;
 		case R.id.about:
 			Intent aboutIntent = new Intent(getActivity(), AboutActivity.class);
 			startActivity(aboutIntent);

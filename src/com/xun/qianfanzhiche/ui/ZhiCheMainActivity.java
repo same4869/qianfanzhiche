@@ -101,10 +101,10 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 		/**
 		 * BUG :显示不出数字。数字尺寸太大
 		 */
-		footer.setItemNewsCount(0, 10);// 设置消息数量
-		footer.setItemNewsCount(1, 99);// 设置消息数量
-		footer.setItemNewsCount(2, 10);// 设置消息数量
-		footer.setItemNewsCount(3, 1);// 设置消息数量
+		// footer.setItemNewsCount(0, 10);// 设置消息数量
+		// footer.setItemNewsCount(1, 99);// 设置消息数量
+		// footer.setItemNewsCount(2, 10);// 设置消息数量
+		// footer.setItemNewsCount(3, 1);// 设置消息数量
 	}
 
 	public class MyOnPageChangeListener implements OnPageChangeListener {

@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xun.qianfanzhiche.R;
@@ -12,6 +13,7 @@ import com.xun.qianfanzhiche.R;
 public class ItemBar extends FrameLayout {
 	private TextView itemBarTitle, itemBarContent, itemBarArrow;
 	private View topLine;
+	private ImageView redPoint;
 
 	public ItemBar(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -34,6 +36,7 @@ public class ItemBar extends FrameLayout {
 		itemBarContent = (TextView) view.findViewById(R.id.item_bar_content);
 		itemBarArrow = (TextView) view.findViewById(R.id.item_bar_arrow);
 		topLine = (View) view.findViewById(R.id.item_bar_top_line);
+		redPoint = (ImageView) view.findViewById(R.id.item_bar_redpoint);
 	}
 
 	public void setTopLineVisible() {
@@ -47,9 +50,17 @@ public class ItemBar extends FrameLayout {
 	public void setItemBarContent(String string) {
 		itemBarContent.setText(string);
 	}
-	
-	public String getItemBarContent(){
+
+	public String getItemBarContent() {
 		return itemBarContent.getText().toString();
+	}
+
+	public void setRedPointVisable() {
+		redPoint.setVisibility(View.VISIBLE);
+	}
+
+	public void setRedPointGone() {
+		redPoint.setVisibility(View.GONE);
 	}
 
 }
