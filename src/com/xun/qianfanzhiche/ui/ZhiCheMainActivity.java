@@ -90,6 +90,7 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 		viewPager.setAdapter(new HomePagerAdapter(getSupportFragmentManager(), fragments));
 		viewPager.setPageMargin(30);
 		viewPager.addOnPageChangeListener(new MyOnPageChangeListener(footer));
+		viewPager.setOffscreenPageLimit(3);
 		// viewPager.setPageTransformer(true, new DepthPageTransformer());
 
 		footer.setCheckedIndex(viewPager.getCurrentItem());
@@ -157,6 +158,11 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 		public void onPageScrollStateChanged(int paramInt) {
 		}
 
+	}
+
+	// 选项卡底部新消息提醒
+	public void setItemsNewCount(int indexPage, int count) {
+		footer.setItemNewsCount(indexPage, count);
 	}
 
 	@Override

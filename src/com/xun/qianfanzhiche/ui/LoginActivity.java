@@ -112,7 +112,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 						String token = jsonObject.getString(com.tencent.connect.common.Constants.PARAM_ACCESS_TOKEN);
 						String expires = jsonObject.getString(com.tencent.connect.common.Constants.PARAM_EXPIRES_IN);
 						String openId = jsonObject.getString(com.tencent.connect.common.Constants.PARAM_OPEN_ID);
-						BmobThirdUserAuth authInfo = new BmobThirdUserAuth(BmobThirdUserAuth.SNS_TYPE_QQ, token, expires, openId);
+						BmobThirdUserAuth authInfo = new BmobThirdUserAuth(BmobThirdUserAuth.SNS_TYPE_QQ, token,
+								expires, openId);
 						loginWithAuth(authInfo);
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -142,6 +143,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				intent.putExtra("json", userAuth.toString());
 				intent.putExtra("from", authInfo.getSnsType());
 				startActivity(intent);
+				finish();
 			}
 
 			@Override

@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
@@ -17,6 +18,7 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.xun.qianfanzhiche.bean.CommunityItem;
 import com.xun.qianfanzhiche.bean.ConstantsBean;
 import com.xun.qianfanzhiche.common.Constant;
+import com.xun.qianfanzhiche.manager.DownLoadManager;
 import com.xun.qianfanzhiche.utils.ActivityManagerUtils;
 import com.xun.qianfanzhiche.utils.LogUtil;
 import com.xun.qianfanzhiche.utils.ZhiCheSPUtil;
@@ -25,6 +27,7 @@ public class ZhiCheApp extends Application {
 	private static ZhiCheApp mApplication = null;
 	public static IWXAPI api;
 	private CommunityItem currentCommunityItem = null;
+	private boolean isShouldDownloadSplashImg;
 
 	public static ZhiCheApp getInstance() {
 		return mApplication;
@@ -47,6 +50,14 @@ public class ZhiCheApp extends Application {
 		// register2WX();
 		// setConstants();
 		getConstants();
+
+	}
+
+	private void downloadSplashImg() {
+		if (isShouldDownloadSplashImg) {
+			DownLoadManager downLoadManager = DownLoadManager.getInstance();
+			downLoadManager.startDownloadSplashPic(ZhiCheSPUtil.getSplashImgUrl());
+		}
 	}
 
 	private void register2WX() {
@@ -83,9 +94,17 @@ public class ZhiCheApp extends Application {
 					ZhiCheSPUtil.setCarActivityUrl(constantsBean.getCarActivityUrl());
 					ZhiCheSPUtil.setCarVideoUrl(constantsBean.getCarVideoUrl());
 					ZhiCheSPUtil.setCarNewsUrl(constantsBean.getCarNewsUrl());
+					// 如果本地保存的闪屏图片URL和远程不一样的话，则下载最新的并保存
+					Log.d("kkkkkkkk", "ZhiCheSPUtil.getSplashImgUrl() --> " + ZhiCheSPUtil.getSplashImgUrl());
+					if (ZhiCheSPUtil.getSplashImgUrl() != null
+							&& !ZhiCheSPUtil.getSplashImgUrl().equals(constantsBean.getSplashImgUrl())) {
+						isShouldDownloadSplashImg = true;
+					}
+					ZhiCheSPUtil.setSplashImgUrl(constantsBean.getSplashImgUrl());
 					ZhiCheSPUtil.setIsUseLocalConstants(constantsBean.isUseLocalConstants());
 					ZhiCheSPUtil.setIsShowPayMe(constantsBean.isShowPayMe());
 				}
+				downloadSplashImg();
 			}
 
 			@Override
@@ -107,6 +126,7 @@ public class ZhiCheApp extends Application {
 		constantsBean.setCarActivityUrl(Constant.CAR_ACTIVITY);
 		constantsBean.setCarVideoUrl(Constant.CAR_VIDEO);
 		constantsBean.setCarNewsUrl(Constant.CAR_NEWS);
+		constantsBean.setSplashImgUrl(Constant.SPLASH_IMG);
 		constantsBean.setUseLocalConstants(false);
 		constantsBean.setShowPayMe(false);
 		constantsBean.save(getApplicationContext(), new SaveListener() {

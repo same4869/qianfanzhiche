@@ -14,9 +14,18 @@ public class ConstantsBean extends BmobObject {
 	private String carActivityUrl;
 	private String carVideoUrl;
 	private String carNewsUrl;
+	private String splashImgUrl;
 
 	private boolean isUseLocalConstants;
 	private boolean isShowPayMe;
+
+	public String getSplashImgUrl() {
+		return splashImgUrl;
+	}
+
+	public void setSplashImgUrl(String splashImgUrl) {
+		this.splashImgUrl = splashImgUrl;
+	}
 
 	public String getCarVideoUrl() {
 		return carVideoUrl;

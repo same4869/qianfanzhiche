@@ -11,6 +11,7 @@ public class ZhiCheSPUtil {
 	private static final String CAR_ACTIVITY = "car_activity";
 	private static final String CAR_VIDEO = "car_video";
 	private static final String CAR_NEWS = "car_news";
+	private static final String SPLASH_IMG_URL = "splash_img_url";
 
 	private static final String IS_USE_LOCAL_CONSTANTS = "is_use_local_constants";
 	private static final String IS_SHOW_PAY_ME_CONSTANTS = "is_show_pay_me_constants";
@@ -77,6 +78,14 @@ public class ZhiCheSPUtil {
 
 	public static String getCarActivityUrl() {
 		return SPUtil.getString(TABLE_CONSTANTS, CAR_ACTIVITY, null);
+	}
+
+	public static void setSplashImgUrl(String string) {
+		SPUtil.putString(TABLE_CONSTANTS, SPLASH_IMG_URL, string);
+	}
+
+	public static String getSplashImgUrl() {
+		return SPUtil.getString(TABLE_CONSTANTS, SPLASH_IMG_URL, null);
 	}
 
 	public static void setIsUseLocalConstants(boolean isUseConstants) {

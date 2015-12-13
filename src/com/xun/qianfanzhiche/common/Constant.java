@@ -29,5 +29,7 @@ public class Constant {
 	public static final String CAR_VIDEO = "http://auto.sina.cn/video/";// 汽车视频
 
 	public static final String CAR_NEWS = "http://info.3g.qq.com/g/s?aid=template&tid=auto_h&icfa=home_navi&iarea=220"; // 汽车新闻
+	
+	public static final String SPLASH_IMG = "http://7xnmgu.com1.z0.glb.clouddn.com/splash001.png"; //闪屏图片
 
 }

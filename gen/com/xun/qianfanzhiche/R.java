@@ -182,7 +182,7 @@ containing a value of this type.
         public static final int selector_edit_pic=0x7f020046;
         public static final int selector_edittext=0x7f020047;
         public static final int selector_edittext_account=0x7f020048;
-        public static final int splash=0x7f020049;
+        public static final int splash001=0x7f020049;
         public static final int ssdk_auth_title_back=0x7f02004a;
         public static final int ssdk_back_arr=0x7f02004b;
         public static final int ssdk_logo=0x7f02004c;
