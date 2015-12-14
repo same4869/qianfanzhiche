@@ -11,7 +11,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="5dp"
-        android:text="捐助感谢榜"
+        android:text="打赏感谢榜"
         android:textColor="#33bbff"
         android:textSize="16sp" />
 
