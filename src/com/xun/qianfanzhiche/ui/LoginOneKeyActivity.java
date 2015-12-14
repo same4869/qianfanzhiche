@@ -110,9 +110,8 @@ public class LoginOneKeyActivity extends BaseActivity implements OnClickListener
 			public void done(User user, BmobException ex) {
 				progress.dismiss();
 				if (ex == null) {
-					ToastUtil.show(getApplicationContext(), "登录成功");
+					ToastUtil.show(getApplicationContext(), "登录成功,请尽快重置密码");
 					Intent intent = new Intent(LoginOneKeyActivity.this, ZhiCheMainActivity.class);
-					intent.putExtra("from", "loginonekey");
 					startActivity(intent);
 					finish();
 				} else {

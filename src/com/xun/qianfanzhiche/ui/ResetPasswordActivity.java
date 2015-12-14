@@ -16,6 +16,8 @@ import cn.bmob.v3.listener.ResetPasswordByCodeListener;
 
 import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.base.BaseActivity;
+import com.xun.qianfanzhiche.bean.User;
+import com.xun.qianfanzhiche.utils.StringUtil;
 import com.xun.qianfanzhiche.utils.ToastUtil;
 
 public class ResetPasswordActivity extends BaseActivity implements OnClickListener {
@@ -37,7 +39,11 @@ public class ResetPasswordActivity extends BaseActivity implements OnClickListen
 
 	private void initView() {
 		setActionBarTitle("重置密码");
+		User user = BmobUser.getCurrentUser(this, User.class);
 		phoneNumEt = (EditText) findViewById(R.id.et_phone);
+		if (!StringUtil.isStringNullorBlank(user.getMobilePhoneNumber())) {
+			phoneNumEt.setText(user.getMobilePhoneNumber());
+		}
 		verifyCodeEt = (EditText) findViewById(R.id.et_verify_code);
 		passwordEt = (EditText) findViewById(R.id.et_pwd);
 		sendBtn = (Button) findViewById(R.id.btn_send);

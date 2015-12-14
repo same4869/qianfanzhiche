@@ -132,7 +132,8 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 			signatureItemBar.setItemBarContent(user.getSignature());
 			carItemBar.setItemBarContent(user.getCar());
 			userNicknameItemBar.setItemBarContent(user.getNickName());
-			if (user.getMobilePhoneNumberVerified() != null && user.getMobilePhoneNumberVerified()) {
+			// if (user.getMobilePhoneNumberVerified() != null && user.getMobilePhoneNumberVerified()) {
+			if (!StringUtil.isStringNullorBlank(user.getMobilePhoneNumber())) {
 				bindPhoneItemBar.setItemBarContent(user.getMobilePhoneNumber());
 			}
 			BmobFile avatarFile = user.getAvatar();
@@ -143,6 +144,12 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		} else {
 			// ToastUtil.show(getContext(), "未登录");
 		}
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		loadData();
 	}
 
 	// type = 1 性别 2 座驾 3 个性签名
@@ -276,6 +283,11 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 					@Override
 					public void onSuccess() {
 						ToastUtil.show(getActivity(), "更新信息成功。");
+						if (femaleButton.isChecked()) {
+							sexItemBar.setItemBarContent("美女");
+						} else if (maleButton.isChecked()) {
+							sexItemBar.setItemBarContent("帅哥");
+						}
 					}
 
 					@Override
@@ -542,7 +554,8 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 				ToastUtil.show(getContext(), "未登录，请先登录");
 			} else {
 				User user = BmobUser.getCurrentUser(getActivity(), User.class);
-				if (user.getMobilePhoneNumberVerified() != null && user.getMobilePhoneNumberVerified()) {
+				// if (user.getMobilePhoneNumberVerified() != null && user.getMobilePhoneNumberVerified()) {
+				if (!StringUtil.isStringNullorBlank(user.getMobilePhoneNumber())) {
 					Intent resetPwdIntent = new Intent(getActivity(), ResetPasswordActivity.class);
 					startActivity(resetPwdIntent);
 				} else {
@@ -590,7 +603,8 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 				ToastUtil.show(getContext(), "未登录，请先登录");
 			} else {
 				User user = BmobUser.getCurrentUser(getActivity(), User.class);
-				if (user.getMobilePhoneNumberVerified() != null && user.getMobilePhoneNumberVerified()) {
+				// if (user.getMobilePhoneNumberVerified() != null && user.getMobilePhoneNumberVerified()) {
+				if (!StringUtil.isStringNullorBlank(user.getMobilePhoneNumber())) {
 					ToastUtil.show(getContext(), "这个账号已经绑定了手机号了哟");
 				} else {
 					Intent bindPhoneIntent = new Intent(getActivity(), UserBindPhoneActivity.class);

@@ -16,6 +16,8 @@ public class ZhiCheSPUtil {
 	private static final String IS_USE_LOCAL_CONSTANTS = "is_use_local_constants";
 	private static final String IS_SHOW_PAY_ME_CONSTANTS = "is_show_pay_me_constants";
 
+	private static final String IS_FIRST_OPEN_APP = "is_first_open_app";
+
 	public static void setCarVideoUrl(String string) {
 		SPUtil.putString(TABLE_CONSTANTS, CAR_VIDEO, string);
 	}
@@ -102,5 +104,13 @@ public class ZhiCheSPUtil {
 
 	public static boolean getIsShowPayMe() {
 		return SPUtil.getBoolean(TABLE_CONSTANTS, IS_SHOW_PAY_ME_CONSTANTS, false);
+	}
+
+	public static void setIsFirstOpenApp(boolean isFisrt) {
+		SPUtil.putBoolean(TABLE_CONSTANTS, IS_FIRST_OPEN_APP, isFisrt);
+	}
+
+	public static boolean getIsFirstOpenApp() {
+		return SPUtil.getBoolean(TABLE_CONSTANTS, IS_FIRST_OPEN_APP, true);
 	}
 }

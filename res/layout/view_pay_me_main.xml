@@ -20,9 +20,32 @@
         android:layout_height="1px"
         android:background="#E1E4E6" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="sdfdsgfsg" />
+    <ScrollView
+        android:id="@+id/pay_me_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:id="@+id/pay_me_content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="18dp"
+                android:text="一瓶加多宝，4元\n一箱特仑苏，78元\n行车记录仪，1,980元\n宝骏610 2014款，购置税3,453元\n本田思铂睿，商业保险小计7,412元\n奔驰GLK300，车价558,000\n保时捷Panamera2016款3.0T，购车总花费1,509,565元。。。"
+                android:textColor="#999999" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="数字\n蕴含价值与故事\n带来不可估量的力量\n数字中\n你的努力，你的奋斗，你的进步\n都当之无愧\n滴水成河，粒米成箩\n微打赏，从微小做起。"
+                android:textColor="#777777" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

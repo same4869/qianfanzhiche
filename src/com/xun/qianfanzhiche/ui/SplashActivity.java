@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.base.BaseActivity;
 import com.xun.qianfanzhiche.manager.DownLoadManager;
+import com.xun.qianfanzhiche.utils.ZhiCheSPUtil;
 
 public class SplashActivity extends BaseActivity {
 	private final int SPLASH_DISPLAY_LENGHT = 2500;
@@ -22,6 +23,7 @@ public class SplashActivity extends BaseActivity {
 		setActionBarGone();
 
 		splashImageView = (ImageView) findViewById(R.id.splash);
+		// 去SD卡里找最新的闪屏，找不到显示默认
 		try {
 			String myJpgPath = DownLoadManager.ALBUM_PATH + DownLoadManager.mFileName;
 			BitmapFactory.Options options = new BitmapFactory.Options();
@@ -39,7 +41,13 @@ public class SplashActivity extends BaseActivity {
 		new Handler().postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				Intent mainIntent = new Intent(SplashActivity.this, ZhiCheMainActivity.class);
+				Intent mainIntent = new Intent();
+				if (ZhiCheSPUtil.getIsFirstOpenApp()) {
+					mainIntent.setClass(getApplicationContext(), GuideActivity.class);
+					ZhiCheSPUtil.setIsFirstOpenApp(false);
+				} else {
+					mainIntent.setClass(getApplicationContext(), ZhiCheMainActivity.class);
+				}
 				startActivity(mainIntent);
 				finish();
 			}

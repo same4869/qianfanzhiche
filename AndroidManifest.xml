@@ -66,7 +66,7 @@
         <activity
             android:name="com.xun.qianfanzhiche.ui.ZhiCheMainActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTask" >
         </activity>
         <activity android:name=".ui.CommunityNewPublishActivity" >
         </activity>
@@ -99,6 +99,8 @@
         <activity android:name=".ui.UserBindPhoneActivity" >
         </activity>
         <activity android:name=".ui.AboutActivity" >
+        </activity>
+        <activity android:name=".ui.GuideActivity" >
         </activity>
         <activity
             android:name=".ui.PersonalActivity"

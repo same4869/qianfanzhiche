@@ -111,7 +111,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/bg_btn_press_selector_1"
-            android:text="手机号码一键登录"
+            android:text="手机号码一键注册"
             android:textColor="#ffffff"
             android:textSize="16sp" >
         </Button>
