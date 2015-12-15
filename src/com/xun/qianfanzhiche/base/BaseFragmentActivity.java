@@ -18,7 +18,7 @@ public class BaseFragmentActivity extends FragmentActivity {
 		
 		UmengUpdateAgent.update(this);
 		
-		AdManager.getInstance(getApplicationContext()).init(Constant.YOU_MI_APP_ID, Constant.YOU_MI_APP_SECRET, true);
+		AdManager.getInstance(getApplicationContext()).init(Constant.YOU_MI_APP_ID, Constant.YOU_MI_APP_SECRET, false);
 		OffersManager.getInstance(getApplicationContext()).onAppLaunch();
 		
 		PushAgent mPushAgent = PushAgent.getInstance(getApplicationContext());
