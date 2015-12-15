@@ -7,14 +7,11 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.xun.qianfanzhiche.bean.CommunityItem;
 import com.xun.qianfanzhiche.bean.ConstantsBean;
 import com.xun.qianfanzhiche.common.Constant;
@@ -25,7 +22,7 @@ import com.xun.qianfanzhiche.utils.ZhiCheSPUtil;
 
 public class ZhiCheApp extends Application {
 	private static ZhiCheApp mApplication = null;
-	public static IWXAPI api;
+	//public static IWXAPI api;
 	private CommunityItem currentCommunityItem = null;
 	private boolean isShouldDownloadSplashImg;
 
@@ -48,7 +45,7 @@ public class ZhiCheApp extends Application {
 		mApplication = this;
 		Bmob.initialize(getApplicationContext(), Constant.BMOB_APP_ID);
 		// register2WX();
-		// setConstants();
+		//setConstants();
 		getConstants();
 
 	}
@@ -60,10 +57,10 @@ public class ZhiCheApp extends Application {
 		}
 	}
 
-	private void register2WX() {
-		api = WXAPIFactory.createWXAPI(this, Constant.WEIXIN_APP_ID, true);
-		api.registerApp(Constant.WEIXIN_APP_ID);
-	}
+	// private void register2WX() {
+	// api = WXAPIFactory.createWXAPI(this, Constant.WEIXIN_APP_ID, true);
+	// api.registerApp(Constant.WEIXIN_APP_ID);
+	// }
 
 	private void getConstants() {
 		BmobQuery<ConstantsBean> query = new BmobQuery<ConstantsBean>();
@@ -73,19 +70,15 @@ public class ZhiCheApp extends Application {
 			@Override
 			public void onSuccess(List<ConstantsBean> object) {
 				for (ConstantsBean constantsBean : object) {
-					LogUtil.d(
-							LogUtil.TAG,
-							"constantsBean.getQiniuBaseUrl() --> " + constantsBean.getQiniuBaseUrl()
-									+ " constantsBean.getAutoHomeBaseUrl() --> " + constantsBean.getAutoHomeBaseUrl()
-									+ " constantsBean.getBaiduBaiKeBaseUrl() --> "
-									+ constantsBean.getBaiduBaiKeBaseUrl()
-									+ " constantsBean.getSinaCarMaintenanceUrl() --> "
-									+ constantsBean.getSinaCarMaintenanceUrl()
-									+ " constantsBean.getCarActivityUrl() --> " + constantsBean.getCarActivityUrl()
-									+ " constantsBean.getCarVideoUrl() --> " + constantsBean.getCarVideoUrl()
-									+ " constantsBean.getCarNewsUrl() --> " + constantsBean.getCarNewsUrl()
-									+ " constantsBean.isUseLocalConstants() --> " + constantsBean.isUseLocalConstants()
-									+ " constantsBean.isShowPayMe() --> " + constantsBean.isShowPayMe());
+					LogUtil.d(LogUtil.TAG,
+							"constantsBean.getQiniuBaseUrl() --> " + constantsBean.getQiniuBaseUrl() + " constantsBean.getAutoHomeBaseUrl() --> "
+									+ constantsBean.getAutoHomeBaseUrl() + " constantsBean.getBaiduBaiKeBaseUrl() --> " + constantsBean.getBaiduBaiKeBaseUrl()
+									+ " constantsBean.getSinaCarMaintenanceUrl() --> " + constantsBean.getSinaCarMaintenanceUrl()
+									+ " constantsBean.getCarActivityUrl() --> " + constantsBean.getCarActivityUrl() + " constantsBean.getCarVideoUrl() --> "
+									+ constantsBean.getCarVideoUrl() + " constantsBean.getCarNewsUrl() --> " + constantsBean.getCarNewsUrl()
+									+ " constantsBean.isUseLocalConstants() --> " + constantsBean.isUseLocalConstants() + " constantsBean.isShowPayMe() --> "
+									+ constantsBean.isShowPayMe() + " constantsBean.getPaymeWebUrl() --> " + constantsBean.getPaymeWebUrl()
+									+ " constantsBean.getSplashImgUrl() --> " + constantsBean.getSplashImgUrl());
 					ZhiCheSPUtil.setQiniuBaseUrl(constantsBean.getQiniuBaseUrl());
 					ZhiCheSPUtil.setAutoHomeBaseUrl(constantsBean.getAutoHomeBaseUrl());
 					ZhiCheSPUtil.setAutoHomeBaseUrlSuffix(constantsBean.getAutoHomeBaseUrlSuffix());
@@ -95,12 +88,11 @@ public class ZhiCheApp extends Application {
 					ZhiCheSPUtil.setCarVideoUrl(constantsBean.getCarVideoUrl());
 					ZhiCheSPUtil.setCarNewsUrl(constantsBean.getCarNewsUrl());
 					// 如果本地保存的闪屏图片URL和远程不一样的话，则下载最新的并保存
-					Log.d("kkkkkkkk", "ZhiCheSPUtil.getSplashImgUrl() --> " + ZhiCheSPUtil.getSplashImgUrl());
-					if (ZhiCheSPUtil.getSplashImgUrl() != null
-							&& !ZhiCheSPUtil.getSplashImgUrl().equals(constantsBean.getSplashImgUrl())) {
+					if (ZhiCheSPUtil.getSplashImgUrl() != null && !ZhiCheSPUtil.getSplashImgUrl().equals(constantsBean.getSplashImgUrl())) {
 						isShouldDownloadSplashImg = true;
 					}
 					ZhiCheSPUtil.setSplashImgUrl(constantsBean.getSplashImgUrl());
+					ZhiCheSPUtil.setPaymeWebUrl(constantsBean.getPaymeWebUrl());
 					ZhiCheSPUtil.setIsUseLocalConstants(constantsBean.isUseLocalConstants());
 					ZhiCheSPUtil.setIsShowPayMe(constantsBean.isShowPayMe());
 				}
@@ -127,6 +119,7 @@ public class ZhiCheApp extends Application {
 		constantsBean.setCarVideoUrl(Constant.CAR_VIDEO);
 		constantsBean.setCarNewsUrl(Constant.CAR_NEWS);
 		constantsBean.setSplashImgUrl(Constant.SPLASH_IMG);
+		constantsBean.setPaymeWebUrl(Constant.PAY_ME_WEB_URL);
 		constantsBean.setUseLocalConstants(false);
 		constantsBean.setShowPayMe(false);
 		constantsBean.save(getApplicationContext(), new SaveListener() {

@@ -3,9 +3,11 @@ package com.xun.qianfanzhiche.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -23,12 +25,16 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
@@ -45,6 +51,9 @@ import com.xun.qianfanzhiche.utils.ApkUtil;
 import com.xun.qianfanzhiche.utils.BmobUtil;
 import com.xun.qianfanzhiche.utils.LogUtil;
 import com.xun.qianfanzhiche.utils.StringUtil;
+import com.xun.qianfanzhiche.utils.ZhiCheSPUtil;
+import com.xun.qianfanzhiche.view.TypeTextView;
+import com.xun.qianfanzhiche.view.TypeTextView.OnTypeViewListener;
 
 public class PayMeActivity extends BaseActivity implements OnClickListener {
 	private static final int NUMBERS_PER_PAGE = 30;// 榜单1次拉30条
@@ -55,6 +64,9 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 	private ListView payListView, payListView2;
 	private MyScrollListener myScrollListener;
 	private MyScrollListener2 myScrollListener2;
+	private TypeTextView paymeTipTv1, paymeTipTv2;
+	private WebView paymeWebView;
+	private ProgressBar progressBar;
 
 	private String username, orderId;
 	// 1都是最新榜，2都是感谢榜
@@ -117,6 +129,32 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 			usernameTv.setTextColor(Color.RED);
 			usernameTv.setText("亲爱的用户，您还没有登录噢，这样打赏会自动命名为“低调用户”噢。");
 		}
+
+		paymeWebView = (WebView) mainView.findViewById(R.id.pay_me_web);
+		initWebSetting();
+		progressBar = (ProgressBar) mainView.findViewById(R.id.progressBar);
+		paymeWebView.setWebViewClient(new MyWebViewClient());
+		String url = ZhiCheSPUtil.getPaymeWebUrl();
+		if (url != null && url.startsWith("htt")) {
+			paymeWebView.setVisibility(View.VISIBLE);
+			paymeWebView.loadUrl(url);
+		}
+
+		paymeTipTv1 = (TypeTextView) mainView.findViewById(R.id.pay_me_tip_1);
+		paymeTipTv2 = (TypeTextView) mainView.findViewById(R.id.pay_me_tip_2);
+		paymeTipTv1.setOnTypeViewListener(new OnTypeViewListener() {
+
+			@Override
+			public void onTypeStart() {
+
+			}
+
+			@Override
+			public void onTypeOver() {
+				paymeTipTv2.start(getResources().getString(R.string.payme_tip_2));
+			}
+		});
+		paymeTipTv1.start(getResources().getString(R.string.payme_tip_1));
 		listViews.add(mainView);
 
 		View payMeListView = mInflater.inflate(R.layout.view_pay_me_list, null);
@@ -137,6 +175,34 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 
 		myScrollListener = new MyScrollListener();
 		myScrollListener2 = new MyScrollListener2();
+	}
+
+	@SuppressLint("SetJavaScriptEnabled")
+	private void initWebSetting() {
+		WebSettings settings = paymeWebView.getSettings();
+		settings.setJavaScriptEnabled(true);
+		settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+	}
+
+	private class MyWebViewClient extends WebViewClient {
+
+		@Override
+		public boolean shouldOverrideUrlLoading(WebView view, String url) {
+			return super.shouldOverrideUrlLoading(view, url);
+		}
+
+		@Override
+		public void onPageStarted(WebView view, String url, Bitmap favicon) {
+			super.onPageStarted(view, url, favicon);
+			progressBar.setVisibility(View.VISIBLE);
+		}
+
+		@Override
+		public void onPageFinished(WebView view, String url) {
+			super.onPageFinished(view, url);
+			progressBar.setVisibility(View.GONE);
+		}
+
 	}
 
 	// 把所有支持成功的订单号查询出来显示
@@ -518,6 +584,15 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 			}
 		});
 
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (paymeWebView.canGoBack()) {
+			paymeWebView.goBack();
+			return;
+		}
+		super.onBackPressed();
 	}
 
 	@Override

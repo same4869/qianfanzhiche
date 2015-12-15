@@ -19,7 +19,6 @@ import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.modelmsg.SendAuth;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
-import com.xun.qianfanzhiche.app.ZhiCheApp;
 import com.xun.qianfanzhiche.utils.LogUtil;
 
 /** 微信客户端回调activity示例 */
@@ -28,14 +27,14 @@ public class WXEntryActivity extends WechatHandlerActivity implements IWXAPIEven
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ZhiCheApp.api.handleIntent(getIntent(), this);
+		//ZhiCheApp.api.handleIntent(getIntent(), this);
 	}
 	
 	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
 		setIntent(intent);
-		ZhiCheApp.api.handleIntent(intent, this);
+		//ZhiCheApp.api.handleIntent(intent, this);
 	}
 
 	/**

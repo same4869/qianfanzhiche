@@ -19,7 +19,63 @@
 #   public *;
 #}
 
+-optimizationpasses 5
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-dontskipnonpubliclibraryclassmembers
+-dontpreverify
+-ignorewarnings
+-verbose
+-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
+-libraryjars libs
+-keepattributes Exceptions, Signature, InnerClasses
+
+-keep class com.xun.qianfanzhiche.app.a { public <methods>; }
+-keep class android.support.** {*; }
+-keep class cn.sharesdk.**{*;}
+-keep class org.apache.** {*; }
+-keep class com.alipay.** {*;}
+-keep class cn.bmob.** {*; }
+
+-keep public class * extends android.app.Fragment
+-keep public class * extends android.support.v4.app.Fragment
+-keep public class * extends android.webkit.WebView
+-keep public class * extends android.app.Dialog
+
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
+}
+
+-keep public class * implements java.io.Serializable{
+    <fields>;
+}
+
 -dontwarn net.youmi.android.**
 -keep class net.youmi.android.** {
     *;
+}
+
+-dontwarn com.taobao.dp.**
+-keep class com.taobao.dp.**{
+	*;
+}
+
+-dontwarn com.xiaomi.**
+-keep class com.xiaomi.**{
+	*;
+}
+
+-dontwarn com.ut.mini.**
+-keep class com.ut.mini.**{
+	*;
+}
+
+-dontwarn org.codehaus.**
+-keep class org.codehaus.**{
+	*;
+}
+
+-dontwarn java.nio.**
+-keep class java.nio.**{
+	*;
 }

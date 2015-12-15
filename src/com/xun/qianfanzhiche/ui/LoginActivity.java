@@ -21,7 +21,6 @@ import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 import com.xun.qianfanzhiche.R;
-import com.xun.qianfanzhiche.app.ZhiCheApp;
 import com.xun.qianfanzhiche.base.BaseActivity;
 import com.xun.qianfanzhiche.bean.User;
 import com.xun.qianfanzhiche.common.Constant;
@@ -171,7 +170,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			final SendAuth.Req req = new SendAuth.Req();
 			req.scope = "snsapi_userinfo";
 			req.state = "wechat_sdk_qianfanzhiche";
-			ZhiCheApp.api.sendReq(req);
+			//ZhiCheApp.api.sendReq(req);
 			break;
 		case R.id.btn_login:
 			if (canLogin()) {

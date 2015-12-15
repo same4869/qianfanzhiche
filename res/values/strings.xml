@@ -7,5 +7,7 @@
     <string name="level_icon_3">&#xe60d;</string>
     <string name="level_icon_4">&#xe630;</string>
     <string name="level_icon_5">&#xe614;</string>
+    <string name="payme_tip_1">一瓶加多宝，4元\n一箱特仑苏，78元\n行车记录仪，1,980元\n宝骏610 2014款，购置税3,453元\n本田思铂睿，商业保险小计7,412元\n奔驰GLK300，车价558,000\n保时捷Panamera2016款3.0T，购车总花费1,509,565元。。。</string>
+    <string name="payme_tip_2">数字\n蕴含价值与故事\n带来不可估量的力量\n数字中\n你的努力，你的奋斗，你的进步\n都当之无愧\n这是最好的时代\n滴水成河，粒米成箩\n微打赏，从微小做起</string>
 
 </resources>
