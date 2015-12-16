@@ -84,6 +84,13 @@ public class CommunityDetailActivity extends BaseActivity implements OnClickList
 
 	private void initData() {
 		currentUser = BmobUser.getCurrentUser(this, User.class);
+		if (currentUser == null) {
+			ToastUtil.show(getApplicationContext(), "请先登录噢");
+			Intent intent = new Intent(this, LoginActivity.class);
+			startActivity(intent);
+			finish();
+			return;
+		}
 		imageLoaderWithCaches = new ImageLoaderWithCaches(getApplicationContext(), null, null);
 		Intent intent = getIntent();
 		communityItem = (CommunityItem) intent.getSerializableExtra("data");

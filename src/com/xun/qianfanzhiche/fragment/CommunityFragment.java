@@ -30,7 +30,6 @@ import com.xun.qianfanzhiche.ui.ZhiCheMainActivity;
 import com.xun.qianfanzhiche.ui.ZhiCheMainActivity.ActionBarTopInterface;
 import com.xun.qianfanzhiche.utils.BmobUtil;
 import com.xun.qianfanzhiche.utils.LogUtil;
-import com.xun.qianfanzhiche.utils.ToastUtil;
 
 /**
  * 社区页面
@@ -153,7 +152,7 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 					}
 					if (list.size() < Constant.NUMBERS_PER_PAGE) {
 						isAllLoaded = true;
-						ToastUtil.show(getContext(), "已加载完所有数据~");
+						// ToastUtil.show(getContext(), "已加载完所有数据~");
 					}
 					data.addAll(list);
 					putImgData(data);
@@ -166,7 +165,7 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 					mListView.setOnScrollListener(myScrollListener);
 				} else {
 					isAllLoaded = true;
-					ToastUtil.show(getContext(), "暂无更多数据~");
+					// ToastUtil.show(getContext(), "暂无更多数据~");
 					if (list.size() == 0 && data.size() == 0) {
 						pageNum--;
 						return;

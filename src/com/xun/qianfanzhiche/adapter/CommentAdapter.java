@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.bean.Comment;
+import com.xun.qianfanzhiche.utils.StringUtil;
 
 public class CommentAdapter extends BaseContentAdapter<Comment> {
 
@@ -32,7 +33,11 @@ public class CommentAdapter extends BaseContentAdapter<Comment> {
 
 		final Comment comment = dataList.get(position);
 		if (comment.getUser() != null) {
-			viewHolder.userName.setText(comment.getUser().getUsername());
+			if (!StringUtil.isStringNullorBlank(comment.getUser().getNickName())) {
+				viewHolder.userName.setText(comment.getUser().getNickName());
+			} else {
+				viewHolder.userName.setText(comment.getUser().getUsername());
+			}
 		}
 		switch (position) {
 		case 0:

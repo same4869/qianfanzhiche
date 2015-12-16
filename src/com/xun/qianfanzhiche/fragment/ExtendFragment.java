@@ -2,8 +2,6 @@ package com.xun.qianfanzhiche.fragment;
 
 import java.util.List;
 
-import net.youmi.android.offers.OffersManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,7 +25,6 @@ import com.xun.qianfanzhiche.ui.PersonalActivity;
 import com.xun.qianfanzhiche.ui.ZhiCheMainActivity;
 import com.xun.qianfanzhiche.utils.BmobUtil;
 import com.xun.qianfanzhiche.utils.ConstantsUtil;
-import com.xun.qianfanzhiche.utils.LogUtil;
 import com.xun.qianfanzhiche.utils.ZhiCheSPUtil;
 import com.xun.qianfanzhiche.view.ItemBar;
 
@@ -38,7 +35,7 @@ import com.xun.qianfanzhiche.view.ItemBar;
  * 
  *         2015-11-27
  */
-public class ExtendFragment extends BaseFragment implements OnClickListener, net.youmi.android.listener.Interface_ActivityListener {
+public class ExtendFragment extends BaseFragment implements OnClickListener {
 	private ItemBar carShowGirlItemBar, userFavItemBar, carMaintenance, carActivity, payMeItemBar, carVideoItemBar, appWallItemBar, carNewsItemBar,
 			notifyCenterItemBar;
 
@@ -86,30 +83,32 @@ public class ExtendFragment extends BaseFragment implements OnClickListener, net
 	// 这个页面的时候请求下是否有新回复，用来显示通知中心的小红点
 	private void loadData() {
 		User mUser = BmobUtil.getCurrentUser(getContext());
-		BmobQuery<CommunityItem> query = new BmobQuery<CommunityItem>();
-		query.setLimit(5);
-		query.order("-createdAt");
-		query.include("author");
-		query.addWhereEqualTo("author", mUser);
-		query.addWhereEqualTo("isHaveNewComment", true);
-		query.findObjects(getContext(), new FindListener<CommunityItem>() {
+		if (mUser != null) {
+			BmobQuery<CommunityItem> query = new BmobQuery<CommunityItem>();
+			query.setLimit(5);
+			query.order("-createdAt");
+			query.include("author");
+			query.addWhereEqualTo("author", mUser);
+			query.addWhereEqualTo("isHaveNewComment", true);
+			query.findObjects(getContext(), new FindListener<CommunityItem>() {
 
-			@Override
-			public void onSuccess(List<CommunityItem> list) {
-				if (list != null && list.size() > 0) {
-					notifyCenterItemBar.setRedPointVisable();
-				} else {
-					notifyCenterItemBar.setRedPointGone();
+				@Override
+				public void onSuccess(List<CommunityItem> list) {
+					if (list != null && list.size() > 0) {
+						notifyCenterItemBar.setRedPointVisable();
+					} else {
+						notifyCenterItemBar.setRedPointGone();
+					}
+					if (list != null) {
+						((ZhiCheMainActivity) getActivity()).setItemsNewCount(2, list.size());
+					}
 				}
-				if (list != null) {
-					((ZhiCheMainActivity) getActivity()).setItemsNewCount(2, list.size());
-				}
-			}
 
-			@Override
-			public void onError(int arg0, String msg) {
-			}
-		});
+				@Override
+				public void onError(int arg0, String msg) {
+				}
+			});
+		}
 	}
 
 	@Override
@@ -162,7 +161,6 @@ public class ExtendFragment extends BaseFragment implements OnClickListener, net
 			startActivity(carVideoIntent);
 			break;
 		case R.id.app_wall:
-			OffersManager.getInstance(getActivity()).showOffersWall(this);
 			break;
 		case R.id.car_news:
 			Intent carNewsIntent = new Intent(getActivity(), CommonWebActivity.class);
@@ -186,8 +184,4 @@ public class ExtendFragment extends BaseFragment implements OnClickListener, net
 
 	}
 
-	@Override
-	public void onActivityDestroy(Context arg0) {
-		LogUtil.d(LogUtil.TAG, "onActivityDestroy");
-	}
 }

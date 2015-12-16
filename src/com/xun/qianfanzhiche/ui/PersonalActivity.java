@@ -28,7 +28,6 @@ import com.xun.qianfanzhiche.common.Constant;
 import com.xun.qianfanzhiche.db.DatabaseManager;
 import com.xun.qianfanzhiche.utils.BmobUtil;
 import com.xun.qianfanzhiche.utils.StringUtil;
-import com.xun.qianfanzhiche.utils.ToastUtil;
 
 /**
  * 个人中心，我的帖子，消息中心
@@ -190,7 +189,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 
 					if (list.size() < Constant.NUMBERS_PER_PAGE) {
 						isAllLoaded = true;
-						ToastUtil.show(getApplicationContext(), "已加载完所有数据~");
+						//ToastUtil.show(getApplicationContext(), "已加载完所有数据~");
 					}
 
 					data.addAll(list);
@@ -203,7 +202,7 @@ public class PersonalActivity extends BaseActivity implements OnClickListener {
 					mListView.setOnScrollListener(myScrollListener);
 				} else {
 					isAllLoaded = true;
-					ToastUtil.show(getApplicationContext(), "暂无更多数据~");
+					// ToastUtil.show(getApplicationContext(), "暂无更多数据~");
 					pageNum--;
 				}
 			}

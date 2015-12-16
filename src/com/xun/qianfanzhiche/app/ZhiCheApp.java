@@ -22,7 +22,7 @@ import com.xun.qianfanzhiche.utils.ZhiCheSPUtil;
 
 public class ZhiCheApp extends Application {
 	private static ZhiCheApp mApplication = null;
-	//public static IWXAPI api;
+	// public static IWXAPI api;
 	private CommunityItem currentCommunityItem = null;
 	private boolean isShouldDownloadSplashImg;
 
@@ -45,7 +45,7 @@ public class ZhiCheApp extends Application {
 		mApplication = this;
 		Bmob.initialize(getApplicationContext(), Constant.BMOB_APP_ID);
 		// register2WX();
-		//setConstants();
+		// setConstants();
 		getConstants();
 
 	}

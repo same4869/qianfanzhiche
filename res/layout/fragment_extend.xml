@@ -63,7 +63,8 @@
         <com.xun.qianfanzhiche.view.ItemBar
             android:id="@+id/app_wall"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:visibility="gone" >
         </com.xun.qianfanzhiche.view.ItemBar>
     </LinearLayout>
 

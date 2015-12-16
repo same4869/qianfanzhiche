@@ -45,10 +45,8 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 
 	private List<Fragment> fragments = new ArrayList<Fragment>();
 	private Boolean is2CallBack = false;// 是否双击退出
-	private int[] itemImage = { R.drawable.basic_spades_d, R.drawable.basic_heart_d, R.drawable.basic_clubs_d,
-			R.drawable.basic_diamonds_d };
-	private int[] itemCheckedImage = { R.drawable.basic_spades_h, R.drawable.basic_heart_h, R.drawable.basic_clubs_h,
-			R.drawable.basic_diamonds_h };
+	private int[] itemImage = { R.drawable.basic_spades_d, R.drawable.basic_heart_d, R.drawable.basic_clubs_d, R.drawable.basic_diamonds_d };
+	private int[] itemCheckedImage = { R.drawable.basic_spades_h, R.drawable.basic_heart_h, R.drawable.basic_clubs_h, R.drawable.basic_diamonds_h };
 	private String[] itemText = { "品牌", "社区", "扩展", "个人" };
 
 	@Override
@@ -180,7 +178,7 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 		} else {
 			Intent intent = new Intent(this, LoginActivity.class);
 			startActivity(intent);
-			ToastUtil.show(getApplicationContext(), "未登录");
+			ToastUtil.show(getApplicationContext(), "您还没有登录噢，请先登录~");
 		}
 	}
 

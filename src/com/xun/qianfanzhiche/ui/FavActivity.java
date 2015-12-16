@@ -26,7 +26,6 @@ import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
 import com.xun.qianfanzhiche.common.Constant;
 import com.xun.qianfanzhiche.db.DatabaseManager;
 import com.xun.qianfanzhiche.utils.BmobUtil;
-import com.xun.qianfanzhiche.utils.ToastUtil;
 
 /**
  * 我的收藏
@@ -113,7 +112,7 @@ public class FavActivity extends BaseActivity {
 					}
 					if (list.size() < Constant.NUMBERS_PER_PAGE) {
 						isAllLoaded = true;
-						ToastUtil.show(getApplicationContext(), "已加载完所有数据~");
+						// ToastUtil.show(getApplicationContext(), "已加载完所有数据~");
 					}
 					for (int i = 0; i < list.size(); i++) {
 						list.get(i).setMyFav(true);
@@ -130,7 +129,7 @@ public class FavActivity extends BaseActivity {
 					setState(LOADING_COMPLETED);
 				} else {
 					isAllLoaded = true;
-					ToastUtil.show(getApplicationContext(), "暂无更多数据~");
+					// ToastUtil.show(getApplicationContext(), "暂无更多数据~");
 					if (list.size() == 0 && data.size() == 0) {
 
 						networkTips.setText("暂无收藏。快去收藏几个吧~");
