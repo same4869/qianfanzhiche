@@ -94,7 +94,7 @@ public class ZhiCheApp extends Application {
 					ZhiCheSPUtil.setSplashImgUrl(constantsBean.getSplashImgUrl());
 					ZhiCheSPUtil.setPaymeWebUrl(constantsBean.getPaymeWebUrl());
 					ZhiCheSPUtil.setIsUseLocalConstants(constantsBean.isUseLocalConstants());
-					ZhiCheSPUtil.setIsShowPayMe(constantsBean.isShowPayMe());
+					ZhiCheSPUtil.setIsShowPayMe(false);
 				}
 				downloadSplashImg();
 			}

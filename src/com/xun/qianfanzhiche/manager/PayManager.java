@@ -1,10 +1,5 @@
 package com.xun.qianfanzhiche.manager;
 
-import android.app.Activity;
-
-import com.bmob.pay.tool.BmobPay;
-import com.bmob.pay.tool.OrderQueryListener;
-import com.bmob.pay.tool.PayListener;
 
 /**
  * 支付
@@ -33,15 +28,18 @@ public class PayManager {
 		}
 	}
 
-	public void startAliPay(Activity context, Double price, String name, PayListener listener) {
-		new BmobPay(context).pay(price, name, listener);
-	}
-
-	public void startWeixinPay(Activity context, Double price, String name, PayListener listener) {
-		new BmobPay(context).payByWX(price, name, listener);
-	}
-
-	public void orderQuery(Activity context, String orderId, OrderQueryListener orderQueryListener) {
-		new BmobPay(context).query(orderId, orderQueryListener);
-	}
+	// public void startAliPay(Activity context, Double price, String name,
+	// PayListener listener) {
+	// new BmobPay(context).pay(price, name, listener);
+	// }
+	//
+	// public void startWeixinPay(Activity context, Double price, String name,
+	// PayListener listener) {
+	// new BmobPay(context).payByWX(price, name, listener);
+	// }
+	//
+	// public void orderQuery(Activity context, String orderId,
+	// OrderQueryListener orderQueryListener) {
+	// new BmobPay(context).query(orderId, orderQueryListener);
+	// }
 }

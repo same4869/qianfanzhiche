@@ -56,7 +56,7 @@ public class ConstantsUtil {
 			if (isUseLocalConstants) {
 				return Constant.CAR_NEWS;
 			} else {
-				return ZhiCheSPUtil.getCarVideoUrl();
+				return ZhiCheSPUtil.getCarNewsUrl();
 			}
 		}
 		return constantKey;

@@ -40,8 +40,6 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 
-import com.bmob.pay.tool.OrderQueryListener;
-import com.bmob.pay.tool.PayListener;
 import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.adapter.PayMeDetailAdapter;
 import com.xun.qianfanzhiche.base.BaseActivity;
@@ -326,92 +324,97 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 
 	}
 
-	private void startAliPay(final double price, final String payInfo) {
-		PayManager.getInstance().startAliPay(this, price, payInfo, new PayListener() {
-
-			@Override
-			public void unknow() {
-				LogUtil.d(LogUtil.TAG, "unknow");
-			}
-
-			@Override
-			public void succeed() {
-				LogUtil.d(LogUtil.TAG, "succeed");
-				updatePayInfoToBmob(price, payInfo, username, orderId, true, null);
-			}
-
-			@Override
-			public void orderId(String arg0) {
-				orderId = arg0;
-				LogUtil.d(LogUtil.TAG, "orderId arg0 --> " + arg0);
-			}
-
-			@Override
-			public void fail(int arg0, String arg1) {
-				LogUtil.d(LogUtil.TAG, "fail arg0 --> " + arg0 + " arg1 --> " + arg1);
-				updatePayInfoToBmob(price, payInfo, username, orderId, false, arg1);
-			}
-		});
-	}
-
-	private void startWxPay(final double price, final String payInfo) {
-		PayManager.getInstance().startWeixinPay(this, price, payInfo, new PayListener() {
-
-			@Override
-			public void unknow() {
-				LogUtil.d(LogUtil.TAG, "unknow");
-			}
-
-			@Override
-			public void succeed() {
-				LogUtil.d(LogUtil.TAG, "succeed");
-			}
-
-			@Override
-			public void orderId(String arg0) {
-				orderId = arg0;
-				LogUtil.d(LogUtil.TAG, "orderId arg0 --> " + arg0);
-			}
-
-			@Override
-			public void fail(int arg0, String arg1) {
-				LogUtil.d(LogUtil.TAG, "fail arg0 --> " + arg0 + " arg1 --> " + arg1);
-				// 当code为-2,意味着用户中断了操作
-				// code为-3意味着没有安装BmobPlugin插件
-				if (arg0 == -3) {
-					new AlertDialog.Builder(PayMeActivity.this).setMessage("监测到你尚未安装支付插件,无法进行微信打赏,请选择安装插件(已打包在本地,无流量消耗)还是用支付宝打赏")
-							.setPositiveButton("安装", new DialogInterface.OnClickListener() {
-
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									ApkUtil.installBmobPayPlugin(getApplicationContext(), "BmobPayPlugin.apk");
-								}
-							}).setNegativeButton("支付宝打赏", new DialogInterface.OnClickListener() {
-
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									startAliPay(price, payInfo);
-								}
-							}).create().show();
-				}
-			}
-		});
-	}
-
-	private void orderQuery(String orderId) {
-		PayManager.getInstance().orderQuery(this, orderId, new OrderQueryListener() {
-
-			@Override
-			public void succeed(String arg0) {
-				LogUtil.d(LogUtil.TAG, "orderId arg0 --> " + arg0);
-			}
-
-			@Override
-			public void fail(int arg0, String arg1) {
-				LogUtil.d(LogUtil.TAG, "orderId arg0 --> " + arg0 + " arg1 --> " + arg1);
-			}
-		});
-	}
+	// private void startAliPay(final double price, final String payInfo) {
+	// PayManager.getInstance().startAliPay(this, price, payInfo, new
+	// PayListener() {
+	//
+	// @Override
+	// public void unknow() {
+	// LogUtil.d(LogUtil.TAG, "unknow");
+	// }
+	//
+	// @Override
+	// public void succeed() {
+	// LogUtil.d(LogUtil.TAG, "succeed");
+	// updatePayInfoToBmob(price, payInfo, username, orderId, true, null);
+	// }
+	//
+	// @Override
+	// public void orderId(String arg0) {
+	// orderId = arg0;
+	// LogUtil.d(LogUtil.TAG, "orderId arg0 --> " + arg0);
+	// }
+	//
+	// @Override
+	// public void fail(int arg0, String arg1) {
+	// LogUtil.d(LogUtil.TAG, "fail arg0 --> " + arg0 + " arg1 --> " + arg1);
+	// updatePayInfoToBmob(price, payInfo, username, orderId, false, arg1);
+	// }
+	// });
+	// }
+	//
+	// private void startWxPay(final double price, final String payInfo) {
+	// PayManager.getInstance().startWeixinPay(this, price, payInfo, new
+	// PayListener() {
+	//
+	// @Override
+	// public void unknow() {
+	// LogUtil.d(LogUtil.TAG, "unknow");
+	// }
+	//
+	// @Override
+	// public void succeed() {
+	// LogUtil.d(LogUtil.TAG, "succeed");
+	// }
+	//
+	// @Override
+	// public void orderId(String arg0) {
+	// orderId = arg0;
+	// LogUtil.d(LogUtil.TAG, "orderId arg0 --> " + arg0);
+	// }
+	//
+	// @Override
+	// public void fail(int arg0, String arg1) {
+	// LogUtil.d(LogUtil.TAG, "fail arg0 --> " + arg0 + " arg1 --> " + arg1);
+	// // 当code为-2,意味着用户中断了操作
+	// // code为-3意味着没有安装BmobPlugin插件
+	// if (arg0 == -3) {
+	// new
+	// AlertDialog.Builder(PayMeActivity.this).setMessage("监测到你尚未安装支付插件,无法进行微信打赏,请选择安装插件(已打包在本地,无流量消耗)还是用支付宝打赏")
+	// .setPositiveButton("安装", new DialogInterface.OnClickListener() {
+	//
+	// @Override
+	// public void onClick(DialogInterface dialog, int which) {
+	// ApkUtil.installBmobPayPlugin(getApplicationContext(),
+	// "BmobPayPlugin.apk");
+	// }
+	// }).setNegativeButton("支付宝打赏", new DialogInterface.OnClickListener() {
+	//
+	// @Override
+	// public void onClick(DialogInterface dialog, int which) {
+	// startAliPay(price, payInfo);
+	// }
+	// }).create().show();
+	// }
+	// }
+	// });
+	// }
+	//
+	// private void orderQuery(String orderId) {
+	// PayManager.getInstance().orderQuery(this, orderId, new
+	// OrderQueryListener() {
+	//
+	// @Override
+	// public void succeed(String arg0) {
+	// LogUtil.d(LogUtil.TAG, "orderId arg0 --> " + arg0);
+	// }
+	//
+	// @Override
+	// public void fail(int arg0, String arg1) {
+	// LogUtil.d(LogUtil.TAG, "orderId arg0 --> " + arg0 + " arg1 --> " + arg1);
+	// }
+	// });
+	// }
 
 	private void updatePayInfoToBmob(Double price, String payInfo, String username, String orderId, boolean payStatus, String failWhy) {
 		final QFFoundBean qFFoundBean = new QFFoundBean();
@@ -568,21 +571,22 @@ public class PayMeActivity extends BaseActivity implements OnClickListener {
 		Button button = (Button) v.findViewById(R.id.user_edit_btn_ok);
 
 		titleTv.setText("非常感谢，请输入打赏金额（元）");
-		button.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				String editString = editText.getText().toString();
-				if (StringUtil.isStringNullorBlank(editString) || editString.equals("0")) {
-					return;
-				}
-				if (type == 0) {
-					startAliPay(Double.parseDouble(editString), "我来自支付宝打赏");
-				} else if (type == 1) {
-					startWxPay(Double.parseDouble(editString), "我来自支付宝打赏");
-				}
-			}
-		});
+		// button.setOnClickListener(new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// String editString = editText.getText().toString();
+		// if (StringUtil.isStringNullorBlank(editString) ||
+		// editString.equals("0")) {
+		// return;
+		// }
+		// if (type == 0) {
+		// startAliPay(Double.parseDouble(editString), "我来自支付宝打赏");
+		// } else if (type == 1) {
+		// startWxPay(Double.parseDouble(editString), "我来自支付宝打赏");
+		// }
+		// }
+		// });
 
 	}
 
