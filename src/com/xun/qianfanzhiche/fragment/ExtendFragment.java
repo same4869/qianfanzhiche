@@ -22,6 +22,7 @@ import com.xun.qianfanzhiche.ui.FavActivity;
 import com.xun.qianfanzhiche.ui.LoginActivity;
 import com.xun.qianfanzhiche.ui.PayMeActivity;
 import com.xun.qianfanzhiche.ui.PersonalActivity;
+import com.xun.qianfanzhiche.ui.QianfanRobotActivity;
 import com.xun.qianfanzhiche.ui.ZhiCheMainActivity;
 import com.xun.qianfanzhiche.utils.BmobUtil;
 import com.xun.qianfanzhiche.utils.ConstantsUtil;
@@ -37,7 +38,7 @@ import com.xun.qianfanzhiche.view.ItemBar;
  */
 public class ExtendFragment extends BaseFragment implements OnClickListener {
 	private ItemBar carShowGirlItemBar, userFavItemBar, carMaintenance, carActivity, payMeItemBar, carVideoItemBar, appWallItemBar, carNewsItemBar,
-			notifyCenterItemBar;
+			notifyCenterItemBar, qianfanRobotItemBar;
 
 	@Override
 	@Nullable
@@ -74,6 +75,9 @@ public class ExtendFragment extends BaseFragment implements OnClickListener {
 		notifyCenterItemBar = (ItemBar) root.findViewById(R.id.user_notify_center);
 		notifyCenterItemBar.setItemBarTitle("通知中心");
 		notifyCenterItemBar.setOnClickListener(this);
+		qianfanRobotItemBar = (ItemBar) root.findViewById(R.id.qianfan_robot);
+		qianfanRobotItemBar.setItemBarTitle("千帆问答");
+		qianfanRobotItemBar.setOnClickListener(this);
 		if (!ZhiCheSPUtil.getIsShowPayMe()) {
 			payMeItemBar.setVisibility(View.GONE);
 		}
@@ -177,6 +181,10 @@ public class ExtendFragment extends BaseFragment implements OnClickListener {
 				Intent intent = new Intent(getActivity(), LoginActivity.class);
 				startActivity(intent);
 			}
+			break;
+		case R.id.qianfan_robot:
+			Intent intent = new Intent(getActivity(), QianfanRobotActivity.class);
+			startActivity(intent);
 			break;
 		default:
 			break;

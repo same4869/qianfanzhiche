@@ -206,7 +206,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 
 	// type = 1 性别 2 座驾 3 个性签名 4 昵称
 	public void showEditDialog(String originContent, String title, final int type) {
-		editDialog = new AlertDialog.Builder(getContext()).create();
+		editDialog = new AlertDialog.Builder(getActivity()).create();
 		editDialog.setCanceledOnTouchOutside(false);
 		View v = LayoutInflater.from(getContext()).inflate(R.layout.dialog_useredit, null);
 		editDialog.show();
@@ -249,7 +249,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 	}
 
 	public void showSelectSexDialog(int originContent, String title) {
-		selectSexDialog = new AlertDialog.Builder(getContext()).create();
+		selectSexDialog = new AlertDialog.Builder(getActivity()).create();
 		selectSexDialog.setCanceledOnTouchOutside(false);
 		final View v = LayoutInflater.from(getContext()).inflate(R.layout.dialog_select_sex, null);
 		selectSexDialog.show();

@@ -22,6 +22,7 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
@@ -82,7 +83,9 @@
         </activity>
         <activity android:name=".base.BaseActivity" >
         </activity>
-        <activity android:name=".ui.CommonWebActivity" >
+        <activity
+            android:name=".ui.CommonWebActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" >
         </activity>
         <activity android:name=".ui.CarShowGirlActivity" >
         </activity>
@@ -105,6 +108,8 @@
         <activity
             android:name=".ui.PersonalActivity"
             android:launchMode="singleTop" >
+        </activity>
+        <activity android:name=".ui.QianfanRobotActivity" >
         </activity>
         <activity
             android:name="com.mob.tools.MobUIShell"
@@ -170,28 +175,6 @@
             android:name="com.bmob.pay.tool.PayActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" />
-        <activity
-            android:name="net.youmi.android.AdBrowser"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
-        </activity>
-
-        <service
-            android:name="net.youmi.android.AdService"
-            android:exported="false" >
-        </service>
-        <service
-            android:name="net.youmi.android.ExpService"
-            android:exported="false" >
-        </service>
-
-        <receiver android:name="net.youmi.android.AdReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
 
         <service
             android:name="com.umeng.update.net.DownloadingService"

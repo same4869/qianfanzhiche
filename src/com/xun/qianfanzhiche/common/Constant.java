@@ -9,9 +9,7 @@ public class Constant {
 
 	public static final String WEIXIN_APP_ID = "wxf373d09a6458127c";
 
-	public static final String YOU_MI_APP_ID = "d846455406a2ac6f";
-
-	public static final String YOU_MI_APP_SECRET = "2b7a62635620d835";
+	public static final String TURING_KEY = "b3207a1940569653d5d2e920d31bf8bc";
 
 	// 下面的地址分为取本地与使用服务器两种方式
 	public static final String QINIU_IMG_BASE_URL = "http://7xnmgu.com1.z0.glb.clouddn.com/";// 七牛存储，首页车标图片，车模图片

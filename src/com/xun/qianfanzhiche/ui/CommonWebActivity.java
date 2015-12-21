@@ -2,6 +2,7 @@ package com.xun.qianfanzhiche.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
@@ -115,6 +116,7 @@ public class CommonWebActivity extends BaseActivity {
 				myView = null;
 				return;
 			}
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 			videoFullLayout.addView(view);
 			myView = view;
 			myCallback = callback;
@@ -124,8 +126,10 @@ public class CommonWebActivity extends BaseActivity {
 		@Override
 		public void onHideCustomView() {
 			super.onHideCustomView();
-			if (myView == null)// 不是全屏播放状态
+			if (myView == null) {// 不是全屏播放状态
 				return;
+			}
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 			myView.setVisibility(View.GONE);
 			videoFullLayout.removeView(myView);
