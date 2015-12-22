@@ -3,6 +3,7 @@ package com.xun.qianfanzhiche.fragment;
 import java.util.List;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -78,6 +79,9 @@ public class ExtendFragment extends BaseFragment implements OnClickListener {
 		qianfanRobotItemBar = (ItemBar) root.findViewById(R.id.qianfan_robot);
 		qianfanRobotItemBar.setItemBarTitle("千帆问答");
 		qianfanRobotItemBar.setOnClickListener(this);
+		if (ZhiCheSPUtil.getIsFirstShowRobot()) {
+			qianfanRobotItemBar.setItemBarTitleColor(Color.parseColor("#ffbb33"));
+		}
 		if (!ZhiCheSPUtil.getIsShowPayMe()) {
 			payMeItemBar.setVisibility(View.GONE);
 		}
@@ -183,6 +187,7 @@ public class ExtendFragment extends BaseFragment implements OnClickListener {
 			}
 			break;
 		case R.id.qianfan_robot:
+			ZhiCheSPUtil.setIsFirstShowRobot(false);
 			Intent intent = new Intent(getActivity(), QianfanRobotActivity.class);
 			startActivity(intent);
 			break;

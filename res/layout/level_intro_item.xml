@@ -34,7 +34,7 @@
         android:layout_marginRight="16dp"
         android:layout_toLeftOf="@+id/level_intro_value"
         android:text="Lv1"
-        android:textColor="#33bbff"
+        android:textColor="@color/theme_color"
         android:textSize="20sp" />
 
 </RelativeLayout>

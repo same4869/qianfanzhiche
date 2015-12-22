@@ -19,6 +19,8 @@ public class ZhiCheSPUtil {
 
 	private static final String IS_FIRST_OPEN_APP = "is_first_open_app";
 
+	private static final String IS_FIRST_SHOW_ROBOT = "is_first_show_robot";
+
 	public static void setCarVideoUrl(String string) {
 		SPUtil.putString(TABLE_CONSTANTS, CAR_VIDEO, string);
 	}
@@ -121,5 +123,13 @@ public class ZhiCheSPUtil {
 
 	public static boolean getIsFirstOpenApp() {
 		return SPUtil.getBoolean(TABLE_CONSTANTS, IS_FIRST_OPEN_APP, true);
+	}
+
+	public static void setIsFirstShowRobot(boolean isFisrt) {
+		SPUtil.putBoolean(TABLE_CONSTANTS, IS_FIRST_SHOW_ROBOT, isFisrt);
+	}
+
+	public static boolean getIsFirstShowRobot() {
+		return SPUtil.getBoolean(TABLE_CONSTANTS, IS_FIRST_SHOW_ROBOT, true);
 	}
 }

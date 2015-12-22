@@ -47,6 +47,10 @@ public class ItemBar extends FrameLayout {
 		itemBarTitle.setText(string);
 	}
 
+	public void setItemBarTitleColor(int color) {
+		itemBarTitle.setTextColor(color);
+	}
+
 	public void setItemBarContent(String string) {
 		itemBarContent.setText(string);
 	}

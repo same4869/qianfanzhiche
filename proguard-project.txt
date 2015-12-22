@@ -42,9 +42,24 @@
 -keep public class * extends android.webkit.WebView
 -keep public class * extends android.app.Dialog
 
--keep class com.baidu.android.**{*;}
--keep class com.baidu.voicerecognition.android.**{*;}
--keep class com.iflytek.**{*;}
+-dontwarn android.support.**
+-dontwarn com.alibaba.fastjson.**
+
+
+-libraryjars libs/android-support-v4.jar
+-libraryjars libs/fastjson-1.1.35.jar
+
+-dontskipnonpubliclibraryclassmembers
+-dontskipnonpubliclibraryclasses
+
+-keep class com.baidu.** { *; }
+-keep class com.alibaba.fastjson.** { *; }
+
+-keepclassmembers class * {
+public <methods>;
+}
+-keep class com.xun.qianfanzhiche.bean.**
+
 
 -keepclassmembers class * {
     @android.webkit.JavascriptInterface <methods>;
@@ -54,10 +69,6 @@
     <fields>;
 }
 
--dontwarn net.youmi.android.**
--keep class net.youmi.android.** {
-    *;
-}
 
 -dontwarn com.taobao.dp.**
 -keep class com.taobao.dp.**{

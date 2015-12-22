@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -93,6 +94,7 @@ public class QianfanRobotActivity extends BaseActivity implements OnClickListene
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
+			Log.d("kkkkkkkk", "result --> " + result);
 			String resString = TulingManager.getInstance().processString(result);
 			adapter.addItemNotifiChange(new TulingRobotBean(resString, R.drawable.qianfanlengleng, new Date() + "", 1));
 			mRobotListView.setSelection(beans.size() - 1);

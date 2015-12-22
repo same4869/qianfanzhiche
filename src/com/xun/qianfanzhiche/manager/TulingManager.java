@@ -1,5 +1,6 @@
 package com.xun.qianfanzhiche.manager;
 
+import android.util.Log;
 import android.util.SparseArray;
 
 import com.alibaba.fastjson.JSON;
@@ -38,8 +39,10 @@ public class TulingManager {
 		if (!type2.equals(AnswerType.TEXT)) {
 			return "千帆冷冷暂时听不懂哟，快去鞭笞作者增强我%>_<%";
 		}
+		Log.d("kkkkkkkk", "turingResult --> " + turingResult);
 		TextResponse textResponse = JSON.parseObject(turingResult, TextResponse.class);
 		if (textResponse != null) {
+			Log.d("kkkkkkkk", "textResponse.getText() --> " + textResponse.getText());
 			return textResponse.getText();
 		}
 		return null;
