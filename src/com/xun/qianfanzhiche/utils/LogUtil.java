@@ -3,7 +3,7 @@ package com.xun.qianfanzhiche.utils;
 import android.util.Log;
 
 public class LogUtil {
-	private static final boolean IS_DEBUG = false;
+	private static final boolean IS_DEBUG = true;
 	public static final String TAG = "kkkkkkkk";
 
 	public static void d(String tag, String msg) {
