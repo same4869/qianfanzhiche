@@ -46,6 +46,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void onSuccess() {
 				ToastUtil.show(getApplicationContext(), "注册成功");
+				finish();
 			}
 
 			@Override

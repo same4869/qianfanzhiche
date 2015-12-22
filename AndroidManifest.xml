@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.xun.qianfanzhiche"
-    android:versionCode="100300"
-    android:versionName="1.3" >
+    android:versionCode="100400"
+    android:versionName="1.4" >
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -22,6 +22,7 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
@@ -82,7 +83,9 @@
         </activity>
         <activity android:name=".base.BaseActivity" >
         </activity>
-        <activity android:name=".ui.CommonWebActivity" >
+        <activity
+            android:name=".ui.CommonWebActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" >
         </activity>
         <activity android:name=".ui.CarShowGirlActivity" >
         </activity>
@@ -105,6 +108,8 @@
         <activity
             android:name=".ui.PersonalActivity"
             android:launchMode="singleTop" >
+        </activity>
+        <activity android:name=".ui.QianfanRobotActivity" >
         </activity>
         <activity
             android:name="com.mob.tools.MobUIShell"
@@ -158,6 +163,7 @@
                 <data android:scheme="tencent100442925" />
             </intent-filter>
         </activity>
+
         <service
             android:name="com.umeng.update.net.DownloadingService"
             android:process=":DownloadingService" >

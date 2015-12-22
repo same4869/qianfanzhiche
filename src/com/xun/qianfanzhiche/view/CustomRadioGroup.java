@@ -24,9 +24,7 @@ public class CustomRadioGroup extends LinearLayout {
 	/**
 	 * IMAGE/TEXT : 条目的图片/文字 START/DIF : 初始值/和目标的差值 R/G/B ： 目标颜色RGB格式下的R/G/B
 	 */
-	private static final int TEXT_START_COLOR = Color.GRAY, END_COLOR = Color.parseColor("#33bbff"), TEXT_START_R = Color.red(TEXT_START_COLOR),
-			TEXT_START_G = Color.green(TEXT_START_COLOR), TEXT_START_B = Color.blue(TEXT_START_COLOR), TEXT_DIF_R = Color.red(END_COLOR) - TEXT_START_R,
-			TEXT_DIF_G = Color.green(END_COLOR) - TEXT_START_G, TEXT_DIF_B = Color.blue(END_COLOR) - TEXT_START_B;;
+	private static int TEXT_START_COLOR, END_COLOR, TEXT_START_R, TEXT_START_G, TEXT_START_B, TEXT_DIF_R, TEXT_DIF_G, TEXT_DIF_B;
 	// 相关的资源ID：
 	private final int ID_LAYOUT = R.layout.custom_radio_button, ID_IMAGE_TOP = R.id.custom_radio_button_image_top,
 			ID_IMAGE_BOTTOM = R.id.custom_radio_button_image_botom, ID_TEXT = R.id.custom_radio_button_text, ID_NEWS = R.id.custom_radio_button_news;
@@ -42,18 +40,26 @@ public class CustomRadioGroup extends LinearLayout {
 
 	public CustomRadioGroup(Context c) {
 		super(c);
-		init();
+		init(c);
 	}
 
 	public CustomRadioGroup(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		init();
+		init(context);
 	}
 
 	/**
 	 * 构造函数里适用的初始化部分
 	 */
-	private void init() {
+	private void init(Context context) {
+		TEXT_START_COLOR = Color.GRAY;
+		END_COLOR = context.getResources().getColor(R.color.theme_color);
+		TEXT_START_R = Color.red(TEXT_START_COLOR);
+		TEXT_START_G = Color.green(TEXT_START_COLOR);
+		TEXT_START_B = Color.blue(TEXT_START_COLOR);
+		TEXT_DIF_R = Color.red(END_COLOR) - TEXT_START_R;
+		TEXT_DIF_G = Color.green(END_COLOR) - TEXT_START_G;
+		TEXT_DIF_B = Color.blue(END_COLOR) - TEXT_START_B;
 		inflater = LayoutInflater.from(getContext());
 		itemLayoutParams.weight = 1;
 		setOrientation(HORIZONTAL);

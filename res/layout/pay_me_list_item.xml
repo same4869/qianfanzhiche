@@ -12,7 +12,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="16dp"
         android:text="张三"
-        android:textColor="#33bbff"
+        android:textColor="@color/theme_color"
         android:textSize="18sp" />
 
     <TextView

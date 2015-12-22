@@ -29,6 +29,12 @@
         </com.xun.qianfanzhiche.view.ItemBar>
 
         <com.xun.qianfanzhiche.view.ItemBar
+            android:id="@+id/qianfan_robot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </com.xun.qianfanzhiche.view.ItemBar>
+
+        <com.xun.qianfanzhiche.view.ItemBar
             android:id="@+id/car_activity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
