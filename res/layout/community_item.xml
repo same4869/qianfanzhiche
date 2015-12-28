@@ -4,17 +4,17 @@
     android:layout_height="match_parent"
     android:background="#55BBBBBB"
     android:orientation="vertical"
-    android:paddingBottom="3dp"
-    android:paddingLeft="3dp"
-    android:paddingRight="3dp"
-    android:paddingTop="3dp" >
+    android:paddingBottom="4dp"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
+    android:paddingTop="4dp" >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ffffff"
         android:orientation="vertical"
-        android:paddingBottom="5dp" >
+        android:paddingBottom="6dp" >
 
         <ImageView
             android:id="@+id/item_avater"
