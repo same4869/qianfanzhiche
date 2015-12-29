@@ -11,10 +11,10 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 
 import com.xun.qianfanzhiche.R;
 import com.xun.qianfanzhiche.base.BaseActivity;
+import com.xun.qianfanzhiche.view.AVLoadingIndicatorView;
 
 /**
  * 
@@ -27,7 +27,7 @@ public class CommonWebActivity extends BaseActivity {
 	public static final String COMMON_WEB_TITLE = "common_web_title";
 
 	private WebView commonWebView;
-	private ProgressBar progressBar;
+	private AVLoadingIndicatorView progressBar;
 
 	private MyWebChromeClient myWebChromeClient;
 	private FrameLayout videoFullLayout;
@@ -47,7 +47,7 @@ public class CommonWebActivity extends BaseActivity {
 
 		setActionBarTitle(intent.getStringExtra(COMMON_WEB_TITLE));
 
-		progressBar = (ProgressBar) findViewById(R.id.progressBar);
+		progressBar = (AVLoadingIndicatorView) findViewById(R.id.progressBar);
 		videoFullLayout = (FrameLayout) findViewById(R.id.video_fullView);
 
 		commonWebView = (WebView) findViewById(R.id.common_webview);

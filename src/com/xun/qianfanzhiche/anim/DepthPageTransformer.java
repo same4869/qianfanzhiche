@@ -37,4 +37,4 @@ public class DepthPageTransformer implements ViewPager.PageTransformer {
 			view.setAlpha(0);
 		}
 	}
-}
+ }

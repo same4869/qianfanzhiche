@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.listener.FindListener;
@@ -30,6 +29,7 @@ import com.xun.qianfanzhiche.ui.ZhiCheMainActivity;
 import com.xun.qianfanzhiche.ui.ZhiCheMainActivity.ActionBarTopInterface;
 import com.xun.qianfanzhiche.utils.BmobUtil;
 import com.xun.qianfanzhiche.utils.LogUtil;
+import com.xun.qianfanzhiche.view.AVLoadingIndicatorView;
 
 /**
  * 社区页面
@@ -45,7 +45,7 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 	private SwipeRefreshLayout swipeView;
 	private CommunityListAdapter communityListAdapter;
 	private MyScrollListener myScrollListener;
-	private ProgressBar progressBar;
+	private AVLoadingIndicatorView progressBar;
 
 	private ImageLoaderWithCaches mImageLoader;
 	private int start, end;
@@ -69,7 +69,7 @@ public class CommunityFragment extends BaseFragment implements OnRefreshListener
 		swipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_red_light, android.R.color.holo_green_light,
 				android.R.color.holo_orange_light);
 		mListView = (ListView) rootView.findViewById(R.id.community_list);
-		progressBar = (ProgressBar) rootView.findViewById(R.id.community_progressbar);
+		progressBar = (AVLoadingIndicatorView) rootView.findViewById(R.id.community_progressbar);
 		mImageLoader = new ImageLoaderWithCaches(getContext(), mListView, imgUrls);
 		communityListAdapter = new CommunityListAdapter(getContext(), data, mImageLoader);
 		myScrollListener = new MyScrollListener();

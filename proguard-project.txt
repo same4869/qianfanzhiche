@@ -94,3 +94,13 @@ public <methods>;
 -keep class java.nio.**{
 	*;
 }
+
+-keep public class com.xun.qianfanzhiche.R$*{
+    public static final int *;
+}
+# 添加第三方jar包
+-libraryjars libs/umeng-update-v2.6.0.1.jar
+# 以下类过滤不混淆  
+-keep public class * extends com.umeng.**
+# 以下包不进行过滤 
+-keep class com.umeng.** { *; }
