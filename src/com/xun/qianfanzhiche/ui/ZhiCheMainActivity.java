@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -48,6 +49,8 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 	private int[] itemImage = { R.drawable.basic_spades_d, R.drawable.basic_heart_d, R.drawable.basic_clubs_d, R.drawable.basic_diamonds_d };
 	private int[] itemCheckedImage = { R.drawable.basic_spades_h, R.drawable.basic_heart_h, R.drawable.basic_clubs_h, R.drawable.basic_diamonds_h };
 	private String[] itemText = { "品牌", "社区", "扩展", "个人" };
+
+	private static final int CAMERA_WITH_DATA = 10000;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -118,15 +121,23 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 			switch (position) {
 			case 0:
 				zhiCheActionBar.setTitle("汽车品牌");
+				zhiCheActionBar.setAddImgResource(R.drawable.recog_photo);
+				zhiCheActionBar.setAddImgType(0);
 				break;
 			case 1:
 				zhiCheActionBar.setTitle("知车社区");
+				zhiCheActionBar.setAddImgResource(R.drawable.basic_todolist_pen);
+				zhiCheActionBar.setAddImgType(1);
 				break;
 			case 2:
 				zhiCheActionBar.setTitle("扩展功能");
+				zhiCheActionBar.setAddImgResource(R.drawable.recog_photo);
+				zhiCheActionBar.setAddImgType(0);
 				break;
 			case 3:
 				zhiCheActionBar.setTitle("个人中心");
+				zhiCheActionBar.setAddImgResource(R.drawable.recog_photo);
+				zhiCheActionBar.setAddImgType(0);
 				break;
 			default:
 				break;
@@ -170,15 +181,23 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 	}
 
 	@Override
-	public void onAddImgClick() {
-		User user = BmobUser.getCurrentUser(this, User.class);
-		if (user != null) {
-			Intent intent = new Intent(this, CommunityNewPublishActivity.class);
-			startActivity(intent);
-		} else {
-			Intent intent = new Intent(this, LoginActivity.class);
-			startActivity(intent);
-			ToastUtil.show(getApplicationContext(), "您还没有登录噢，请先登录~");
+	public void onAddImgClick(int type) {
+		// Intent intent = new Intent(ZhiCheMainActivity.this, RadarActivity.class);
+		// startActivity(intent);
+		// return;
+		if (type == 0) {
+			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+			startActivityForResult(intent, CAMERA_WITH_DATA);
+		} else if (type == 1) {
+			User user = BmobUser.getCurrentUser(this, User.class);
+			if (user != null) {
+				Intent intent = new Intent(this, CommunityNewPublishActivity.class);
+				startActivity(intent);
+			} else {
+				Intent intent = new Intent(this, LoginActivity.class);
+				startActivity(intent);
+				ToastUtil.show(getApplicationContext(), "您还没有登录噢，请先登录~");
+			}
 		}
 	}
 
@@ -220,6 +239,24 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 
 	public interface ActionBarTopInterface {
 		public void onActionBarTopClick();
+	}
+
+	@Override
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+		super.onActivityResult(arg0, arg1, arg2);
+		if (arg2 == null) {
+			return;
+		}
+		switch (arg0) {
+		case CAMERA_WITH_DATA:
+			Intent intent = new Intent(ZhiCheMainActivity.this, RadarActivity.class);
+			intent.putExtra("cameraData", arg2.getParcelableExtra("data"));
+			startActivity(intent);
+			break;
+
+		default:
+			break;
+		}
 	}
 
 }

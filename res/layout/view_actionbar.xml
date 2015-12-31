@@ -31,7 +31,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:padding="5dp"
-        android:src="@drawable/basic_todolist_pen" />
+        android:src="@drawable/recog_photo" />
 
     <TextView
         android:id="@+id/actionbar_text"

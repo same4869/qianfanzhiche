@@ -16,6 +16,7 @@ public class ZhiCheActionBar extends FrameLayout implements OnClickListener {
 	private RelativeLayout actionbarLayout;
 	private ImageView backImg, addImg;
 	private TextView titleTv, textTv;
+	private int type = 0; // 0.拍照 1.发帖
 
 	private ActionBarListener actionBarListener;
 
@@ -46,6 +47,10 @@ public class ZhiCheActionBar extends FrameLayout implements OnClickListener {
 		addImg.setOnClickListener(this);
 		textTv.setOnClickListener(this);
 		addImg.setVisibility(View.GONE);
+	}
+
+	public void setAddImgType(int type) {
+		this.type = type;
 	}
 
 	public ImageView getBackImg() {
@@ -81,7 +86,7 @@ public class ZhiCheActionBar extends FrameLayout implements OnClickListener {
 	public interface ActionBarListener {
 		void onBackImgClick();
 
-		void onAddImgClick();
+		void onAddImgClick(int type);
 
 		void onTextTvClick();
 
@@ -98,7 +103,7 @@ public class ZhiCheActionBar extends FrameLayout implements OnClickListener {
 			break;
 		case R.id.actionbar_add:
 			if (actionBarListener != null) {
-				actionBarListener.onAddImgClick();
+				actionBarListener.onAddImgClick(type);
 			}
 			break;
 		case R.id.actionbar_text:

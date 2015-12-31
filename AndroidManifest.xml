@@ -111,6 +111,8 @@
         </activity>
         <activity android:name=".ui.QianfanRobotActivity" >
         </activity>
+        <activity android:name=".ui.RadarActivity" >
+        </activity>
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"

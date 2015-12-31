@@ -146,7 +146,7 @@ public class CommunityNewPublishActivity extends BaseActivity implements OnClick
 	}
 
 	@Override
-	public void onAddImgClick() {
+	public void onAddImgClick(int type) {
 		if (isPublishing) {
 			ToastUtil.show(getApplicationContext(), "正在发布中。。。");
 			return;

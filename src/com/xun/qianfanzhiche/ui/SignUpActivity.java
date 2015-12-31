@@ -99,7 +99,7 @@ public class SignUpActivity extends BaseActivity implements OnClickListener, Act
 	}
 
 	@Override
-	public void onAddImgClick() {
+	public void onAddImgClick(int type) {
 		// TODO Auto-generated method stub
 
 	}

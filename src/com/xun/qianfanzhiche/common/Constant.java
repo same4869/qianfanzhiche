@@ -11,6 +11,12 @@ public class Constant {
 
 	public static final String TURING_KEY = "b3207a1940569653d5d2e920d31bf8bc";
 
+	public static final String SHITU_API_KEY = "c6f2e486536540cc21f58d80200a035a";
+
+	public static final String SHITU_URL = "http://apis.baidu.com/image_search/shitu/shitu_image";
+
+	public static final String BAIDU_SEARCH_BASE_URL = "http://m.baidu.com/ssid=edfcd0a1b2d6b2d6b0a1b9fe3b36/s?word=";
+
 	// 下面的地址分为取本地与使用服务器两种方式
 	public static final String QINIU_IMG_BASE_URL = "http://7xnmgu.com1.z0.glb.clouddn.com/";// 七牛存储，首页车标图片，车模图片
 

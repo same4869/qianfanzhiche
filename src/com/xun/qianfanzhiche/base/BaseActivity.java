@@ -76,12 +76,6 @@ public class BaseActivity extends Activity implements ActionBarListener {
 	}
 
 	@Override
-	public void onAddImgClick() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void onTextTvClick() {
 		// TODO Auto-generated method stub
 
@@ -91,6 +85,12 @@ public class BaseActivity extends Activity implements ActionBarListener {
 	public void onActionBarTopClick() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void onAddImgClick(int type) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
