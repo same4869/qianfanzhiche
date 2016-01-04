@@ -28,7 +28,7 @@
         android:layout_below="@id/app_name"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
-        android:text="version 1.5" />
+        android:text="version 1.6" />
 
     <TextView
         android:id="@+id/copyright"

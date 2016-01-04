@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobRelation;
+import cn.bmob.v3.listener.DeleteListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 import com.xun.qianfanzhiche.R;
@@ -49,6 +50,22 @@ public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
 		notifyDataSetChanged();
 	}
 
+	// 删除无用户的非法数据
+	private void deleteUnholpData(String objectId) {
+		CommunityItem communityItem = new CommunityItem();
+		communityItem.setObjectId(objectId);
+		communityItem.delete(mContext, new DeleteListener() {
+
+			@Override
+			public void onSuccess() {
+			}
+
+			@Override
+			public void onFailure(int code, String msg) {
+			}
+		});
+	}
+
 	@Override
 	public View getConvertView(final int position, View convertView, ViewGroup parent) {
 		final ViewHolder viewHolder;
@@ -75,6 +92,10 @@ public class CommunityListAdapter extends BaseContentAdapter<CommunityItem> {
 			return convertView;
 		}
 		viewHolder.itemContent.setText(data.get(position).getContent());
+		if (data.get(position).getAuthor() == null) {// 非法数据，删除
+			deleteUnholpData(data.get(position).getObjectId());
+			return convertView;
+		}
 		if (!StringUtil.isStringNullorBlank(data.get(position).getAuthor().getNickName())) {
 			viewHolder.itemName.setText(data.get(position).getAuthor().getNickName());
 		} else {

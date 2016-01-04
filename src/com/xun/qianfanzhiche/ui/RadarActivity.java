@@ -13,22 +13,31 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.xun.qianfanzhiche.R;
+import com.xun.qianfanzhiche.adapter.MoreInfoListAdapter;
 import com.xun.qianfanzhiche.base.BaseActivity;
 import com.xun.qianfanzhiche.bean.ShiTuBean;
+import com.xun.qianfanzhiche.cache.ImageLoaderWithCaches;
 import com.xun.qianfanzhiche.common.Constant;
 import com.xun.qianfanzhiche.utils.HttpUtil;
 import com.xun.qianfanzhiche.utils.LogUtil;
+import com.xun.qianfanzhiche.utils.ScreenUtil;
 import com.xun.qianfanzhiche.view.RadarView;
 
 public class RadarActivity extends BaseActivity {
 	private RadarView radarView;
 	private TextView guessWord1, guessWord2, guessWord3;
 	private ShiTuBean shiTuBean;
+	private ListView moreInfoListView;
+	private MoreInfoListAdapter moreInfoListAdapter;
+	private ImageLoaderWithCaches imageLoaderWithCaches;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +59,26 @@ public class RadarActivity extends BaseActivity {
 
 	private void initView() {
 		setActionBarTitle("千帆智能识别");
+		int viewSize = (int) (ScreenUtil.getDensity(this) * 320);
 		radarView = (RadarView) findViewById(R.id.radar_view);
+		radarView.resetViewSize(viewSize);
 		radarView.start();
 		guessWord1 = (TextView) findViewById(R.id.guess_tip1);
 		guessWord2 = (TextView) findViewById(R.id.guess_tip2);
 		guessWord3 = (TextView) findViewById(R.id.guess_tip3);
+		moreInfoListView = (ListView) findViewById(R.id.more_info_list);
+		moreInfoListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				if (shiTuBean.getData() != null && shiTuBean.getData().getSameInfo() != null) {
+					Intent intent = new Intent(RadarActivity.this, CommonWebActivity.class);
+					intent.putExtra(CommonWebActivity.COMMON_WEB_URL, shiTuBean.getData().getSameInfo().get(position).getFromURL());
+					startActivity(intent);
+				}
+			}
+		});
+
 		new Handler().postDelayed(new Runnable() {
 
 			@Override
@@ -123,6 +147,11 @@ public class RadarActivity extends BaseActivity {
 			if (shiTuBean != null) {
 				if (shiTuBean.getData() != null && shiTuBean.getData().getGuessWord() != null && shiTuBean.getData().getGuessWord().size() > 0) {
 					randomTextTip(guessWord1, shiTuBean.getData().getGuessWord().get(0), 1);
+				}
+				if (shiTuBean.getData() != null && shiTuBean.getData().getSameInfo() != null) {
+					imageLoaderWithCaches = new ImageLoaderWithCaches(getApplicationContext(), null, null);
+					moreInfoListAdapter = new MoreInfoListAdapter(getApplicationContext(), shiTuBean.getData().getSameInfo(), imageLoaderWithCaches);
+					moreInfoListView.setAdapter(moreInfoListAdapter);
 				}
 			}
 			LogUtil.d(LogUtil.TAG, "result --> " + result);

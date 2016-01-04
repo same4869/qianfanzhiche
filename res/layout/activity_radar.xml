@@ -43,4 +43,11 @@
         android:shadowRadius="3"
         android:textSize="17sp" />
 
+    <ListView
+        android:id="@+id/more_info_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radar_view" >
+    </ListView>
+
 </RelativeLayout>

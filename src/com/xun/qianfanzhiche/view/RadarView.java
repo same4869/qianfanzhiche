@@ -43,6 +43,10 @@ public class RadarView extends FrameLayout {
 		mThread = new ScanThread(this);
 		setBackgroundColor(Color.TRANSPARENT);
 	}
+	
+	public void resetViewSize(int viewSize){
+		this.viewSize = viewSize;
+	}
 
 	private void initPaint() {
 		mPaintLine = new Paint();
