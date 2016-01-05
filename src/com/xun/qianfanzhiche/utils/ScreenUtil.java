@@ -32,4 +32,11 @@ public class ScreenUtil {
 		InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
 	}
+
+	public static int getScreenWidth(Activity context) {
+		DisplayMetrics metric = new DisplayMetrics();
+		context.getWindowManager().getDefaultDisplay().getMetrics(metric);
+		return metric.widthPixels; // 屏幕宽度（像素）
+	}
+
 }

@@ -3,9 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="点击雷达上的文字即可搜索，如果有扩展项会在底部列表显示噢~"
+        android:textColor="@color/theme_color"
+        android:textSize="18sp" />
+
     <com.xun.qianfanzhiche.view.RadarView
         android:id="@+id/radar_view"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" >
     </com.xun.qianfanzhiche.view.RadarView>

@@ -65,6 +65,12 @@ public class CommonWebActivity extends BaseActivity {
 		WebSettings settings = commonWebView.getSettings();
 		settings.setJavaScriptEnabled(true);
 		settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+		settings.setAppCacheEnabled(true);
+		settings.setJavaScriptCanOpenWindowsAutomatically(true);
+		settings.setBuiltInZoomControls(false);
+		settings.setSupportZoom(false);
+		settings.setDomStorageEnabled(true);
+		settings.setUseWideViewPort(true);
 	}
 
 	private class MyWebViewClient extends WebViewClient {

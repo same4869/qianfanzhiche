@@ -59,7 +59,7 @@ public class RadarActivity extends BaseActivity {
 
 	private void initView() {
 		setActionBarTitle("千帆智能识别");
-		int viewSize = (int) (ScreenUtil.getDensity(this) * 320);
+		int viewSize = ScreenUtil.getScreenWidth(this);
 		radarView = (RadarView) findViewById(R.id.radar_view);
 		radarView.resetViewSize(viewSize);
 		radarView.start();
