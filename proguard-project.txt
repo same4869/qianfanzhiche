@@ -104,3 +104,4 @@ public <methods>;
 -keep public class * extends com.umeng.**
 # 以下包不进行过滤 
 -keep class com.umeng.** { *; }
+

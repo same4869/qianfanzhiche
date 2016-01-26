@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -12,6 +14,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnSystemUiVisibilityChangeListener;
+import android.view.WindowManager;
 import android.widget.Toast;
 import cn.bmob.v3.BmobUser;
 
@@ -37,7 +41,7 @@ import com.xun.qianfanzhiche.view.ZhiCheActionBar.ActionBarListener;
  * 
  *         2015-10-22
  */
-public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBarListener {
+public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBarListener, OnSystemUiVisibilityChangeListener {
 
 	private ViewPager viewPager;
 	private ZhiCheActionBar zhiCheActionBar;
@@ -55,6 +59,7 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setStatusBarTransparent();
 		setContentView(R.layout.activity_main);
 		ZhiCheApp.getInstance().addActivity(this);
 
@@ -107,6 +112,21 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 		// footer.setItemNewsCount(1, 99);// 设置消息数量
 		// footer.setItemNewsCount(2, 10);// 设置消息数量
 		// footer.setItemNewsCount(3, 1);// 设置消息数量
+	}
+
+	private void setStatusBarTransparent() {
+
+		if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
+			// 托盘重叠显示在Activity上
+			View decorView = getWindow().getDecorView();
+			int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+			decorView.setSystemUiVisibility(uiOptions);
+			decorView.setOnSystemUiVisibilityChangeListener(this);
+			// 设置托盘透明
+			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+		} else {
+		}
+
 	}
 
 	public class MyOnPageChangeListener implements OnPageChangeListener {
@@ -257,6 +277,12 @@ public class ZhiCheMainActivity extends BaseFragmentActivity implements ActionBa
 		default:
 			break;
 		}
+	}
+
+	@Override
+	public void onSystemUiVisibilityChange(int visibility) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
